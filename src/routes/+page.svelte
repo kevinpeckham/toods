@@ -32,36 +32,44 @@
 	//- body
 	main.relative.grid.min-h-screen.place-content-center.bg-primary.p-4.pb-48.text-white
 		div(class="sm:max-w-lg lg:max-w-xl xl:max-w-2xl")
-			LogosGrid
-
 			.text-center(class="sm:text-left")
 				//- headline
 				h1.prose-xl.mb-3.font-semibold.text-accent
-					| Hit the ground running with Sveltekit, Typescript, TailwindCSS &amp; Pug.
+					| Toods
+				div an experimental syntax for to-dos, inspired by Pug
+
+				.mt-4
+					.underline Syntax
+					div categories: #cat1#cat2
+					div due: ::20210101 ::tomorrow ::7d ::1w
+					div tag: todo (default)
+					div urgency: '&nbsp' = not; '+' = normal; '++' = high;
+					div complexity: '&nbsp' = not; '-' = normal; '--' = high;
+					div importance: '&nbsp' = not; '!' = normal; '!!' = high;
+
+					div tags: .tag1.tag2
+
+				.mt-4
+					.underline Example
+					div
+						| #acme.web::1w! update widget design
 
 				//- text
-				p.text-md.prose-base.mb-10.opacity-90(class="sm:mb-8")
-					| This project is an open source starter template for Node projects using SvelteKit, Typescript, TailwindCSS, and Pug. Designed to help get you up and running quickly with the SkinnyPug Stack.
-
-				//- cta
-				ButtonLink(
-					targetUrl="https://github.com/lightning-jar/lj-sveltekit-ts-tailwind-pug-starter",
-					title="View project on Github"
-				)
-					| Clone from Github
+				ul.text-md.prose-base.mb-10.opacity-90(class="sm:mb-8")
+					li #test
 
 	//- pre-footer
-	PreFooter(
+	//-PreFooter(
 		targetUrl="https://pugify.dev",
 		title="convert HTML to pug"
-	)
+		)
 		svelte:fragment(slot="default") Also check out the ad-free HTML to Pug converter @ https://pugify.dev
 
 	//- footer
-	Footer(
-		authorLink="https://fosstodon.org/@kevinpeckham",
-		orgLink="https://lightningjar.com"
-	)
-		svelte:fragment(slot="author") Kevin Peckham
-		svelte:fragment(slot="org") Lightning Jar
+	//- Footer(
+	//- 	authorLink="https://fosstodon.org/@kevinpeckham",
+	//- 	orgLink="https://lightningjar.com"
+	//- )
+	//- 	svelte:fragment(slot="author") Kevin Peckham
+	//- 	svelte:fragment(slot="org") Lightning Jar
 </template>
