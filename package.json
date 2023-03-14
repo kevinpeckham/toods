@@ -1,7 +1,7 @@
 {
 	"author": "Kevin Peckham",
-	"name": "sveltekit-typescript-tailwind-pug-starter",
-	"version": "1.0.4",
+	"name": "toods",
+	"version": "0.0.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/kevinpeckham/svelte-typescript-tailwind-pug-starter"

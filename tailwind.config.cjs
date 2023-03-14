@@ -8,6 +8,19 @@ module.exports = {
 				primary: "#142239",
 				accent: "#ebf92f",
 			},
+			fontFamily: {
+				mono: [
+					"'Mono Lisa'",
+					"ui-monospace",
+					"SFMono-Regular",
+					"Menlo",
+					"Monaco",
+					"Consolas",
+					"Liberation Mono",
+					"Courier New",
+					"monospace",
+				],
+			},
 			fontSize: {
 				6: "6px",
 				7: "7px",
@@ -57,5 +70,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
+	plugins: [require("@tailwindcss/typography")],
 };

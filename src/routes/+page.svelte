@@ -1,23 +1,9 @@
-<!-- Example Svelte Page / Starter Web Page-->
 <script lang="ts">
 	// eslint-disable-file @typescript-eslint/no-unused-vars, no-unused-vars
 	// components
-
-	import ButtonLink from "$atoms/ButtonLink.svelte";
 	import Footer from "$atoms/Footer.svelte";
-	import LogosGrid from "$molecules/LogosGrid.svelte";
 	import PreFooter from "$atoms/PreFooter.svelte";
-
-	// store
-	import { brands } from "$stores/brandsStore";
-
-	// logos to display
-	$brands = [
-		{ name: "Svelte", url: "https://svelte.dev/" },
-		{ name: "Typescript", url: "https://www.typescriptlang.org/" },
-		{ name: "TailwindCSS", url: "https://tailwindcss.com/" },
-		{ name: "Pug", url: "https://pugjs.org/api/getting-started.html" },
-	];
+	import TodoList from "$molecules/TodoList.svelte";
 </script>
 
 <template lang="pug">
@@ -30,33 +16,36 @@
 		)
 
 	//- body
-	main.relative.grid.min-h-screen.place-content-center.bg-primary.p-4.pb-48.text-white
-		div(class="sm:max-w-lg lg:max-w-xl xl:max-w-2xl")
-			.text-center(class="sm:text-left")
-				//- headline
-				h1.prose-xl.mb-3.font-semibold.text-accent
-					| Toods
-				div an experimental syntax for to-dos, inspired by Pug
+	main.relative.min-h-screen.w-full.bg-primary.p-4.pb-48.text-white.max-w-screen.overflow-hidden
+		.mb-8
+			//- headline
+			.flex.items-center.mb-4
+				h1.mr-4.font-semibold.text-accent Toods
+				.text-14 a compact, keyboard-oriented to-do list.
 
-				.mt-4
-					.underline Syntax
-					div categories: #cat1#cat2
-					div due: ::20210101 ::tomorrow ::7d ::1w
-					div tag: todo (default)
-					div urgency: '&nbsp' = not; '+' = normal; '++' = high;
-					div complexity: '&nbsp' = not; '-' = normal; '--' = high;
-					div importance: '&nbsp' = not; '!' = normal; '!!' = high;
+		//- todo list
+		.mb-8
+			TodoList
 
-					div tags: .tag1.tag2
+		//- cheat sheet
+		//-details.my-4
+			summary.underline Cheat Sheet
+			section
+				div categories: #cat1#cat2
+				div due: ::20210101 ::tomorrow ::7d ::1w
+				//div tag: todo (default)
+				div urgency: '&nbsp' = low; '+' = norm; '++' = high;
+				div complexity: '&nbsp' = low; '-' = norm; '--' = high;
+				div importance: '&nbsp' = low; '!' = norm; '!!' = high;
+				div tags: .tag1.tag2
 
 				.mt-4
 					.underline Example
 					div
 						| #acme.web::1w! update widget design
-
-				//- text
-				ul.text-md.prose-base.mb-10.opacity-90(class="sm:mb-8")
-					li #test
+			//- text
+			//-ul.text-md.prose-base.mb-10.opacity-90(class="sm:mb-8")
+				li #test
 
 	//- pre-footer
 	//-PreFooter(
