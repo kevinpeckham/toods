@@ -1,108 +1,158 @@
 //- store
 import { writable, derived, type Writable } from "svelte/store";
 
-//import type { Todo } from "$stores/todoStore";
-
-interface Column {
-	width: number;
-	widthUnit: string;
-	shortLabel?: string;
-	label: string;
-	handle: string;
-	symbol?: string;
-}
+import type { Column } from "$types/columnTypes";
 
 export const columns: Writable<Column[]> = writable([
+	// 1. id
 	{
-		width: 30,
-		widthUnit: "px",
-		label: "",
-		shortLabel: "",
-		symbol: "",
-		handle: "completed",
+		breakPointLG: {
+			classes:
+				"lg:order-0 lg:text-right lg:pr-2 lg:text-12 lg:flex lg:items-center lg:justify-end ",
+			order: "0",
+			width: "2",
+			widthUnit: "rem",
+		},
+		handle: "id",
+		label: "id",
+		shortLabel: "id",
+		symbol: "#",
 	},
+	// 2. next
 	{
-		width: 30,
-		widthUnit: "px",
+		breakPointLG: {
+			classes: "lg:order-1",
+			order: "1",
+			width: "2",
+			widthUnit: "rem",
+		},
+		handle: "next",
 		label: "next",
 		shortLabel: "nxt",
 		symbol: "!",
-		handle: "next",
 	},
+	// 3. due
 	{
-		width: 56,
-		widthUnit: "px",
-		label: "due(d)",
+		breakPointLG: {
+			order: "2",
+			width: 60,
+			widthUnit: "px",
+		},
 		handle: "due",
+		label: "due(d)",
 		shortLabel: "due",
 		symbol: "/",
-		displaySymbolInColHeading: false,
 	},
+	//- b. completed
 	{
-		width: 5,
-		widthUnit: "%",
-		shortLabel: "#",
-		label: "id",
-		handle: "id",
-		symbol: "0",
-		displaySymbolInColHeading: false,
+		breakPointLG: {
+			classes:
+				"lg:w-4 lg:order-9 lg:h-full lg:text-center lg:flex lg:justify-center ",
+			width: 16,
+			widthUnit: "px",
+		},
+		handle: "completed",
+		label: "",
+		shortLabel: "",
+		symbol: "",
 	},
+
+	// 4. id
+
+	// 5. category
+	// {
+	// 	breakPointLG: {
+	// 		order: 5,
+	// 		width: 50,
+	// 		widthUnit: "px",
+	// 	},
+	// 	displaySymbolInColHeading: false,
+	// 	handle: "category",
+	// 	label: "category",
+	// 	shortLabel: "cat",
+	// 	symbol: "#",
+	// },
+
+	// 6. description
 	{
-		width: 80,
-		widthUnit: "px",
-		shortLabel: "cat",
-		label: "category",
-		handle: "category",
-		symbol: "#",
-		displaySymbolInColHeading: false,
-	},
-	{
-		width: 1,
-		widthUnit: "fr",
-		shortLabel: "desc",
-		label: "description",
-		symbol: "?",
+		breakPointLG: {
+			order: "4",
+			width: 8,
+			widthUnit: "fr",
+		},
 		handle: "description",
-		displaySymbolInColHeading: false,
+		label: "description",
+		shortLabel: "desc",
+		symbol: "?",
 	},
+
+	// 7. priority
 	{
-		width: 70,
-		widthUnit: "px",
+		breakPointLG: {
+			order: "5",
+			width: 34,
+			widthUnit: "px",
+		},
+		handle: "priority",
 		label: "priority",
 		shortLabel: "pri",
 		symbol: "+",
-		handle: "priority",
-		displaySymbolInColHeading: true,
 	},
+	// 8. friction
 	{
-		width: 70,
-		widthUnit: "px",
+		breakPointLG: {
+			order: "6",
+			width: 34,
+			widthUnit: "px",
+		},
+		handle: "friction",
 		label: "friction",
 		shortLabel: "frc",
 		symbol: ":",
-		handle: "friction",
-		displaySymbolInColHeading: true,
 	},
-
+	// 9. joy
 	{
-		width: 60,
-		widthUnit: "px",
+		breakPointLG: {
+			order: "7",
+			width: 34,
+			widthUnit: "px",
+		},
+		handle: "joy",
 		label: "joy",
 		shortLabel: "joy",
 		symbol: "~",
-		handle: "joy",
-		displaySymbolInColHeading: true,
 	},
+	// 10. tags
 	{
-		width: 160,
-		widthUnit: "px",
-		label: "tags",
+		breakPointLG: {
+			order: "9",
+			width: 1,
+			widthUnit: "fr",
+		},
 		handle: "tags",
+		label: "tags",
+		shortLabel: "tags",
 		symbol: "@",
-		displaySymbolInColHeading: false,
 	},
 ]);
 
 export const columnHandles = derived(columns, ($columns) => {
 	return $columns.map((col) => col.handle);
+});
+
+export const column_id = derived(columns, ($columns) => {
+	const found = $columns.find((col) => col.handle === "id");
+	return found;
+});
+export const column_next = derived(columns, ($columns) => {
+	const found = $columns.find((col) => col.handle === "next");
+	return found;
+});
+export const column_due = derived(columns, ($columns) => {
+	const found = $columns.find((col) => col.handle === "due");
+	return found;
+});
+export const column_priority = derived(columns, ($columns) => {
+	const found = $columns.find((col) => col.handle === "priority");
+	return found;
 });

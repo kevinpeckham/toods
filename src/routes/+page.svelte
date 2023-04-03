@@ -9,9 +9,9 @@
 <template lang="pug">
 	//- head
 	svelte:head
-		title Svelte Pug Tailwind Typescript | Starter Template
+		title Toods | keyboard-oriented to-do list
 		meta(
-			content="A node starter template for the Svelte Preprocessed stack.",
+			content="Toods is a compact, keyboard-oriented to-do list.",
 			name="description"
 		)
 
@@ -20,8 +20,8 @@
 		.mb-8
 			//- headline
 			.flex.items-center.mb-4
-				h1.mr-4.font-semibold.text-accent Toods
-				.text-14 a compact, keyboard-oriented to-do list.
+				h1.mr-4.font-semibold.text-accent(class="text-lg") Toods
+				.text-base a compact, keyboard-oriented to-do list.
 
 		//- todo list
 		.mb-8

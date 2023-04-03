@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    --accent: #EBF92F;
+    --primary: #142239;
+  }
+  /* ::-webkit-datetime-edit-month-field:where(:active,:hover,:focus),
+  ::-webkit-datetime-edit-day-field:where(:active,:hover,:focus),
+  ::-webkit-datetime-edit-year-field:where(:active,:hover,:focus) {
+    @apply outline-none bg-accent text-primary;
+  } */
+  /* ::-webkit-calendar-picker-indicator {
+    outline:none;
+    @apply opacity-75 invert relative;
+  } */
+  /* ::-webkit-calendar-picker-indicator:where(:active,:hover,:focus) {
+    filter: invert(73%) sepia(92%) saturate(362%) hue-rotate(14deg)
+    brightness(108%) contrast(102%);
+    @apply opacity-100 text-accent overflow-hidden;
+  } */
+}
+
+
+

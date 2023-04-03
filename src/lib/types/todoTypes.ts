@@ -14,8 +14,10 @@ export interface TodoConstructor {
 	friction?: number;
 	dateAdded?: Date;
 	description?: string;
-	due?: Date;
+	due?: string;
 	joy?: number;
+	linkText?: string;
+	linkUrl?: string;
 	next?: boolean;
 	tags?: string[];
 	priority?: number;
@@ -31,16 +33,18 @@ export class Todo {
 	friction: number;
 	dateAdded: Date;
 	description: string;
-	due?: Date;
+	due?: string;
 	joy: number;
 	dueDisplay: string;
 	next: boolean;
 	tags: string[];
+	linkText?: string;
+	linkUrl?: string;
 	priority: number;
 	constructor(obj?: TodoConstructor) {
-		id_counter.set(get(id_counter) + 1);
+		// id_counter.set(get(id_counter) + 1);
 		this.active = obj && obj.active ? obj.active : false;
-		this.id = get(id_counter);
+		this.id = get(id_counter) as number;
 		this.category = obj && obj.category ? obj.category : "";
 		this.completed = false;
 		this.friction = obj && obj.friction ? obj.friction : 0;
@@ -48,7 +52,9 @@ export class Todo {
 		this.description = obj && obj.description ? obj.description : "";
 		this.due = obj && obj.due ? obj.due : undefined;
 		this.joy = obj && obj.joy ? obj.joy : 0;
-		this.dueDisplay = this.due ? timeLeftInDays(this.due).toString() : "";
+		this.dueDisplay = this.due
+			? timeLeftInDays(new Date(this.due)).toString()
+			: "";
 		this.next = obj && obj.next ? obj.next : false;
 		this.priority = obj && obj.priority ? obj.priority : 0;
 		this.tags = obj && obj.tags && obj.tags.length > 0 ? obj.tags : [];
