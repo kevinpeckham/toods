@@ -18,7 +18,7 @@ Here's some documentation for this component.
 	import FieldDisplayText from "$atoms/FieldDisplayText.svelte";
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 
 	// *
 </script>

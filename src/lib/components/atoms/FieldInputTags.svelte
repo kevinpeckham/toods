@@ -23,7 +23,7 @@ consumes "data_handle" from context api
 	export let max_length = 120;
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 	import { construct_svelte_component } from "svelte/internal";
 
 	// pulling initial value from store

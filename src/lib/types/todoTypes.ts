@@ -1,4 +1,4 @@
-import { id_counter } from "$stores/todoStore";
+import { id_counter } from "$stores/todosStore";
 import { get } from "svelte/store";
 
 // functions

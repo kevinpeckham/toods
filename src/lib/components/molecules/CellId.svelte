@@ -30,6 +30,6 @@ Component for ID cell
 
 <template lang="pug">
 	FieldContainer
-		FieldInputId
-		FieldDisplayText
+		FieldInputId(classes="text-[.75em]")
+		FieldDisplayText(classes="text-[.75em]")
 </template>

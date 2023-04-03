@@ -19,7 +19,7 @@
 	main.relative.min-h-screen.w-full.bg-primary.p-4.pb-48.text-white.max-w-screen.overflow-hidden
 		.mb-8
 			//- headline
-			.flex.items-center.mb-4
+			.flex.items-center.mb-2
 				h1.mr-4.font-semibold.text-accent(class="text-lg") Toods
 				.text-base a compact, keyboard-oriented to-do list.
 

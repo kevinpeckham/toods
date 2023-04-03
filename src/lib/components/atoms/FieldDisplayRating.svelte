@@ -18,7 +18,7 @@ consumes "symbol" from context api
 	export let classes = "";
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 	import { columns, column_next } from "$stores/columnsStore";
 
 	// types
@@ -38,11 +38,12 @@ consumes "symbol" from context api
 	$: valueNum = Number(value);
 
 	// display value
-	let displayValue: string;
-	$: displayValue = value ? symbol.repeat(valueNum) : "";
+	let display_value: string;
+	$: display_value = value ? symbol.repeat(valueNum) : "";
 
 	// style
-	const default_classes = `
+	let default_classes: string;
+	$: default_classes = `
 		absolute
 		inset-0
 		flex
@@ -52,9 +53,10 @@ consumes "symbol" from context api
 		pointer-events-none
 		group-focus-within:opacity-0
 		w-full
+		${valueNum === 3 ? "bg-accent text-primary" : ""}
 	`;
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { displayValue }
+	.field-display(class!="{default_classes} { classes }") { display_value }
 </template>

@@ -21,7 +21,7 @@ consumes "symbol" from context api
 	let input: HTMLInputElement;
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 	import { columns } from "$stores/columnsStore";
 	import type { Column } from "$types/columnTypes";
 

@@ -20,7 +20,7 @@ consumes "todo_id" from context api
 	export let classes: string = "";
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 
 	// get value of "data-next" from store
 	let data_next: "" | undefined;

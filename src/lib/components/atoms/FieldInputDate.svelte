@@ -23,7 +23,7 @@ consumes "data_handle" from context api
 	let input: HTMLInputElement;
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 
 	// pulling initial value from store
 	let value: string = getInitialDateStringValue();

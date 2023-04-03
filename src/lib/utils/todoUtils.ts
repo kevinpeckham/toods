@@ -1,5 +1,5 @@
 import { Todo } from "$types/todoTypes";
-import { todos } from "$stores/todoStore";
+import { todos } from "$stores/todosStore";
 
 export function timeLeftInDays(dueDate: Date) {
 	// get current date

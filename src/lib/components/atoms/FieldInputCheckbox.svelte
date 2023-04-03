@@ -22,7 +22,7 @@ consumes "data_handle" from context api
 	export let classes = "";
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 
 	// pulling initial value from store
 	const initialValue = getInitialValue() as boolean;

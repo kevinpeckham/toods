@@ -18,14 +18,14 @@ export const grid_columns_sm = [
 
 export const grid_columns_lg = [
 	"42px",
-	"24px",
+	"36px",
 	"124px",
 	"1fr",
 	"36px",
 	"36px",
 	"36px",
 	"120px",
-	"24px",
+	"36px",
 ];
 
 export const grid_template_columns = derived([window_w], ([window_w]) => {

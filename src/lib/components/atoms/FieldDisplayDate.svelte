@@ -21,7 +21,7 @@ consumes "data_handle" from context api
 	export let classes = "";
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 
 	// imported functions
 	import { timeLeftInDays } from "$utils/todoUtils";

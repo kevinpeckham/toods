@@ -22,7 +22,7 @@ consumes "data_handle" from context api
 	export let symbol = "*";
 
 	// stores
-	import { todos } from "$stores/todoStore";
+	import { todos } from "$stores/todosStore";
 
 	// text value
 	let value: boolean;
