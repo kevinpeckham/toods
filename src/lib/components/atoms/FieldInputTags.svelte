@@ -72,7 +72,7 @@ consumes "data_handle" from context api
 		// then allow it
 		else if (
 			(key >= "a" && key <= "z") ||
-			(key >= "A" && key <= "Z") ||
+			// (key >= "A" && key <= "Z") ||
 			(key >= "0" && key <= "9") ||
 			key === ":" ||
 			key === "-" ||
@@ -80,8 +80,11 @@ consumes "data_handle" from context api
 			// key === "@"
 		) {
 			return;
-		} else if (key === "Enter" || key === "Tab") {
+		} else if (key === "Enter") {
 			event.preventDefault();
+		} else if (key === "Tab") {
+			// event.preventDefault();
+			// advance to next cell
 		} else {
 			return;
 		}
@@ -92,6 +95,8 @@ consumes "data_handle" from context api
 		if (tagString[tagString.length - 1] === ",") {
 			tagString = tagString.slice(0, -1);
 		}
+		// convert tagString to lowercase
+		tagString = tagString.toLowerCase();
 	}
 
 	function onPaste(event: ClipboardEvent) {
@@ -136,8 +141,11 @@ consumes "data_handle" from context api
 			// remove empty strings
 			const filtered = split.filter((item) => item.length > 0);
 
+			// lowercase all strings
+			const lowercased = filtered.map((item) => item.toLowerCase());
+
 			// save value
-			if (value != split) value = filtered;
+			if (value != split) value = lowercased;
 		} else {
 			value = [];
 		}

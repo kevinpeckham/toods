@@ -27,26 +27,6 @@
 		.mb-8
 			TodoList
 
-		//- cheat sheet
-		//-details.my-4
-			summary.underline Cheat Sheet
-			section
-				div categories: #cat1#cat2
-				div due: ::20210101 ::tomorrow ::7d ::1w
-				//div tag: todo (default)
-				div urgency: '&nbsp' = low; '+' = norm; '++' = high;
-				div complexity: '&nbsp' = low; '-' = norm; '--' = high;
-				div importance: '&nbsp' = low; '!' = norm; '!!' = high;
-				div tags: .tag1.tag2
-
-				.mt-4
-					.underline Example
-					div
-						| #acme.web::1w! update widget design
-			//- text
-			//-ul.text-md.prose-base.mb-10.opacity-90(class="sm:mb-8")
-				li #test
-
 	//- pre-footer
 	//-PreFooter(
 		targetUrl="https://pugify.dev",

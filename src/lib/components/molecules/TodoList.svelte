@@ -18,12 +18,25 @@ Here's some documentation for this component.
 	import { colors } from "$stores/colorsStore";
 	import { next } from "$stores/nextStore";
 
+	// refs
+	let addTodoButton: HTMLButtonElement;
+	let pseudoTable: HTMLDivElement;
+	let lastRow: HTMLDivElement;
+
 	// variables
 	let consoleValue: string = "";
 	let query: string = "";
 	let filterColumn: string = "";
 	let filtered: Todo[] = [];
 	let sorted: Todo[] = [];
+
+	// reactive
+	// $: {
+	// 	if (pseudoTable && pseudoTable.lastElementChild) {
+	// 		lastRow = pseudoTable.lastElementChild as HTMLDivElement;
+	// 	}
+	// 	console.log(lastRow);
+	// }
 
 	// styling
 	let lgColumnsGrid: string;
@@ -142,16 +155,28 @@ Here's some documentation for this component.
 	const baseCellClasses =
 		"text-13 px-2 py-1 leading-none h-full flex items-center truncate bg-slate-50/20";
 
-	//for testing, parsed version of stringified store
-	// const parsed = JSON.parse($todosJSON || "[]") as Todo[];
+	function onKeydown(e: KeyboardEvent) {
+		let lastTodoIndex: number;
 
-	// function largeClasses(column: string) {
-	// 	const classes = column.breakPointLG.classes
-	// 	lg:{column.breakPointLG.classes.join(' lg:')} lg:order-{column.breakPointLG.order} lg:w-full flex items-center
-	// }
+		// combo key press (ctrl + k)
+		if (e.metaKey && e.key === "k") {
+			createTodo();
+
+			//wait for the row to be created
+			setTimeout(() => {
+				const lastRow = pseudoTable.lastElementChild as HTMLElement;
+				const lastRowDescription = lastRow.querySelector(
+					"[data-field=description]",
+				) as HTMLElement;
+				console.log(lastRowDescription);
+				lastRowDescription.focus();
+			}, 20);
+		}
+	}
 </script>
 
 <template lang="pug">
+	svelte:window(on:keydown!="{ onKeydown }")
 	//- console
 	.mb-8
 		textarea#console.h-6.text-primary.text-14.w-80.flex.items-start.px-2(
@@ -186,13 +211,18 @@ Here's some documentation for this component.
 								span(class="inline-block sm:hidden") { column.symbol }
 
 	//- list of todos
-	.table.w-full(data-table)
+	.table.w-full(
+		bind:this!="{ pseudoTable }",
+		data-table
+	)
 		+each('filtered as todo, todoIndex')
-			RowTodoItem(todo!="{ todo }")
+			+if('todo.completed != true')
+				RowTodoItem(todo!="{ todo }")
 
 	//- add todo button
 	button.w-6.h-6.flex.justify-center.items-center.ml-1.mt-4(
 		class="bg-white/20 hover:bg-accent hover:text-primary focus:bg-accent focus:text-primary ",
+		bind:this!="{ addTodoButton }",
 		on:click!="{() => {createTodo()}}"
 	) +
 </template>

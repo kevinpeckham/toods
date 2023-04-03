@@ -25,6 +25,7 @@ export const grid_columns_lg = [
 	"36px",
 	"36px",
 	"120px",
+	"24px",
 ];
 
 export const grid_template_columns = derived([window_w], ([window_w]) => {

@@ -10,6 +10,7 @@ Here's some documentation for this component.
 	import { onMount } from "svelte";
 
 	// components
+	import CellComplete from "$molecules/CellComplete.svelte";
 	import CellNext from "$molecules/CellNext.svelte";
 	import CellId from "$molecules/CellId.svelte";
 	import CellDue from "$molecules/CellDue.svelte";
@@ -71,4 +72,5 @@ Here's some documentation for this component.
 				CellRating(data_handle="friction")
 				CellRating(data_handle="joy")
 				CellTags
+				CellComplete
 </template>

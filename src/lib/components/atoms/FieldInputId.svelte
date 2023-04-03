@@ -47,6 +47,12 @@ consumes "data_handle" from context api
 
 	const mobile_classes = `
 	!opacity-0`;
+
+	function onKeydown(event: KeyboardEvent) {
+		if (event.key === "Backspace") {
+			// remove current todo from $todos
+		}
+	}
 </script>
 
 <template lang="pug">
@@ -57,6 +63,7 @@ consumes "data_handle" from context api
 		data-cell-input="",
 		data-field!="{ data_handle }",
 		on:focus!="{ input.select() }",
+		on:keydown!="{ onKeydown }",
 		readonly="readonly",
 		type!="text"
 	)

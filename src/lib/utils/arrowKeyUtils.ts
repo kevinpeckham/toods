@@ -3,7 +3,6 @@ export function parseArrowKeys(event: KeyboardEvent) {
 	event.preventDefault();
 
 	const key = event.key;
-	//console.log(key);
 
 	// elements
 	const activeElement = document.activeElement as HTMLElement;

@@ -83,7 +83,7 @@ export const todos = writable(todosArray);
 // store to keep track of todo ids
 export const id_counter = derived(todos, ($todos) => {
 	const id = $todos.length > 0 ? $todos[$todos.length - 1].id : 0;
-	console.log("counter", id + 1);
+	// console.log("counter", id + 1);
 	return id + 1;
 });
 
