@@ -29,10 +29,29 @@ consumes "data_handle" from context api
 	const initialStringValue = getInitialTextValue();
 	let value: string = initialStringValue;
 
+	// enforce limits to value
+	$: {
+		if (value && value.length > max_length) {
+			value = value.slice(0, max_length);
+		}
+	}
+
+	// do not allow certain characters
+	// regex for { } ` ~ ^ \
+	$: {
+		// do not allow ticks
+		if (value && value.includes("`")) {
+			value = value.replace(/`/g, "");
+		}
+	}
+
+	// keep store updated as value changes
 	$: {
 		if (
 			value !== null &&
 			value !== undefined &&
+			value.length < max_length &&
+			!value.includes("`") &&
 			$todos &&
 			$todos[todo_id][data_handle] !== value
 		) {

@@ -13,7 +13,8 @@ Here's some documentation for this component.
 	// stores
 	import { query, filtered_todos } from "$stores/filteringStore";
 	import { window_h } from "$stores/windowStore";
-	import { todos, todosJSON } from "$stores/todosStore";
+	import { todos } from "$stores/todosStore";
+	import { tags } from "$stores/tagsStore";
 	import type { Todo } from "$types/todoTypes";
 	import { columns, columnHandles } from "$stores/columnsStore";
 	import { colors } from "$stores/colorsStore";
@@ -31,8 +32,12 @@ Here's some documentation for this component.
 	let filtered: Todo[] = [];
 	let sorted: Todo[] = [];
 
-	// const fakeArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-	// console.log(fakeArray.includes(11));
+	// testing only
+	import { packed_data, unpacked_data } from "$stores/dataProcessing";
+	console.log(packed_data)
+	console.log(JSON.stringify(packed_data).length);
+	console.log(unpacked_data, JSON.stringify(unpacked_data).length);
+
 
 	// functions
 	import { createTodo, ratingDisplay, ratingIncrement } from "$utils/todoUtils";

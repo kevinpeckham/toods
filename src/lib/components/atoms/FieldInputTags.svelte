@@ -68,6 +68,10 @@ consumes "data_handle" from context api
 				tagString = processed3;
 			}
 		}
+		// if it is shift + 3 then allow it
+		else if (key === "#" && event.shiftKey) {
+			event.preventDefault();
+		}
 		// if it is an allowed character A-Z or a-z or 0-9 or ':' or "-" or "_"
 		// then allow it
 		else if (
@@ -144,8 +148,11 @@ consumes "data_handle" from context api
 			// lowercase all strings
 			const lowercased = filtered.map((item) => item.toLowerCase());
 
+			// remove #
+			const noHash = lowercased.map((item) => item.replace("#", ""));
+
 			// save value
-			if (value != split) value = lowercased;
+			if (value != split) value = noHash;
 		} else {
 			value = [];
 		}
@@ -156,9 +163,6 @@ consumes "data_handle" from context api
 			$todos[todo_id][data_handle] = value;
 		}
 	}
-	// $: {
-	// 	console.log("sv", $todos[todo_id][data_handle]);
-	// }
 
 	// style classes
 	const default_classes = `

@@ -9,60 +9,44 @@ import { timeLeftInDays } from "$utils/todoUtils";
 
 export interface TodoConstructor {
 	active?: boolean;
-	category?: string;
 	completed?: boolean;
-	friction?: number;
-	dateAdded?: Date;
+	created?: string;
 	description?: string;
 	due?: string;
-	joy?: number;
-	linkText?: string;
-	linkUrl?: string;
+	friction?: string;
+	joy?: string;
 	next?: boolean;
 	tags?: string[];
-	priority?: number;
+	priority?: string;
 }
 export class Todo {
 	// add index signature
 	//eslint-disable-next-line
 	[key: string]: any;
-	active: boolean;
 	id: number;
-	category: string;
 	completed: boolean;
-	friction: number;
-	dateAdded: Date;
+	created: string;
+	friction: string;
 	description: string;
-	due?: string;
-	joy: number;
-	dueDisplay: string;
+	due: string;
+	joy: string;
 	next: boolean;
 	tags: string[];
-	linkText?: string;
-	linkUrl?: string;
-	priority: number;
-	constructor(obj?: TodoConstructor) {
-		// id_counter.set(get(id_counter) + 1);
-		this.active = obj && obj.active ? obj.active : false;
+	priority: string;
+	constructor(o?: TodoConstructor) {
 		this.id = get(id_counter) as number;
-		this.category = obj && obj.category ? obj.category : "";
 		this.completed = false;
-		this.friction = obj && obj.friction ? obj.friction : 0;
-		this.dateAdded = new Date();
-		this.description = obj && obj.description ? obj.description : "";
-		this.due = obj && obj.due ? obj.due : undefined;
-		this.joy = obj && obj.joy ? obj.joy : 0;
-		this.dueDisplay = this.due
-			? timeLeftInDays(new Date(this.due)).toString()
-			: "";
-		this.next = obj && obj.next ? obj.next : false;
-		this.priority = obj && obj.priority ? obj.priority : 0;
-		this.tags = obj && obj.tags && obj.tags.length > 0 ? obj.tags : [];
-	}
-	ratingDisplay(rating: string) {
-		let sym = "+";
-		if (rating === "friction") sym = ":";
-		else if (rating === "joy") sym = "~";
-		return sym.repeat(this[rating]);
+		this.created = o?.created
+			? o.created
+			: new Date().toISOString().split("T")[0];
+		this.description = o && o.description ? o.description : "";
+		this.due = o && o.due ? o.due : "";
+		this.friction = o && o.friction ? o.friction : "";
+		this.joy = o && o.joy ? o.joy : "";
+		this.next = o && o.next ? o.next : false;
+		this.priority = o && o.priority ? o.priority : "";
+		this.tags = o && o.tags && o.tags.length > 0 ? o.tags : [];
 	}
 }
+
+export type todoAsArray = string[];

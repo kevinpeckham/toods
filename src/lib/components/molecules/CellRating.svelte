@@ -43,6 +43,6 @@ consumes "todo_id" from context api
 <template lang="pug">
 	+if('todo_id >= -1')
 		FieldContainer
-			FieldInputRating
-			FieldDisplayRating
+			FieldInputRating(classes="!opacity-100")
+			//-FieldDisplayRating
 </template>

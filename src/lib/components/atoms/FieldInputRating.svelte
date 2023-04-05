@@ -29,19 +29,19 @@ consumes "symbol" from context api
 	const todo_id = getContext("todo_id") as number;
 	const data_handle = getContext("data_handle") as string;
 	const symbol = getContext("symbol") as string;
-	const initialNumberValue = getInitialNumberValue();
+	const initialStringValue = getInitialStringValue() as string;
 
 	// variables
-	let value: string = "0";
-	let valueNum: number = 0;
+	let value: string = "";
+	// let valueNum: number = 0;
 
 	// pull initial value from store
-	value = initialNumberValue.toString();
+	value = initialStringValue;
 
 	// when value changes, update valueNum & store
 	$: {
-		valueNum = Number(value) ? Number(value) : 0;
-		$todos[todo_id][data_handle] = valueNum;
+		// valueNum = Number(value) ? Number(value) : 0;
+		// $todos[todo_id][data_handle] = value;
 	}
 
 	// style classes
@@ -63,28 +63,26 @@ consumes "symbol" from context api
 	`;
 
 	// functions
-	function valueAsNumber() {
-		return parseInt(value) ? parseInt(value) : 0;
-	}
+
 	function incrementRating() {
-		const num = valueAsNumber();
-		if (num + 1 <= 3) value = `${num + 1}`;
-		else value = "0";
+		const key_num = value.length + 1;
+		if (key_num <= 3) value = symbol.repeat(key_num);
+		else value = "";
 	}
 	function decrementRating() {
-		const num = valueAsNumber();
-		if (valueNum - 1 < 0) value = `3`;
-		else value = `${num - 1}`;
+		const key_num = value.length - 1;
+		if (key_num <= 0) value = symbol.repeat(3);
+		else value = symbol.repeat(key_num);
 	}
-	function getInitialNumberValue() {
+	function getInitialStringValue() {
 		// get value from store
 		const storeVal = $todos[todo_id][data_handle];
 		// prove that is is a number & valid
-		const valid = typeof storeVal == "number" && storeVal >= 0 ? storeVal : 0;
-		// deep copy the number
-		const deep = valid ? JSON.parse(JSON.stringify(storeVal)) : 0;
+		const valid = typeof storeVal == "string" && storeVal ? storeVal : "";
+		// deep copy the string
+		const deep = valid ? JSON.parse(JSON.stringify(storeVal)) : "";
 		// prove that it's a number and valid
-		const result = deep + 1 && typeof deep == "number" ? deep : 0;
+		const result = deep && typeof deep == "string" ? deep : "";
 		return result;
 	}
 	function onKeydown(event: KeyboardEvent) {
@@ -109,9 +107,11 @@ consumes "symbol" from context api
 
 		//-- if key is an allowed number, replace value with new value
 		if (allowedNumbers.includes(key)) {
+			const key_num = Number(key);
+			const string = symbol.repeat(key_num);
 			// prevent default
 			event.preventDefault();
-			if (value != key) value = "" + key;
+			if (value != string) value = string;
 			return;
 		}
 		//-- if key matches field symbol or up arrow
@@ -126,11 +126,24 @@ consumes "symbol" from context api
 			decrementRating();
 			return;
 		}
+		//- else if key is tab
+		else if (key === "Tab") {
+			// allow default
+			return;
+		}
+		// else if  key is a letter, prevent default
+		else if (key.match(/[a-z]/i)) {
+			console.log("letter");
+			event.preventDefault();
+			incrementRating();
+			return;
+		}
 		//- any other key, prevent default
 		else if (!allowed_keys.includes(key)) {
 			event.preventDefault();
 			return;
 		}
+
 		//- remaining keys are allowed
 		else {
 			return;

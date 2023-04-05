@@ -14,7 +14,7 @@ Here's some documentation for this component.
 
 	// components
 	import FieldContainer from "$atoms/FieldContainer.svelte";
-	import FieldInputText from "$atoms/FieldInputText.svelte";
+	import FieldInputText from "$atoms/FieldInputDescription.svelte";
 	import FieldDisplayText from "$atoms/FieldDisplayText.svelte";
 
 	// stores
