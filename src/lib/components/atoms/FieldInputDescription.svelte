@@ -20,10 +20,10 @@ consumes "data_handle" from context api
 
 	// props
 	export let classes = "";
-	export let max_length = 120;
 
-	// stores
+	// stores & settings
 	import { todos } from "$stores/todosStore";
+	import { description_max_length } from "$stores/settings";
 
 	// pulling initial value from store
 	const initialStringValue = getInitialTextValue();
@@ -31,13 +31,12 @@ consumes "data_handle" from context api
 
 	// enforce limits to value
 	$: {
-		if (value && value.length > max_length) {
-			value = value.slice(0, max_length);
+		if (value && value.length > $description_max_length) {
+			value = value.slice(0, $description_max_length);
 		}
 	}
 
 	// do not allow certain characters
-	// regex for { } ` ~ ^ \
 	$: {
 		// do not allow ticks
 		if (value && value.includes("`")) {
@@ -50,7 +49,7 @@ consumes "data_handle" from context api
 		if (
 			value !== null &&
 			value !== undefined &&
-			value.length < max_length &&
+			value.length < $description_max_length &&
 			!value.includes("`") &&
 			$todos &&
 			$todos[todo_id][data_handle] !== value
@@ -98,7 +97,7 @@ consumes "data_handle" from context api
 		bind:value!="{ value }",
 		data-cell-input="",
 		data-field!="{ data_handle }",
-		max-length!="{ max_length }",
+		max-length!="{ $description_max_length }",
 		type!="text"
 	)
 </template>

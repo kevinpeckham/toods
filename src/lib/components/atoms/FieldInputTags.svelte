@@ -45,7 +45,6 @@ consumes "data_handle" from context api
 			return str;
 		}
 	}
-
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
 

@@ -18,7 +18,6 @@ Here's some documentation for this component.
 	import type { Todo } from "$types/todoTypes";
 	import { columns, columnHandles } from "$stores/columnsStore";
 	import { colors } from "$stores/colorsStore";
-	import { next } from "$stores/nextStore";
 
 	// refs
 	let addTodoButton: HTMLButtonElement;
@@ -33,11 +32,10 @@ Here's some documentation for this component.
 	let sorted: Todo[] = [];
 
 	// testing only
-	import { packed_data, unpacked_data } from "$stores/dataProcessing";
-	console.log(packed_data)
-	console.log(JSON.stringify(packed_data).length);
-	console.log(unpacked_data, JSON.stringify(unpacked_data).length);
+	// import { packed_data, unpacked_data } from "$stores/dataProcessing";
+	// import { enriched } from "$stores/backupData";
 
+	// console.log(enriched);
 
 	// functions
 	import { createTodo, ratingDisplay, ratingIncrement } from "$utils/todoUtils";
@@ -57,8 +55,8 @@ Here's some documentation for this component.
 	// }
 
 	function onConsoleInput() {
-		console.log($query);
-		console.log($filtered_todos);
+		// console.log($query);
+		// console.log($filtered_todos);
 	}
 
 	// $: {
@@ -200,7 +198,7 @@ Here's some documentation for this component.
 			+each('$todos as todo, todoIndex')
 				//- if todo is not completed
 
-				+if('($filtered_todos.length \< 1 || $filtered_todos.includes(todo.id)) && !todo.completed')
+				+if('($filtered_todos.length == 0 || $filtered_todos.includes(todo.id)) && !todo.completed')
 					RowTodoItem(todo!="{ todo }")
 
 	//- add todo button

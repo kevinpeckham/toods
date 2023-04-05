@@ -14,3 +14,5 @@ export const symbols = derived(
 		};
 	},
 );
+
+export const description_max_length = writable(120);

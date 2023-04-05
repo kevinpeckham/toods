@@ -29,19 +29,26 @@ consumes "symbol" from context api
 	const todo_id = getContext("todo_id") as number;
 	const data_handle = getContext("data_handle") as string;
 	const symbol = getContext("symbol") as string;
-	const initialStringValue = getInitialStringValue() as string;
+	const initialNumberValue = getInitialNumberValue() as number;
 
 	// variables
-	let value: string = "";
-	// let valueNum: number = 0;
+	let input_string_value: string;
+	let value: number;
 
-	// pull initial value from store
-	value = initialStringValue;
+	// set input string value
+	input_string_value = initialNumberValue.toString();
 
-	// when value changes, update valueNum & store
+	// whenever input_string_value changes, validate & update value
 	$: {
-		// valueNum = Number(value) ? Number(value) : 0;
-		// $todos[todo_id][data_handle] = value;
+		value = Number(input_string_value);
+		if (valueNumIsValid() && $todos && $todos[todo_id][data_handle] !== value) {
+			$todos[todo_id][data_handle] = value;
+			$todos[todo_id].updated = new Date().toISOString();
+		}
+	}
+
+	function valueNumIsValid() {
+		return typeof value == "number" && value >= 0 && value <= 3;
 	}
 
 	// style classes
@@ -65,24 +72,26 @@ consumes "symbol" from context api
 	// functions
 
 	function incrementRating() {
-		const key_num = value.length + 1;
-		if (key_num <= 3) value = symbol.repeat(key_num);
-		else value = "";
+		const new_value = value + 1;
+		if (new_value <= 3) {
+			input_string_value = new_value.toString();
+		} else input_string_value = "0";
 	}
 	function decrementRating() {
-		const key_num = value.length - 1;
-		if (key_num <= 0) value = symbol.repeat(3);
-		else value = symbol.repeat(key_num);
+		const new_value = value - 1;
+		if (new_value < 0) {
+			input_string_value = "3";
+		} else input_string_value = new_value.toString();
 	}
-	function getInitialStringValue() {
+	function getInitialNumberValue() {
 		// get value from store
 		const storeVal = $todos[todo_id][data_handle];
 		// prove that is is a number & valid
-		const valid = typeof storeVal == "string" && storeVal ? storeVal : "";
+		const valid = typeof storeVal == "number" && storeVal ? storeVal : 0;
 		// deep copy the string
 		const deep = valid ? JSON.parse(JSON.stringify(storeVal)) : "";
 		// prove that it's a number and valid
-		const result = deep && typeof deep == "string" ? deep : "";
+		const result = deep && typeof deep == "number" ? deep : 0;
 		return result;
 	}
 	function onKeydown(event: KeyboardEvent) {
@@ -107,15 +116,12 @@ consumes "symbol" from context api
 
 		//-- if key is an allowed number, replace value with new value
 		if (allowedNumbers.includes(key)) {
-			const key_num = Number(key);
-			const string = symbol.repeat(key_num);
-			// prevent default
 			event.preventDefault();
-			if (value != string) value = string;
+			if (input_string_value !== key) input_string_value = key;
 			return;
 		}
-		//-- if key matches field symbol or up arrow
-		else if (key === symbol || key === "ArrowUp") {
+		//-- if key matches up arrow
+		else if (key === "ArrowUp") {
 			event.preventDefault();
 			incrementRating();
 			return;
@@ -133,7 +139,12 @@ consumes "symbol" from context api
 		}
 		// else if  key is a letter, prevent default
 		else if (key.match(/[a-z]/i)) {
-			console.log("letter");
+			event.preventDefault();
+			incrementRating();
+			return;
+		}
+		// else if key is symbol
+		else if (key === symbol) {
 			event.preventDefault();
 			incrementRating();
 			return;
@@ -155,12 +166,13 @@ consumes "symbol" from context api
 	input.field-input.peer(
 		class!="{default_classes} { classes }",
 		bind:this!="{ input }",
-		bind:value!="{ value }",
+		bind:value!="{ input_string_value }",
 		data-cell-input="",
 		data-field!="{ data_handle }",
+		max="3",
+		min="0",
 		on:focus!="{ input.select() }",
 		on:keydown!="{ onKeydown }",
-		size=1,
-		type!="text"
+		type!="number"
 	)
 </template>
