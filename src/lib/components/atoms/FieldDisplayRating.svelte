@@ -14,28 +14,28 @@ consumes "symbol" from context api
 	// context api
 	import { getContext } from "svelte";
 
+	// stores
+	import { todos } from "$stores/todosStore";
+
+	// types
+	import type { Writable } from "svelte/store";
+	import type { Todo } from "$types/todoTypes";
+
 	// props
 	export let classes = "";
 
-	// stores
-	import { todos } from "$stores/todosStore";
-	import { columns, column_next } from "$stores/columnsStore";
-
-	// types
-	import type { Column } from "$types/columnTypes";
-
 	// constants
-	const todo_id = getContext("todo_id") as number;
+	const todo_readable = getContext("todo_readable") as Writable<Todo>;
 	const data_handle = getContext("data_handle") as string;
 	const symbol = getContext("symbol") as string;
 
 	// text value
 	let value: string;
-	$: value = $todos[todo_id][data_handle] as string;
+	$: value = $todo_readable[data_handle] as string;
 
 	// number value
 	let valueNum: number;
-	$: valueNum = Number(value);
+	$: valueNum = Number($todo_readable[data_handle]);
 
 	// display value
 	let display_value: string;

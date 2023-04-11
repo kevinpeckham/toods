@@ -1,32 +1,33 @@
 <!--
 @component
-Field display text component part of a text cell component.
+Field displays store value for a given todo / data handle
+Visible by default
+Is hidden when cell is in edit mode.
 #### *context:*
-consumes "todo_id" from context api
+consumes "todo_readable" from context api
 consumes "data_handle" from context api
 #### *props:*
 * prop - classes?: string
-#### *elements:*
-* .field-container: outer container
+
 -->
 <script lang="ts">
 	// context api
 	import { getContext } from "svelte";
 
-	// constants from context api
-	$: todo_id = getContext("todo_id") as number;
-	$: data_handle = getContext("data_handle") as string;
-
-	// props
-	export let classes = "";
-
 	// stores
 	import { todos } from "$stores/todosStore";
 	import { breakpoint } from "$stores/layoutStore";
 
-	// text value
-	let value: string;
-	$: value = $todos[todo_id][data_handle] as string;
+	// types
+	import type { Writable } from "svelte/store";
+	import type { Todo } from "$types/todoTypes";
+
+	// props
+	export let classes = "";
+
+	// constants from context api
+	const todo_readable = getContext("todo_readable") as Writable<Todo>;
+	const data_handle = getContext("data_handle") as string;
 
 	// style
 	$: default_classes = `
@@ -44,5 +45,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { value }
+	.field-display(class!="{default_classes} { classes }") { $todo_readable[data_handle] }
 </template>

@@ -6,23 +6,22 @@ Here's some documentation for this component.
 	// context
 	import { setContext, getContext } from "svelte";
 
-	// set data_handle
-	setContext("data_handle", "tags");
-
-	// get todo_id
-	const todo_id = getContext("todo_id");
-
 	// components
 	import FieldContainer from "$atoms/FieldContainer.svelte";
 	import FieldInputTags from "$atoms/FieldInputTags.svelte";
 	import FieldDisplayTags from "$atoms/FieldDisplayTags.svelte";
 
+	// props
+	export let classes: string = "";
+
+	// set data_handle
+	setContext("data_handle", "tags");
+
 	// *
 </script>
 
 <template lang="pug">
-	+if('todo_id > -1')
-		FieldContainer
-			FieldInputTags
-			FieldDisplayTags
+	FieldContainer(classes!="{ classes }")
+		FieldInputTags
+		FieldDisplayTags
 </template>

@@ -4,7 +4,7 @@ Here's some documentation for this component.
 -->
 <script lang="ts">
 	// context api
-	import { setContext } from "svelte";
+	import { getContext, setContext } from "svelte";
 
 	// svelte
 	import { onMount } from "svelte";
@@ -12,7 +12,7 @@ Here's some documentation for this component.
 	// components
 	import CellComplete from "$molecules/CellComplete.svelte";
 	import CellNext from "$molecules/CellNext.svelte";
-	import CellId from "$molecules/CellId.svelte";
+	import CellIndex from "$molecules/CellIndex.svelte";
 	import CellDue from "$molecules/CellDue.svelte";
 	import CellDescription from "$molecules/CellDescription.svelte";
 	import CellRating from "$molecules/CellRating.svelte";
@@ -21,18 +21,30 @@ Here's some documentation for this component.
 	// stores
 	import { grid_template_columns } from "$stores/layoutStore";
 	import { breakpoint } from "$stores/layoutStore";
+	import { todos } from "$stores/todosStore";
 
 	// types
-	import type { Readable } from "svelte/store";
+	import type { Readable, Writable } from "svelte/store";
+	import { writable, readable, derived, get } from "svelte/store";
+	import type { Todo } from "$types/todoTypes";
 
-	// props
-	export let todo: Todo = new Todo();
+	// * props
+	// ** unique
+	// unique id of the todo
+	export let unique: string = "";
 
-	// set context -- todo_id
-	setContext("todo_id", todo.id);
+	// track todo state
+	const editableTodo = $todos.find((todo) => todo.unique == unique);
+	const readableTodo = derived(todos, ($todos) =>
+		$todos.find((t: Todo) => t.unique == unique),
+	);
+	const initialTodo = JSON.parse(JSON.stringify(editableTodo));
 
-	// types & classes
-	import { Todo } from "$types/todoTypes";
+	// pass on todo state via	context api
+	setContext("todo_editable", editableTodo); // a direct reference to the to-do in the store
+	setContext("todo_initial", initialTodo); // snapshots load state of todo
+	setContext("todo_readable", readableTodo); // sent as a readable-only store
+	setContext("unique", unique);
 </script>
 
 <template lang="pug">
@@ -42,10 +54,10 @@ Here's some documentation for this component.
 			class!="sm:hidden",
 			data-table-row,
 			disabled,
-			id!="todo-{todo.id}"
+			id!="todo-{unique}"
 			)
 			.grid.grid-cols-4.w-full.mb-1
-				CellId
+				//-CellIndex
 				//- CellNext
 				//- CellDue
 				//- CellDescription
@@ -56,21 +68,20 @@ Here's some documentation for this component.
 
 		//-large
 		+else
-			.gap-1.w-full.block.mb-1(
-				class!="sm:gap-1 sm:w-full sm:grid",
+			button.gap-1.w-full.block.mb-1(
+				class!="sm:gap-1 sm:w-full sm:grid focus:ring:none",
 				data-table-row,
-				disabled,
-				id!="todo-{todo.id}"
+				id!="todo-{unique}"
 				style!="grid-template-columns: { $grid_template_columns };"
 				)
 
-				CellId
-				CellNext
-				CellDue
-				CellDescription
-				CellRating(data_handle="priority")
-				CellRating(data_handle="friction")
-				CellRating(data_handle="joy")
-				CellTags
-				CellComplete
+				CellIndex(classes="text-[12px]")
+				CellNext(classes="text-[18px]")
+				CellDue(classes="text-[14px]")
+				CellDescription(classes="text-[14px]")
+				CellRating(data_handle="priority" classes="text-[14px]")
+				CellRating(data_handle="friction" classes="text-[14px]")
+				CellRating(data_handle="joy" classes="text-[14px]")
+				CellTags(classes="text-[14px]")
+				//- CellComplete
 </template>

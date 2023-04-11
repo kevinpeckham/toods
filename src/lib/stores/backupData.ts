@@ -9,7 +9,7 @@ import type { Todo, TodoConstructor } from "$types/todoTypes";
 const backup_3 = `
 [
   {
-      "id": 0,
+      "index": 0,
       "completed": false,
       "friction": 3,
       "created":"2023-04-05T17:04:58.271Z",
@@ -24,7 +24,7 @@ const backup_3 = `
       "priority": 3
   },
   {
-      "id": 1,
+      "index": 1,
       "completed": false,
       "friction": 2,
       "created":"2023-04-05T17:04:58.271Z",
@@ -39,7 +39,7 @@ const backup_3 = `
       "priority": 3
   },
   {
-      "id": 2,
+      "index": 2,
       "completed": true,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -54,7 +54,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 3,
+      "index": 3,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -69,7 +69,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 4,
+      "index": 4,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -84,7 +84,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 5,
+      "index": 5,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -100,7 +100,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 6,
+      "index": 6,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -115,7 +115,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 7,
+      "index": 7,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -130,7 +130,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 8,
+      "index": 8,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -145,7 +145,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 9,
+      "index": 9,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -160,7 +160,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 10,
+      "index": 10,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -176,7 +176,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 11,
+      "index": 11,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -192,7 +192,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 12,
+      "index": 12,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -208,7 +208,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 13,
+      "index": 13,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -224,7 +224,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 14,
+      "index": 14,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -240,7 +240,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 15,
+      "index": 15,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -256,7 +256,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 16,
+      "index": 16,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -272,7 +272,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 17,
+      "index": 17,
       "completed": true,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -285,7 +285,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 18,
+      "index": 18,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -301,7 +301,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 19,
+      "index": 19,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -317,7 +317,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 20,
+      "index": 20,
       "completed": true,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -330,7 +330,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 21,
+      "index": 21,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -346,7 +346,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 22,
+      "index": 22,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -362,7 +362,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 23,
+      "index": 23,
       "completed": true,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -375,7 +375,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 24,
+      "index": 24,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -391,7 +391,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 25,
+      "index": 25,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -406,7 +406,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 26,
+      "index": 26,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -421,7 +421,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 27,
+      "index": 27,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -436,7 +436,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 28,
+      "index": 28,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -451,7 +451,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 29,
+      "index": 29,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -467,7 +467,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 30,
+      "index": 30,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -483,7 +483,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 31,
+      "index": 31,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -499,7 +499,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 32,
+      "index": 32,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -515,7 +515,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 33,
+      "index": 33,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -531,7 +531,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 34,
+      "index": 34,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -546,7 +546,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 35,
+      "index": 35,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -562,7 +562,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 36,
+      "index": 36,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -578,7 +578,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 37,
+      "index": 37,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -594,7 +594,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 38,
+      "index": 38,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -610,7 +610,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 39,
+      "index": 39,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -626,7 +626,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 40,
+      "index": 40,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -642,7 +642,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 41,
+      "index": 41,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -658,7 +658,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 42,
+      "index": 42,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -671,7 +671,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 43,
+      "index": 43,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -687,7 +687,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 44,
+      "index": 44,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -703,7 +703,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 45,
+      "index": 45,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -719,7 +719,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 46,
+      "index": 46,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -735,7 +735,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 47,
+      "index": 47,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -751,7 +751,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 48,
+      "index": 48,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -767,7 +767,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 49,
+      "index": 49,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -783,7 +783,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 50,
+      "index": 50,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -799,7 +799,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 51,
+      "index": 51,
       "completed": false,
       "friction": 2,
       "created":"2023-04-05T17:04:58.271Z",
@@ -815,7 +815,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 52,
+      "index": 52,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -831,7 +831,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 53,
+      "index": 53,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -847,7 +847,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 54,
+      "index": 54,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -863,7 +863,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 55,
+      "index": 55,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -879,7 +879,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 56,
+      "index": 56,
       "completed": false,
       "friction": 3,
       "created":"2023-04-05T17:04:58.271Z",
@@ -895,7 +895,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 57,
+      "index": 57,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -911,7 +911,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 58,
+      "index": 58,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -927,7 +927,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 59,
+      "index": 59,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -943,7 +943,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 60,
+      "index": 60,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -958,7 +958,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 61,
+      "index": 61,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -974,7 +974,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 62,
+      "index": 62,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -987,7 +987,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 63,
+      "index": 63,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
@@ -1000,7 +1000,7 @@ const backup_3 = `
       "priority": 0
   },
   {
-      "id": 64,
+      "index": 64,
       "completed": false,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",

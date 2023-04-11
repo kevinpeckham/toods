@@ -7,6 +7,23 @@
 
 	// store
 	import { window_w, window_h } from "$stores/windowStore";
+
+	// types
+	import type { Todo } from "$types/todo";
+
+	// local type
+	interface Data {
+		content: {
+			todos: Todo[];
+		};
+	}
+
+	// props
+	export let data: Data;
+
+	$: {
+		// console.log(data.content.todos);
+	}
 </script>
 
 <template lang="pug">

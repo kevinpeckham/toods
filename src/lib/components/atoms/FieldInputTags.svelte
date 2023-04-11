@@ -14,77 +14,85 @@ consumes "data_handle" from context api
 	// context api
 	import { getContext } from "svelte";
 
-	// constants from context api
-	const todo_id = getContext("todo_id") as number;
-	const data_handle = getContext("data_handle") as string;
+	// stores
+	import { todos } from "$stores/todosStore";
+
+	// utils
+	// string utils
+	import {
+		replaceSpacesWithCommas,
+		removeFinalComma,
+		removeInitialComma,
+		removeRepeatedCommas,
+		removeUpperCaseLetters,
+		removeUnlistedSpecialCharacters,
+	} from "$lib/utils/stringUtils";
+	// array utils
+	import {
+		stringArrayToString,
+		convertedAndScrubbedArray,
+	} from "$lib/utils/arrayUtils";
+	// table utils
+	import { goDownOneRow } from "$lib/utils/tableUtils";
+
+	// types
+	import type { Writable } from "svelte/store";
+	import type { Todo } from "$types/todoTypes";
 
 	// props
 	export let classes = "";
 	export let max_length = 120;
 
-	// stores
-	import { todos } from "$stores/todosStore";
-	import { construct_svelte_component } from "svelte/internal";
+	// refs
+	let input: HTMLInputElement;
 
-	// pulling initial value from store
-	const initialArrayValue = getInitialArrayValue();
-	let value: string[] = initialArrayValue;
-	let tagString = stringArrayToString(value);
+	// constants from context api
+	const data_handle = getContext("data_handle") as string;
+	const todo_initial = getContext("todo_initial") as Todo;
+	const todo_editable = getContext("todo_editable") as Todo;
 
-	function replaceSpacesWithCommas(str: string) {
-		return str.replace(/\s/g, ",");
+	// ** value
+	// value is bound to the input element
+	// when the user types in text, value is updated
+	const initial = todo_initial[data_handle] as string[];
+	let value: string;
+	value = stringArrayToString(initial);
+
+	// as value changes, value is formatted and filtered
+	$: {
+		const formatted1 = replaceSpacesWithCommas(value);
+		const formatted2 = removeInitialComma(formatted1);
+		const formatted3 = removeRepeatedCommas(formatted2);
+		const formatted4 = removeUpperCaseLetters(formatted3);
+		const formatted5 = removeUnlistedSpecialCharacters(formatted4, [":", " "]);
+
+		value = formatted5;
 	}
 
-	function removeRepeatedCommas(str: string) {
-		return str.replace(/,{2,}/g, ",");
-	}
-	function removeInitialComma(str: string) {
-		if (str[0] === ",") {
-			return str.slice(1);
-		} else {
-			return str;
+	// ** array
+	// array is derived from value
+	// when value changes, array is updated
+	let array: string[];
+	$: array = convertedAndScrubbedArray(value);
+
+	// ** updating the store
+	// store gets updated when array changes
+	$: {
+		if (todo_editable[data_handle] !== array) {
+			todo_editable[data_handle] = array;
+			$todos = $todos;
 		}
 	}
+
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
+		const target = event.target as HTMLInputElement;
+		let tagString = target.value;
 
-		// if space  or comma then prevent default and add comma
-		if (key === " " || key === ",") {
+		if (key === "Enter") {
 			event.preventDefault();
-
-			// if last character is not a comma, add one
-			const processed1 =
-				tagString[tagString.length - 1] !== "," ? tagString + "," : tagString;
-
-			// remove repeated commas
-			const processed2 = removeRepeatedCommas(processed1);
-
-			// remove initial comma
-			const processed3 = removeInitialComma(processed2);
-
-			// update tagString if it has changed
-			if (processed3 !== tagString) {
-				tagString = processed3;
-			}
-		}
-		// if it is shift + 3 then allow it
-		else if (key === "#" && event.shiftKey) {
-			event.preventDefault();
-		}
-		// if it is an allowed character A-Z or a-z or 0-9 or ':' or "-" or "_"
-		// then allow it
-		else if (
-			(key >= "a" && key <= "z") ||
-			// (key >= "A" && key <= "Z") ||
-			(key >= "0" && key <= "9") ||
-			key === ":" ||
-			key === "-" ||
-			key === "_"
-			// key === "@"
-		) {
-			return;
-		} else if (key === "Enter") {
-			event.preventDefault();
+			// advance to next cell
+			goDownOneRow(input);
 		} else if (key === "Tab") {
 			// event.preventDefault();
 			// advance to next cell
@@ -93,74 +101,9 @@ consumes "data_handle" from context api
 		}
 	}
 
-	function onChange(event: KeyboardEvent) {
-		// remove comma from end of tagString if it exists
-		if (tagString[tagString.length - 1] === ",") {
-			tagString = tagString.slice(0, -1);
-		}
-		// convert tagString to lowercase
-		tagString = tagString.toLowerCase();
-	}
-
-	function onPaste(event: ClipboardEvent) {
-		// get pasted text
-		const pastedText = event.clipboardData?.getData("text");
-
-		if (!pastedText) {
-			return;
-		}
-
-		event.preventDefault();
-
-		// remove double-spaces
-		const processed0 = pastedText.replace(/\s\s+/g, " ");
-
-		// remove leading and trailing spaces
-		const processed1 = processed0.trim();
-
-		// replace spaces with commas
-		const processed2 = replaceSpacesWithCommas(processed1);
-
-		// remove repeated commas
-		const processed3 = removeRepeatedCommas(processed2);
-
-		// remove initial comma
-		const processed4 = removeInitialComma(processed3);
-
-		// update tagString if it has changed
-		if (processed4 !== tagString) {
-			tagString = processed4;
-		}
-	}
-
-	// update value as tagString changes
-	$: {
-		if (tagString.length >= 1) {
-			let processed: string = tagString;
-
-			// split string by comma
-			const split = tagString.split(",");
-
-			// remove empty strings
-			const filtered = split.filter((item) => item.length > 0);
-
-			// lowercase all strings
-			const lowercased = filtered.map((item) => item.toLowerCase());
-
-			// remove #
-			const noHash = lowercased.map((item) => item.replace("#", ""));
-
-			// save value
-			if (value != split) value = noHash;
-		} else {
-			value = [];
-		}
-	}
-	// as value changes, update store
-	$: {
-		if (value.length >= 0 && $todos[todo_id][data_handle] !== value) {
-			$todos[todo_id][data_handle] = value;
-		}
+	function onBlur(event: KeyboardEvent) {
+		const scrubbed1 = removeFinalComma(value);
+		if (value != scrubbed1) value = scrubbed1;
 	}
 
 	// style classes
@@ -179,38 +122,22 @@ consumes "data_handle" from context api
 	pointer-events-auto
 	px-2
 	`;
-
-	// functions
-	function getInitialArrayValue() {
-		const emptyStringArray: string[] = [];
-		// get value from store
-		const storeVal = $todos[todo_id][data_handle] as string[];
-		// prove that it's a string[] & valid
-		const valid = storeVal ? storeVal : emptyStringArray;
-
-		// deep copy the string
-		const deep = valid
-			? (JSON.parse(JSON.stringify(valid)) as string[])
-			: emptyStringArray;
-		return deep;
-	}
-	function stringArrayToString(stringArray: string[]) {
-		return stringArray.join(",");
-	}
 </script>
 
 <template lang="pug">
 	input.field-input.peer(
 		class!="{default_classes} { classes }",
 		autocomplete="off",
-		bind:value!="{ tagString }",
+		bind:this!="{ input }",
+		bind:value!="{ value }",
 		data-cell-input="",
 		data-field!="{ data_handle }",
 		max-length!="{ max_length }",
-		on:blur!="{ onChange }",
+		on:blur!="{ onBlur }",
 		on:keydown!="{ onKeydown }",
-		on:paste!="{ onPaste }",
 		spellcheck="false",
 		type!="text"
 	)
+
+	//- 	,
 </template>

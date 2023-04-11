@@ -1,12 +1,12 @@
 <!--
 @component
-Component for text input
+Input field for todo description
 #### *context:*
-consumes "todo_id" from context api
 consumes "data_handle" from context api
+consumes "todo_initial" from context api
+consumes "todo_editable" from context api
 #### *props:*
 * prop - classes: string // default: ""
-* prop - max_length?: number	// default: 120
 #### *elements:*
 * .field-input: input
 -->
@@ -14,47 +14,80 @@ consumes "data_handle" from context api
 	// context api
 	import { getContext } from "svelte";
 
-	// constants from context api
-	const todo_id = getContext("todo_id") as number;
-	const data_handle = getContext("data_handle") as string;
-
-	// props
-	export let classes = "";
-
 	// stores & settings
 	import { todos } from "$stores/todosStore";
 	import { description_max_length } from "$stores/settings";
 
-	// pulling initial value from store
-	const initialStringValue = getInitialTextValue();
-	let value: string = initialStringValue;
+	// types
+	import type { Todo } from "$types/todoTypes";
 
-	// enforce limits to value
+	// refs
+	let input: HTMLInputElement;
+
+	// props
+	export let classes = "";
+
+	// constants from context api
+	const data_handle = getContext("data_handle") as string;
+	const todo_initial = getContext("todo_initial") as Todo;
+	const todo_editable = getContext("todo_editable") as Todo;
+
+	// functions
+	import {
+		getFieldNextField,
+		goDownOneRow,
+		goUpOneRow,
+	} from "$utils/tableUtils";
+
+	// ** value
+	// value is bound to the input element
+	// when the user types in text, value is updated
+	// when value is updated, todo_editable is updated, which updates the store
+	const initial = todo_initial[data_handle];
+	let value: string = initial;
+
+	// $: value = initial;
+
+	// // enforce limits to length
 	$: {
 		if (value && value.length > $description_max_length) {
 			value = value.slice(0, $description_max_length);
+			value = value;
 		}
 	}
 
 	// do not allow certain characters
 	$: {
 		// do not allow ticks
-		if (value && value.includes("`")) {
-			value = value.replace(/`/g, "");
+		if (value.includes("`")) {
+			value = value.replace("`", "");
 		}
 	}
 
-	// keep store updated as value changes
 	$: {
-		if (
-			value !== null &&
-			value !== undefined &&
-			value.length < $description_max_length &&
-			!value.includes("`") &&
-			$todos &&
-			$todos[todo_id][data_handle] !== value
-		) {
-			$todos[todo_id][data_handle] = value;
+		if (todo_editable[data_handle] != value) {
+			todo_editable[data_handle] = value;
+			$todos = $todos;
+		}
+	}
+
+	function onKeydown(event: KeyboardEvent) {
+		const key = event.key;
+
+		//- key is enter; accept value + advance to next cell
+		if (key == "Enter" || key == "ArrowDown") {
+			event.preventDefault();
+			goDownOneRow(input);
+			// const nextField = getFieldNextField(input);
+			// if (nextField) nextField.focus();
+			return;
+		}
+		if (key == "ArrowUp") {
+			event.preventDefault();
+			goUpOneRow(input);
+			// const nextField = getFieldNextField(input);
+			// if (nextField) nextField.focus();
+			return;
 		}
 	}
 
@@ -75,29 +108,17 @@ consumes "data_handle" from context api
 	pointer-events-auto
 	px-2
 	`;
-
-	// functions
-	function getInitialTextValue() {
-		// get value from store
-		const storeVal = $todos[todo_id][data_handle];
-		// prove that it's a string & valid
-		const valid = storeVal && typeof storeVal == "string" ? storeVal : "";
-		// deep copy the string
-		const deep = valid ? (JSON.parse(JSON.stringify(valid)) as string) : "";
-		// prove that it's a string & valid
-		const result = deep && typeof deep == "string" ? deep : "";
-
-		return result;
-	}
 </script>
 
 <template lang="pug">
 	input.field-input.peer(
 		class!="{default_classes} { classes }",
+		bind:this!="{ input }",
 		bind:value!="{ value }",
 		data-cell-input="",
 		data-field!="{ data_handle }",
 		max-length!="{ $description_max_length }",
+		on:keydown!="{ onKeydown }",
 		type!="text"
 	)
 </template>

@@ -4,6 +4,19 @@
 	import Footer from "$atoms/Footer.svelte";
 	import PreFooter from "$atoms/PreFooter.svelte";
 	import TodoList from "$molecules/TodoList.svelte";
+
+	import { todos } from "$stores/todosStore";
+
+	// testing mutation via content api
+	import {
+		getAllIncompleteTodos,
+		getTodoFromHygraph,
+		upsertTodo,
+	} from "$utils/graphQLUtils";
+	// getAllIncompleteTodos();
+	// getTodo("lg3po561-zpttps");
+	// upsertTodo($todos[0]);
+	// getTodoFromHygraph($todos[0]);
 </script>
 
 <template lang="pug">

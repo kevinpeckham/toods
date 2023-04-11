@@ -1,4 +1,4 @@
-import { id_counter } from "$stores/todosStore";
+import { index_counter } from "$stores/todosStore";
 import { get } from "svelte/store";
 
 // regex for matching a date string or empty string
@@ -18,6 +18,7 @@ export interface TodoConstructor {
 	description?: string | null;
 	due?: string | null;
 	friction?: number;
+	index?: number;
 	id?: number;
 	joy?: number;
 	next?: boolean;
@@ -29,7 +30,8 @@ export class Todo {
 	// add index signature
 	//eslint-disable-next-line
 	[key: string]: any;
-	id: number;
+	id: number | null;
+	index: number;
 	completed: boolean;
 	created: string;
 	description: string | null;
@@ -45,7 +47,8 @@ export class Todo {
 	constructor(o?: TodoConstructor) {
 		const dateAndTimeString = new Date().toISOString();
 		const justDateString = new Date().toISOString().split("T")[0];
-		this.id = get(id_counter) as number;
+		this.id = null;
+		this.index = get(index_counter) as number;
 		this.completed = false;
 		this.created = o?.created ? o.created : justDateString;
 		this.description = o && o.description ? o.description : "";

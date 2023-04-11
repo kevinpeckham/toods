@@ -30,9 +30,10 @@ if (stored) {
 export const todos = writable(todosArray);
 
 // store to keep track of todo ids
-export const id_counter = derived(todos, ($todos) => {
-	const id = $todos.length > 0 ? $todos[$todos.length - 1].id : 0;
-	return id + 1;
+export const index_counter = derived(todos, ($todos) => {
+	const index =
+		$todos.length > 0 ? $todos[$todos.length - 1].index : $todos.length - 1;
+	return index + 1;
 });
 
 //- derived store that returns a JSON string of the todos array -- mostly for testing
@@ -46,8 +47,8 @@ todos.subscribe((todos) => {
 });
 
 //- sync id_counter with local storage
-id_counter.subscribe((id) => {
+index_counter.subscribe((index) => {
 	if (browser && writeToLocalStorage) {
-		localStorage.setItem("id_counter", JSON.stringify(id));
+		localStorage.setItem("id_counter", JSON.stringify(index));
 	}
 });

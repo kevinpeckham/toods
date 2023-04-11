@@ -14,30 +14,32 @@ consumes "data_handle" from context api
 	// context api
 	import { getContext } from "svelte";
 
-	// constants from context api
-	const todo_id = getContext("todo_id") as number;
-	const data_handle = getContext("data_handle") as string;
+	// stores
+	import { todos } from "$stores/todosStore";
+
+	// types
+	import type { Todo } from "$types/todoTypes";
 
 	// props
 	export let classes = "";
 
-	// stores
-	import { todos } from "$stores/todosStore";
+	// constants from context api
+	const data_handle = getContext("data_handle") as string;
+	const todo_initial = getContext("todo_initial") as Todo;
+	const todo_editable = getContext("todo_editable") as Todo;
 
-	// pulling initial value from store
-	const initialValue = getInitialValue() as boolean;
-	let value: boolean = initialValue;
+	// ** value
+	// value is bound to the input element
+	// when the user toggles the checkbox, value is updated
+	// when value is updated, todo_editable is updated, which updates the store
+	const initial = todo_initial[data_handle];
+	let value: boolean;
+	value = initial;
 
-	// update store when value changes
 	$: {
-		if (
-			value != null &&
-			value != undefined &&
-			typeof value === "boolean" &&
-			$todos &&
-			$todos[todo_id][data_handle] !== value
-		) {
-			$todos[todo_id][data_handle] = value;
+		if (todo_editable[data_handle] != value) {
+			todo_editable[data_handle] = value;
+			$todos = $todos;
 		}
 	}
 
@@ -53,25 +55,6 @@ consumes "data_handle" from context api
 	group-focus-within:outline
 	pointer-events-auto
 	`;
-
-	// functions
-	function getInitialValue() {
-		// get value from store
-		const value = $todos[todo_id][data_handle];
-		// prove that value is boolean and valid
-		const valid =
-			value != undefined && value != null && typeof value == "boolean"
-				? value
-				: false;
-		// deep copy the boolean
-		const deep = valid ? JSON.parse(JSON.stringify(valid)) : false;
-		// prove that deep copy is boolean and valid
-		const result =
-			deep != undefined && deep != null && typeof deep == "boolean"
-				? deep
-				: false;
-		return result;
-	}
 </script>
 
 <template lang="pug">

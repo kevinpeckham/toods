@@ -11,38 +11,27 @@ consumes "todo_id" from context api
 	// context
 	import { setContext, getContext } from "svelte";
 
-	// get todo_id
-	const todo_id = getContext("todo_id");
-
 	// components
 	import FieldContainer from "$atoms/FieldContainer.svelte";
 	import FieldInputRating from "$atoms/FieldInputRating.svelte";
 	import FieldDisplayRating from "$atoms/FieldDisplayRating.svelte";
 
 	// stores
-	import { columns } from "$stores/columnsStore";
-
-	// types
-	import type { Column } from "$types/columnTypes";
+	import { symbols } from "$stores/settings";
 
 	// props
 	export let data_handle: string = "";
+	export let classes: string = "";
 
-	// find column from data handle
-	const colLookup = $columns.find((col: Column) => col.handle === data_handle);
-	const column = data_handle && colLookup != undefined ? colLookup : null;
+	const symbol = $symbols[data_handle] as string;
 
-	// find symbol from column
-	const symbol = column?.symbol ? column.symbol : "*";
-
-	// pass down data handle and column via context
-	setContext("symbol", symbol);
+	// set data_handle
 	setContext("data_handle", data_handle);
+	setContext("symbol", symbol);
 </script>
 
 <template lang="pug">
-	+if('todo_id >= -1')
-		FieldContainer
-			FieldInputRating(classes="!opacity-100")
-			//-FieldDisplayRating
+	FieldContainer(classes!="{ classes }")
+		FieldInputRating(classes="")
+		FieldDisplayRating
 </template>

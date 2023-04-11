@@ -1,6 +1,6 @@
 <!--
 @component
-Field display text component part of a text cell component.
+Display-only layer for Tags field.
 #### *context:*
 consumes "todo_id" from context api
 consumes "data_handle" from context api
@@ -13,19 +13,23 @@ consumes "data_handle" from context api
 	// context api
 	import { getContext } from "svelte";
 
-	// constants from context api
-	$: todo_id = getContext("todo_id") as number;
-	$: data_handle = getContext("data_handle") as string;
+	// stores & settings
+	import { todos } from "$stores/todosStore";
+
+	// types
+	import type { Writable } from "svelte/store";
+	import type { Todo } from "$types/todoTypes";
 
 	// props
 	export let classes = "";
 
-	// stores
-	import { todos } from "$stores/todosStore";
+	// constants from context api
+	const todo_readable = getContext("todo_readable") as Writable<Todo>;
+	const data_handle = getContext("data_handle") as string;
 
-	// text value
-	let value: string;
-	$: value = $todos[todo_id][data_handle] as string;
+	// // text value
+	// let value: string;
+	// $: value = $todos[todo_id][data_handle] as string;
 
 	// style
 	const default_classes = `
@@ -41,5 +45,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { value }
+	.field-display(class!="{default_classes} { classes }") { $todo_readable[data_handle] }
 </template>

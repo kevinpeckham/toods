@@ -7,11 +7,19 @@ export const priority_symbol = writable("+");
 export const symbols = derived(
 	[friction_symbol, joy_symbol, priority_symbol],
 	([$friction_symbol, $joy_symbol, $priority_symbol]) => {
-		return {
+		interface Symbols {
+			// index signature
+			[key: string]: string;
+			friction: string;
+			joy: string;
+			priority: string;
+		}
+		const obj: Symbols = {
 			friction: $friction_symbol,
 			joy: $joy_symbol,
 			priority: $priority_symbol,
 		};
+		return obj;
 	},
 );
 

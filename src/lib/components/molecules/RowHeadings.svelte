@@ -9,7 +9,7 @@ Here's some documentation for this component.
 	// components
 	import CellComplete from "$molecules/CellComplete.svelte";
 	import CellNext from "$molecules/CellNext.svelte";
-	import CellId from "$molecules/CellId.svelte";
+	import CellId from "$components/molecules/CellIndex.svelte";
 	import CellDue from "$molecules/CellDue.svelte";
 	import CellDescription from "$molecules/CellDescription.svelte";
 	import CellRating from "$molecules/CellRating.svelte";

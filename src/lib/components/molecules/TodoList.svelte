@@ -149,7 +149,7 @@ Here's some documentation for this component.
 				const lastRowDescription = lastRow.querySelector(
 					"[data-field=description]",
 				) as HTMLElement;
-				console.log(lastRowDescription);
+				// console.log(lastRowDescription);
 				lastRowDescription.focus();
 			}, 20);
 		}
@@ -195,11 +195,18 @@ Here's some documentation for this component.
 			class="overflow-y-scroll",
 			style="height: { $window_h - 220 }px"
 		)
+			//- iterate through all todos in the to-do store
 			+each('$todos as todo, todoIndex')
-				//- if todo is not completed
+				//- +const(unique = todo.unique)
 
-				+if('($filtered_todos.length == 0 || $filtered_todos.includes(todo.id)) && !todo.completed')
-					RowTodoItem(todo!="{ todo }")
+				//- display todos that meets these conditions
+				//- 1. if there are no filters, show all todos
+				//- 2. if there are filters, show only todos that match the filters
+				//- 3. if the todo is completed, don't show it
+				+if('($filtered_todos.length == 0 || $filtered_todos.includes(todo.index)) && !todo.completed')
+					RowTodoItem(
+						unique!="{ todo.unique }"
+						)
 
 	//- add todo button
 	button.w-6.h-6.flex.justify-center.items-center.ml-1.mt-4(
