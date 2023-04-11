@@ -16,8 +16,10 @@ consumes "symbol" from context api
 
 	// stores
 	import { todos } from "$stores/todosStore";
-	import { columns } from "$stores/columnsStore";
-	import type { Column } from "$types/columnTypes";
+
+	// utils
+	import { traverseTable } from "$utils/tableUtils";
+	import { advanceCursorToEndOfTextInput } from "$utils/inputUtils";
 
 	// types
 	import type { Todo } from "$types/todoTypes";
@@ -28,18 +30,19 @@ consumes "symbol" from context api
 	// refs
 	let input: HTMLInputElement;
 
-	// functions
-	import { getFieldNextField } from "$utils/tableUtils";
-
 	// constants
 	const data_handle = getContext("data_handle") as string;
 	const todo_initial = getContext("todo_initial") as Todo;
 	const todo_editable = getContext("todo_editable") as Todo;
 	const symbol = getContext("symbol") as string;
-	// initial value
 
-	// set input string value
-	// input_string_value = initialNumberValue.toString();
+	// variables
+	let value_string: string;
+	let value_num: number;
+	let editable: boolean = false;
+
+	// functions
+	import { getFieldNextField } from "$utils/tableUtils";
 
 	// * variables
 
@@ -47,15 +50,12 @@ consumes "symbol" from context api
 	// value_string is bound to the input element
 	// when value_string is updated, value_num is updated
 	const initialStringValue = todo_initial[data_handle].toString();
-	let value_string: string;
 	value_string = initialStringValue ? initialStringValue : 0;
 
 	// ** value_num
 	// value_num is reactively derived from value_string
 	// when value_string is updated, value_num is updated
-	let value_num: number;
 	$: value_num = Number(value_string) != undefined ? Number(value_string) : -1;
-
 	// ** todo_editable and updating the $todos (store)
 	// todo_editable is a copy of the todo in the store
 	// when value_num is updated, todo_editable is updated, which updates the store
@@ -73,13 +73,13 @@ consumes "symbol" from context api
 	w-full
 	py-1
 	opacity-0
+	data-[editable]:opacity-100
 	leading-none
 	outline-transparent
 	select-all
 	selection:bg-accent
 	selection:text-primary
 	text-center
-	group-focus-within:opacity-100
 	group-focus-within:outline
 	pointer-events-auto
 	`;
@@ -90,93 +90,104 @@ consumes "symbol" from context api
 		const new_value = value_num + 1;
 		if (new_value <= 3) {
 			value_string = new_value.toString();
-			console.log(value_string);
 		} else value_string = "0";
 	}
 	function decrementRating() {
 		const new_value = value_num - 1;
-		if (new_value < 0) {
+		if (value_num <= 0) {
 			value_string = "3";
-		} else value_string = new_value.toString();
+		} else value_string = (value_num - 1).toString();
 	}
 
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
-
-		const allowed_keys = [
-			"Tab",
-			"ArrowUp",
-			"ArrowDown",
-			"ArrowLeft",
-			"ArrowRight",
-			"Backspace",
-			"Delete",
-			"Enter",
-			"Escape",
-			"Home",
-			"End",
-			"PageUp",
-			"PageDown",
-		];
+		const Space = " ";
 		const allowedNumbers = ["0", "1", "2", "3"];
 
-		//-- if key is an allowed number, replace value with new value
-		if (allowedNumbers.includes(key)) {
-			event.preventDefault();
-			if (value_string !== key) value_string = key;
-			return;
+		interface Actions {
+			[key: string]: () => void;
 		}
-		//-- if key matches up arrow
-		else if (key === "ArrowUp") {
+		const action: Actions = {
+			ArrowDown() {
+				if (!editable) traverseTable.down(input);
+				else {
+					event.preventDefault();
+					decrementRating();
+				}
+			},
+			ArrowLeft() {
+				if (!editable) traverseTable.left(input);
+				return;
+			},
+			ArrowRight() {
+				if (!editable) traverseTable.right(input);
+				return;
+			},
+			ArrowUp() {
+				if (!editable) traverseTable.up(input);
+				else {
+					event.preventDefault();
+					incrementRating();
+				}
+			},
+			Enter() {
+				// if active but not editable, make editable
+				if (editable) {
+					traverseTable.down(input);
+				} else {
+					editable = true;
+					event.preventDefault();
+				}
+			},
+			Escape() {
+				if (editable) editable = false;
+			},
+			Space() {
+				event.preventDefault();
+				if (editable) incrementRating();
+				else {
+					editable = true;
+				}
+			},
+			Tab() {
+				if (!event.shiftKey) {
+					traverseTable.right(input);
+				} else traverseTable.left(input);
+				event.preventDefault();
+			},
+		};
+
+		// "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter", "Escape", "Tab"
+		if (action[key]) action[key]();
+		// space bar
+		else if (key == " ") action["Space"]();
+		// allowed numbers
+		else if (allowedNumbers.includes(key)) {
 			event.preventDefault();
-			incrementRating();
-			return;
-		}
-		//- if key matches down arrow
-		else if (key === "ArrowDown") {
-			event.preventDefault();
-			decrementRating();
-			return;
-		}
-		//- else if key is tab
-		else if (key === "Tab") {
-			// allow default
+			if (value_string !== key) {
+				value_string = key;
+			}
 			return;
 		}
 
-		//- key is escape
-		else if (key == "Escape") {
+		// disallowed numbers
+		else if (key.match(/^[4-9]$/)) {
 			event.preventDefault();
-			input.blur();
-			const row = input.closest("[data-table-row]") as HTMLDivElement;
-			row.focus();
-		}
-
-		//- key is enter; accept value + advance to next cell
-		else if (key == "Enter") {
-			event.preventDefault();
-			const nextField = getFieldNextField(input);
-			if (nextField) nextField.focus();
+			// value_string = "0";
 			return;
 		}
 
-		// - key is symbol
-		else if (key === symbol) {
-			event.preventDefault();
-			incrementRating();
-			return;
-		}
-
-		//- not an allowed key
-		else if (!allowed_keys.includes(key)) {
-			event.preventDefault();
-			return;
-		}
-
-		//- remaining keys are allowed
+		// anything else
 		else {
 			return;
 		}
+	}
+
+	function onBlur(event: KeyboardEvent) {
+		if (editable) editable = false;
+	}
+	function onMousedown(event: MouseEvent) {
+		if (!editable) editable = true;
 	}
 </script>
 
@@ -186,11 +197,13 @@ consumes "symbol" from context api
 		bind:this!="{ input }",
 		bind:value!="{ value_string }",
 		data-cell-input="",
+		data-editable!="{ editable ? '' : null }",
 		data-field!="{ data_handle }",
 		max="3",
 		min="0",
-		on:focus!="{ input.select() }",
+		on:blur!="{ onBlur }",
 		on:keydown!="{ onKeydown }",
+		on:mousedown!="{ onMousedown }",
 		type!="number"
 	)
 </template>

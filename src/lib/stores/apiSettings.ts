@@ -1,5 +1,5 @@
 // cspell: disable-next-line
-export const googleApiKey = `&key=AIzaSyAcHhgDSUQjmPQGEGN3oyvgfY8hp2lWvuo`;
+
 export const graphCMSEndpoint =
 	"https://api-us-east-1.graphcms.com/v2/cl3d0jmsh1ii301xn48wzbtc9/master";
 

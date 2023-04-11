@@ -28,6 +28,7 @@ consumes "todo_id" from context api
 
 	// classes
 	const default_classes = `
+		flex
 		bg-slate-50/10
 		data-[next]:bg-accent
 		data-[next]:text-primary

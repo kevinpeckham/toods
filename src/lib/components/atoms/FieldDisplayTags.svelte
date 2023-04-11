@@ -23,6 +23,15 @@ consumes "data_handle" from context api
 	// props
 	export let classes = "";
 
+	// refs
+	let div: HTMLDivElement;
+
+	// $: {
+	// 	if (div && div.previousElementSibling instanceof HTMLInputElement) {
+	// 		input = div.previousElementSibling;
+	// 	}
+	// }
+
 	// constants from context api
 	const todo_readable = getContext("todo_readable") as Writable<Todo>;
 	const data_handle = getContext("data_handle") as string;
@@ -39,11 +48,13 @@ consumes "data_handle" from context api
 		items-center
 		leading-none
 		pointer-events-none
-		group-focus-within:opacity-0
+		peer-data-[editable]:opacity-0
 		px-2
 	`;
+
+	// group-focus-within:opacity-0
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { $todo_readable[data_handle] }
+	.field-display(class!="{default_classes} { classes }", bind:this!="{ div }") { $todo_readable[data_handle] }
 </template>

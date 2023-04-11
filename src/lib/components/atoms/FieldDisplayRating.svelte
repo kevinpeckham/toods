@@ -51,7 +51,7 @@ consumes "symbol" from context api
 		items-center
 		leading-none
 		pointer-events-none
-		group-focus-within:opacity-0
+		peer-data-[editable]:opacity-0
 		w-full
 		${valueNum === 3 ? "bg-accent text-primary" : ""}
 	`;

@@ -7,9 +7,10 @@
 
 	// store
 	import { window_w, window_h } from "$stores/windowStore";
+	import { activeElement } from "$stores/activeElementStore";
 
 	// types
-	import type { Todo } from "$types/todo";
+	import type { Todo } from "$types/todoTypes";
 
 	// local type
 	interface Data {
@@ -21,15 +22,17 @@
 	// props
 	export let data: Data;
 
-	$: {
-		// console.log(data.content.todos);
+	function onFocusIn(event: FocusEvent) {
+		const target = event.target as HTMLElement;
+		$activeElement = target ? target : null;
 	}
 </script>
 
 <template lang="pug">
 	svelte:window(
 		bind:innerHeight!="{ $window_h }",
-		bind:innerWidth!="{ $window_w }"
+		bind:innerWidth!="{ $window_w }",
+		on:focusin!="{ onFocusIn }"
 	)
 	slot
 </template>

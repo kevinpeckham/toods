@@ -41,15 +41,9 @@ export function getFieldNextField(field: Field): Field {
 	return next_field;
 }
 
-export function getRowCells(row: Row): Cell[] {
-	const cells = Array.from(row?.children as HTMLCollectionOf<Cell>);
+export function getRowCells(row: Row): Cell[] | null {
+	const cells = Array.from(row?.children as HTMLCollectionOf<HTMLDivElement>);
 	return cells;
-}
-export function getCellPositionInRow(cell: Cell) {
-	const row = cell?.parentElement as Row;
-	const cells = getRowCells(row);
-	const index = cells.indexOf(cell);
-	return index;
 }
 
 export function goDownOneRow(field: Field) {
@@ -66,3 +60,22 @@ export function goUpOneRow(field: Field) {
 	const new_field = prev_row?.querySelector(`[data-field=${handle}]`) as Field;
 	if (new_field) new_field.focus();
 }
+export function goLeftOneCell(field: Field) {
+	const cell = getFieldCell(field) as Cell;
+	const prev_cell = cell?.previousElementSibling as Cell;
+	const new_field = prev_cell?.firstElementChild as Field;
+	if (new_field) new_field.focus();
+}
+export function goRightOneCell(field: Field) {
+	const cell = getFieldCell(field) as Cell;
+	const next_cell = cell?.nextElementSibling as Cell;
+	const new_field = next_cell?.firstElementChild as Field;
+	if (new_field) new_field.focus();
+}
+
+export const traverseTable = {
+	up: goUpOneRow,
+	down: goDownOneRow,
+	left: goLeftOneCell,
+	right: goRightOneCell,
+};
