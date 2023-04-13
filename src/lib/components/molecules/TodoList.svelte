@@ -191,7 +191,7 @@ Here's some documentation for this component.
 		RowHeadings
 
 		//- body
-		div(
+		div.grid.grid-cols-1.gap-y-1.overflow-visible.px-2.py-2(
 			class="overflow-y-scroll",
 			style="height: { $window_h - 220 }px"
 		)

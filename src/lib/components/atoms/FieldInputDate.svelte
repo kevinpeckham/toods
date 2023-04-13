@@ -16,6 +16,10 @@ consumes "todo_editable" from context api
 	// stores
 	import { todos } from "$stores/todosStore";
 
+	// utils
+	import { tableUtils } from "$utils/tableUtils";
+	import { inputUtils } from "$utils/inputUtils";
+
 	// types
 	import type { Todo } from "$types/todoTypes";
 
@@ -29,6 +33,10 @@ consumes "todo_editable" from context api
 	const data_handle = getContext("data_handle") as string;
 	const todo_initial = getContext("todo_initial") as Todo;
 	const todo_editable = getContext("todo_editable") as Todo;
+
+	// shorthand and other constants
+	const iu = inputUtils;
+	const tu = tableUtils;
 
 	// * variables
 	// pulling initial value from store
@@ -48,17 +56,60 @@ consumes "todo_editable" from context api
 	h-full
 	w-full
 	py-1
-	opacity-0
+	opacity-100
+	read-only:opacity-0
 	leading-none
 	outline-transparent
 	select-all
 	selection:bg-accent
 	selection:text-primary
 	text-center
-	group-focus-within:opacity-100
 	group-focus-within:outline
 	pointer-events-auto
 	`;
+
+	function onKeydown(event: KeyboardEvent) {
+		// constants
+		const e = event;
+		const key = e.key;
+		const pd = "preventDefault";
+		const allowedNumbers = ["0", "1", "2", "3"];
+
+		interface Actions {
+			[key: string]: () => void;
+		}
+
+		const action: Actions = {
+			ArrowUp: () => (input.readOnly ? tu.up(e, pd) : null),
+			ArrowDown: () => (input.readOnly ? tu.down(e, pd) : null),
+			ArrowRight: () => (input.readOnly ? tu.right(e, pd) : null),
+			ArrowLeft: () => (input.readOnly ? tu.left(e, pd) : null),
+			Enter: () => iu.toggleReadOnly(e),
+			Space: () => iu.removeReadOnly(e),
+			Escape() {
+				if (!input.readOnly) iu.setReadOnly(e);
+				else if (input.readOnly) tu.getRowFromField(input)?.focus();
+			},
+			Tab: () =>
+				input.readOnly ? (e.shiftKey ? tu.left(e, pd) : tu.right(e, pd)) : null,
+		};
+
+		// if an action key is pressed, run action
+		if (action[key]) {
+			e.stopPropagation();
+			action[key]();
+		}
+		// if a number key is pressed, make editable
+		const regexp = new RegExp(/^[0-9]$/);
+		if (regexp.test(key)) iu.removeReadOnly(e);
+	}
+
+	function onBlur(event: KeyboardEvent) {
+		iu.setReadOnly(event);
+	}
+	function onMousedown(event: MouseEvent) {
+		iu.removeReadOnly(event);
+	}
 </script>
 
 <template lang="pug">
@@ -70,6 +121,10 @@ consumes "todo_editable" from context api
 		data-field!="due",
 		max="2099-12-31",
 		min="2022-01-01",
+		on:blur|stopPropagation!="{ onBlur }",
+		on:keydown|stopPropagation!="{ onKeydown }",
+		on:mousedown|stopPropagation!="{ onMousedown }",
+		readonly!="true",
 		type!="date"
 	)
 </template>

@@ -37,8 +37,9 @@ consumes "data_handle" from context api
 		items-center
 		leading-none
 		truncate
+		opacity-0
 		pointer-events-none
-		peer-data-[editable]:opacity-0
+		peer-read-only:opacity-100
 		px-2
 		${data_handle == "id" && $breakpoint == "mobile" ? "text-11" : ""}
 	`;

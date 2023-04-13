@@ -17,7 +17,7 @@ Component for Index cell
 	// components
 	import FieldContainer from "$atoms/FieldContainer.svelte";
 	import FieldInputIndex from "$atoms/FieldInputIndex.svelte";
-	import FieldDisplayText from "$atoms/FieldDisplayText.svelte";
+	import FieldDisplayIndex from "$atoms/FieldDisplayIndex.svelte";
 
 	// props
 	export let classes = "";
@@ -25,6 +25,6 @@ Component for Index cell
 
 <template lang="pug">
 	FieldContainer(classes!="{ classes }")
-		FieldInputIndex
-		FieldDisplayText
+		//FieldInputIndex
+		FieldDisplayIndex
 </template>

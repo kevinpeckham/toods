@@ -46,12 +46,13 @@ consumes "symbol" from context api
 	$: default_classes = `
 		absolute
 		inset-0
+		opacity-0
 		flex
 		justify-center
 		items-center
 		leading-none
 		pointer-events-none
-		peer-data-[editable]:opacity-0
+		peer-read-only:opacity-100
 		w-full
 		${valueNum === 3 ? "bg-accent text-primary" : ""}
 	`;

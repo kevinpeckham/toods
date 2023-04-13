@@ -32,19 +32,19 @@ consumes "todo_editable" from context api
 	const todo_editable = getContext("todo_editable") as Todo;
 
 	// * variables
+	let value_string: string;
+	let value_num: number;
 
 	// ** value_string
 	// value_string is bound to the input element
 	// when the user types a number, value_string is updated
 	// when value_string is updated, value_num is updated
 	const initialStringValue = todo_initial[data_handle].toString();
-	let value_string: string;
 	value_string = initialStringValue;
 
 	// ** value_num
 	// value_num is reactively derived from value_string
-	// when value_string is updated, value_num is updated
-	let value_num: number;
+	// when value_string is updated, value_num is updated\
 	$: value_num = Number(value_string) != undefined ? Number(value_string) : -1;
 
 	// ** todo_editable and updating the $todos (store)
@@ -66,32 +66,40 @@ consumes "todo_editable" from context api
 	h-full
 	w-full
 	py-1
-	opacity-0
+	px-2
+	opacity-100
 	leading-none
 	outline-transparent
-	select-all
+	select-none
 	selection:bg-accent
 	selection:text-primary
-	text-center
-	${$breakpoint == "mobile" ? "" : "group-focus-within:opacity-100"}
+	text-right
 	group-focus-within:outline
-	pointer-events-auto
+	pointer-events-none
 	`;
 
 	const mobile_classes = `
 	!opacity-0`;
+
+	function onFocus(event: FocusEvent) {
+		// highlight row
+		const field = input as HTMLInputElement;
+		const row = field.closest("[data-table-row]") as HTMLDivElement;
+		row.focus();
+	}
 </script>
 
 <template lang="pug">
 	input.field-input.peer(
-		class!="{default_classes} { classes } { $breakpoint === 'mobile' ? mobile_classes : '' }",
+		class!="{default_classes} { classes }",
 		bind:this!="{ input }",
 		bind:value!="{ value_string }",
 		data-cell-input="",
 		data-field!="{ data_handle }",
-		on:focus!="{ input.select() }",
 		readonly="readonly",
+		tabindex="-1",
 		type!="text"
 	)
+	//- div(class!="{default_classes} { classes }", on:mousedown!="{ onMousedown }") { value_num }
 </template>
 <!-- 	readonly="readonly" -->

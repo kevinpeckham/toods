@@ -18,37 +18,13 @@ consumes "data_handle" from context api
 	import { todos } from "$stores/todosStore";
 
 	// utils
-	// string utils
-	import {
-		replaceSpacesWithCommas,
-		removeFinalComma,
-		removeInitialComma,
-		removeRepeatedCommas,
-		removeUpperCaseLetters,
-		removeUnlistedSpecialCharacters,
-	} from "$lib/utils/stringUtils";
-	// array utils
-	import {
-		stringArrayToString,
-		convertedAndScrubbedArray,
-	} from "$lib/utils/arrayUtils";
-
-	// table utils
-	import {
-		goDownOneRow,
-		goUpOneRow,
-		goLeftOneCell,
-		goRightOneCell,
-		traverseTable,
-	} from "$lib/utils/tableUtils";
-
-	// field utils
-	import { advanceCursorToEndOfTextInput } from "$utils/inputUtils";
+	import { stringUtils } from "$lib/utils/stringUtils";
+	import { arrayUtils } from "$lib/utils/arrayUtils";
+	import { tableUtils } from "$lib/utils/tableUtils";
+	import { inputUtils } from "$utils/inputUtils";
 
 	// types
-	import type { Writable } from "svelte/store";
 	import type { Todo } from "$types/todoTypes";
-	import { prevent_default } from "svelte/internal";
 
 	// props
 	export let classes = "";
@@ -62,34 +38,37 @@ consumes "data_handle" from context api
 	const todo_initial = getContext("todo_initial") as Todo;
 	const todo_editable = getContext("todo_editable") as Todo;
 
+	// shorthand and other constants
+	const au = arrayUtils;
+	const iu = inputUtils;
+	const su = stringUtils;
+	const tu = tableUtils;
+
 	// variables
 	let value: string;
 	let array: string[];
-	let editable: boolean;
-	editable = false;
 
 	// ** value
 	// value is bound to the input element
 	// when the user types in text, value is updated
 	const initial = todo_initial[data_handle] as string[];
 
-	value = stringArrayToString(initial);
+	value = au.stringArrayToString(initial);
 	// as value changes, value is formatted and filtered
 	$: {
-		const formatted1 = replaceSpacesWithCommas(value);
-		const formatted2 = removeInitialComma(formatted1);
-		const formatted3 = removeRepeatedCommas(formatted2);
-		const formatted4 = removeUpperCaseLetters(formatted3);
-		const formatted5 = removeUnlistedSpecialCharacters(formatted4, [":", " "]);
-
-		value = formatted5;
+		const f1 = su.replaceSpacesWithCommas(value);
+		const f2 = su.removeInitialComma(f1);
+		const f3 = su.removeRepeatedCommas(f2);
+		const f4 = su.removeUpperCaseLetters(f3);
+		const f5 = su.removeUnlistedSpecialCharacters(f4, [":", " "]);
+		value = f5;
 	}
 
 	// ** array
 	// array is derived from value
 	// when value changes, array is updated
+	$: array = au.convertedAndScrubbedArray(value);
 
-	$: array = convertedAndScrubbedArray(value);
 	// ** updating the store
 	// store gets updated when array changes
 	$: {
@@ -100,81 +79,82 @@ consumes "data_handle" from context api
 	}
 
 	function onKeydown(event: KeyboardEvent) {
-		const key = event.key;
+		// constants
+		const e = event;
+		const key = e.key;
+		const pd = "preventDefault";
+		const Space = " ";
 
 		interface Actions {
 			[key: string]: () => void;
 		}
+
 		const action: Actions = {
-			ArrowDown() {
-				traverseTable.down(input);
-			},
-			ArrowLeft() {
-				if (!editable) traverseTable.left(input);
-				else null;
-			},
-			ArrowRight() {
-				if (!editable) traverseTable.right(input);
-				else null;
-			},
-			ArrowUp() {
-				traverseTable.up(input);
-			},
+			ArrowUp: () => tu.up(e, pd),
+			ArrowDown: () => tu.down(e, pd),
+			ArrowRight: () => (input.readOnly ? tu.right(e, pd) : null),
+			ArrowLeft: () => (input.readOnly ? tu.left(e, pd) : null),
 			Enter() {
-				// if active but not editable, make editable
-				if (editable) {
-					traverseTable.down(input);
-					editable = false;
-				} else {
-					editable = true;
-					advanceCursorToEndOfTextInput(input, value);
-					prevent_default(event);
-				}
+				iu.toggleReadOnly(e);
+				iu.advanceCursorToEndOfTextInput(input, value);
+			},
+			Space() {
+				if (input.readOnly) iu.advanceCursorToEndOfTextInput(input, value);
+				iu.removeReadOnly(e);
 			},
 			Escape() {
-				editable = false;
+				if (!input.readOnly) iu.setReadOnly(e);
+				else if (input.readOnly) tu.getRowFromField(input)?.focus();
 			},
-			Tab() {
-				traverseTable.right(input);
-			},
+			Tab: () => (e.shiftKey ? tu.left(e, pd) : tu.right(e, pd)),
 		};
 
-		if (action[key]) action[key]();
+		if (action[key] && key !== Space) {
+			action[key]();
+			return;
+		} else if (key === Space) {
+			action["Space"]();
+		}
 
 		//- if key is a letter, number, or space, make editable
 		//- and move cursor to end of input
 
 		const regexp = new RegExp(/^[a-zA-Z0-9: ]$/);
 		if (regexp.test(key)) {
-			if (!editable) editable = true;
+			iu.removeReadOnly(event);
 		}
 	}
 
 	function onBlur(event: KeyboardEvent) {
-		const scrubbed1 = removeFinalComma(value);
-		if (value != scrubbed1) value = scrubbed1;
-		if (editable) editable = false;
+		const input = event.target as HTMLInputElement;
+		const scrubbed = su.removeFinalComma(value);
+		if (value != scrubbed) value = scrubbed;
+		iu.setReadOnly(event);
 	}
 
 	function onMousedown(event: MouseEvent) {
-		if (!editable) editable = true;
+		iu.removeReadOnly(event);
+	}
+
+	function onFocus(event: MouseEvent) {
+		iu.advanceCursorToEndOfTextInput(input, value);
 	}
 
 	// style classes
 	$: default_classes = `
 	bg-transparent
+	group-focus-within:outline
 	h-full
-	w-full
-	py-1
 	leading-none
 	outline-transparent
-	selection:bg-accent
-	selection:text-primary
-	opacity-0
-	data-[editable]:opacity-100
-	group-focus-within:outline
+	opacity-100
 	pointer-events-auto
 	px-2
+	py-1
+	read-only:opacity-0
+	selection:bg-accent
+	selection:text-primary
+	w-full
 	`;
 </script>
 
@@ -185,13 +165,14 @@ consumes "data_handle" from context api
 		bind:this!="{ input }",
 		bind:value!="{ value }",
 		data-cell-input="",
-		data-editable!="{ editable ? '' : null }",
 		data-field!="{ data_handle }",
 		id!="{todo_initial.unique}-{data_handle}",
 		max-length!="{ max_length }",
-		on:blur!="{ onBlur }",
-		on:keydown!="{ onKeydown }",
-		on:mousedown!="{ onMousedown }",
+		on:blur|stopPropagation!="{ onBlur }",
+		on:focus|stopPropagation!="{ onFocus }",
+		on:keydown|stopPropagation!="{ onKeydown }",
+		on:mousedown|stopPropagation!="{ onMousedown }",
+		readonly!="readonly",
 		spellcheck="false",
 		type!="text"
 	)

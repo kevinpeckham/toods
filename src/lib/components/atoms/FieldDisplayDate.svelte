@@ -49,7 +49,8 @@ consumes "data_handle" from context api
 		items-center
 		leading-none
 		pointer-events-none
-		group-focus-within:opacity-0
+		opacity-0
+		peer-read-only:opacity-100
 		px-2
 	`;
 </script>

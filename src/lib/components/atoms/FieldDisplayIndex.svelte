@@ -1,20 +1,22 @@
 <!--
 @component
-Display-only layer for Tags field.
+Field displays store value for a given todo / data handle
+Visible by default
+Is hidden when cell is in edit mode.
 #### *context:*
-consumes "todo_id" from context api
+consumes "todo_readable" from context api
 consumes "data_handle" from context api
 #### *props:*
 * prop - classes?: string
-#### *elements:*
-* .field-container: outer container
+
 -->
 <script lang="ts">
 	// context api
 	import { getContext } from "svelte";
 
-	// stores & settings
+	// stores
 	import { todos } from "$stores/todosStore";
+	import { breakpoint } from "$stores/layoutStore";
 
 	// types
 	import type { Writable } from "svelte/store";
@@ -23,39 +25,24 @@ consumes "data_handle" from context api
 	// props
 	export let classes = "";
 
-	// refs
-	let div: HTMLDivElement;
-
-	// $: {
-	// 	if (div && div.previousElementSibling instanceof HTMLInputElement) {
-	// 		input = div.previousElementSibling;
-	// 	}
-	// }
-
 	// constants from context api
 	const todo_readable = getContext("todo_readable") as Writable<Todo>;
 	const data_handle = getContext("data_handle") as string;
 
-	// // text value
-	// let value: string;
-	// $: value = $todos[todo_id][data_handle] as string;
-
 	// style
-	const default_classes = `
+	$: default_classes = `
 		absolute
 		inset-0
 		flex
 		items-center
 		leading-none
-		opacity-0
-		pointer-events-none
-		peer-read-only:opacity-100
+		truncate
+		user-select-none
 		px-2
+		focus:bg-blue-500
 	`;
-
-	// group-focus-within:opacity-0
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }", bind:this!="{ div }") { $todo_readable[data_handle] }
+	.field-display.pointer-events-none(class!="{default_classes} { classes }") { $todo_readable[data_handle] }
 </template>

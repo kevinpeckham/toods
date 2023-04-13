@@ -13,3 +13,10 @@ export function convertedAndScrubbedArray(str: string) {
 	const filteredArray = removeEmptyStringsFromArray(convertedArray);
 	return filteredArray;
 }
+
+export const arrayUtils = {
+	stringToStringArray: stringToStringArray,
+	removeEmptyStringsFromArray: removeEmptyStringsFromArray,
+	stringArrayToString: stringArrayToString,
+	convertedAndScrubbedArray: convertedAndScrubbedArray,
+};

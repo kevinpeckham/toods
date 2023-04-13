@@ -23,12 +23,19 @@ Here's some documentation for this component.
 	import { breakpoint } from "$stores/layoutStore";
 	import { todos } from "$stores/todosStore";
 
+	// utils
+	import { tableUtils } from "$utils/tableUtils";
+
 	// types
 	import type { Readable, Writable } from "svelte/store";
 	import { writable, readable, derived, get } from "svelte/store";
 	import type { Todo } from "$types/todoTypes";
+	import { stop_propagation } from "svelte/internal";
+	type Row = HTMLButtonElement | HTMLDivElement | null;
 
 	// * props
+	export let row: Row;
+
 	// ** unique
 	// unique id of the todo
 	export let unique: string = "";
@@ -45,6 +52,58 @@ Here's some documentation for this component.
 	setContext("todo_initial", initialTodo); // snapshots load state of todo
 	setContext("todo_readable", readableTodo); // sent as a readable-only store
 	setContext("unique", unique);
+
+	// functions
+
+	function onMousedown(event: MouseEvent) {
+		event.stopPropagation();
+	}
+
+	function onKeydown(event: KeyboardEvent) {
+		const key = event.key;
+		const Space = " ";
+
+		interface Actions {
+			[key: string]: () => void;
+		}
+
+		const action: Actions = {
+			ArrowDown() {
+				event.preventDefault();
+				tableUtils.goDownOneRow(row);
+				return;
+			},
+			ArrowLeft() {
+				event.preventDefault();
+				tableUtils.goToPreviousRowLastFieldFromRow(row);
+				return;
+			},
+			ArrowRight() {
+				event.preventDefault();
+				const first = tableUtils.goToFirstFieldFromRow(row);
+				return;
+			},
+			ArrowUp() {
+				event.preventDefault();
+				tableUtils.goUpOneRow(row);
+				return;
+			},
+			Enter() {
+				event.preventDefault();
+				tableUtils.goDownOneRow(row);
+				return;
+			},
+			// Tab() {
+			// 	if (!event.shiftKey) {
+			// 		traverseTable.right(input);
+			// 	} else traverseTable.left(input);
+			// 	event.preventDefault();
+			// },
+		};
+
+		if (action[key]) action[key]();
+		// else if (key == " ") action["Space"]();
+	}
 </script>
 
 <template lang="pug">
@@ -68,10 +127,13 @@ Here's some documentation for this component.
 
 		//-large
 		+else
-			button.gap-1.w-full.block.mb-1(
-				class!="sm:gap-1 sm:w-full sm:grid focus:ring:none",
+			button.gap-1.w-full.block.rounded-sm.overflow-visible(
+				bind:this!="{ row }"
+				class!="sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-white !outline-white outline-1 focus:outline",
 				data-table-row,
 				id!="todo-{unique}"
+				on:mousedown!="{onMousedown}"
+				on:keydown!="{onKeydown}"
 				style!="grid-template-columns: { $grid_template_columns };"
 				)
 

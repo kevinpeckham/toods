@@ -19,8 +19,10 @@ consumes "todo_editable" from context api
 	import { description_max_length } from "$stores/settings";
 
 	// utils
-	import { traverseTable } from "$utils/tableUtils";
-	import { advanceCursorToEndOfTextInput } from "$utils/inputUtils";
+	import { tableUtils } from "$utils/tableUtils";
+	import { inputUtils } from "$utils/inputUtils";
+	import { stringUtils } from "$utils/stringUtils";
+	import { arrayUtils } from "$utils/arrayUtils";
 
 	// types
 	import type { Todo } from "$types/todoTypes";
@@ -36,16 +38,14 @@ consumes "todo_editable" from context api
 	const todo_initial = getContext("todo_initial") as Todo;
 	const todo_editable = getContext("todo_editable") as Todo;
 
+	// shorthand and other constants
+	const au = arrayUtils;
+	const iu = inputUtils;
+	const su = stringUtils;
+	const tu = tableUtils;
+
 	// variables
 	let value: string;
-	let editable: boolean = false;
-
-	// functions
-	import {
-		getFieldNextField,
-		goDownOneRow,
-		goUpOneRow,
-	} from "$utils/tableUtils";
 
 	// ** value
 	// value is bound to the input element
@@ -79,57 +79,42 @@ consumes "todo_editable" from context api
 		}
 	}
 
+	// functions
+	// function toggleReadOnly() {
+	// 	readonly = !readonly;
+	// }
 	function onKeydown(event: KeyboardEvent) {
-		const key = event.key;
+		// constants
+		const e = event;
+		const key = e.key;
+		const pd = "preventDefault";
 
 		interface Actions {
 			[key: string]: () => void;
 		}
 		const action: Actions = {
-			ArrowDown() {
-				event.preventDefault();
-				traverseTable.down(input);
-			},
-			ArrowLeft() {
-				if (!editable) {
-					event.preventDefault();
-					traverseTable.left(input);
-				}
-				return;
-			},
-			ArrowRight() {
-				if (!editable) {
-					event.preventDefault();
-					traverseTable.right(input);
-				}
-				return;
-			},
-			ArrowUp() {
-				event.preventDefault();
-				traverseTable.up(input);
-				return;
-			},
+			ArrowUp: () => tu.up(e, pd),
+			ArrowDown: () => tu.down(e, pd),
+			ArrowRight: () => (input.readOnly ? tu.right(e, pd) : null),
+			ArrowLeft: () => (input.readOnly ? tu.left(e, pd) : null),
 			Enter() {
-				// if active but not editable, make editable
-				if (editable) {
-					traverseTable.down(input);
-				} else {
-					editable = true;
-					advanceCursorToEndOfTextInput(input, value);
-					event.preventDefault();
-				}
+				iu.toggleReadOnly(e);
+				iu.advanceCursorToEndOfTextInput(input, value);
+			},
+			Space() {
+				if (input.readOnly) iu.advanceCursorToEndOfTextInput(input, value);
+				iu.removeReadOnly(e);
 			},
 			Escape() {
-				if (editable) editable = false;
+				if (!input.readOnly) {
+					iu.setReadOnly(e);
+					iu.advanceCursorToEndOfTextInput(input, value);
+				} else if (input.readOnly) tu.getRowFromField(input)?.focus();
 			},
-			Tab() {
-				if (!event.shiftKey) {
-					traverseTable.right(input);
-				} else traverseTable.left(input);
-				event.preventDefault();
-			},
+			Tab: () => (e.shiftKey ? tu.left(e, pd) : tu.right(e, pd)),
 		};
 		if (action[key]) action[key]();
+		else if (key.match(/^.$/)) iu.removeReadOnly(e);
 	}
 
 	// style classes
@@ -138,8 +123,8 @@ consumes "todo_editable" from context api
 	h-full
 	w-full
 	py-1
-	opacity-0
-	data-[editable]:opacity-100
+	opacity-100
+	read-only:opacity-0
 	leading-none
 	outline-transparent
 	selection:bg-accent
@@ -151,10 +136,10 @@ consumes "todo_editable" from context api
 	`;
 
 	function onBlur(event: KeyboardEvent) {
-		if (editable) editable = false;
+		iu.setReadOnly(event);
 	}
 	function onMousedown(event: MouseEvent) {
-		if (!editable) editable = true;
+		iu.removeReadOnly(event);
 	}
 </script>
 
@@ -164,12 +149,12 @@ consumes "todo_editable" from context api
 		bind:this!="{ input }",
 		bind:value!="{ value }",
 		data-cell-input="",
-		data-editable!="{ editable ? '' : null }",
 		data-field!="{ data_handle }",
 		max-length!="{ $description_max_length }",
-		on:blur!="{ onBlur }",
-		on:keydown!="{ onKeydown }",
-		on:mousedown!="{ onMousedown }",
+		on:blur|stopPropagation!="{ onBlur }",
+		on:keydown|stopPropagation!="{ onKeydown }",
+		on:mousedown|stopPropagation!="{ onMousedown }",
+		readonly!="true",
 		type!="text"
 	)
 </template>

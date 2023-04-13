@@ -43,3 +43,15 @@ export function removeUnlistedSpecialCharacters(
 		)
 		.join("");
 }
+
+export const stringUtils = {
+	removeHash: removeHash,
+	removeFinalComma: removeFinalComma,
+	removeInitialComma: removeInitialComma,
+	removeRepeatedCommas: removeRepeatedCommas,
+	replaceSpacesWithCommas: replaceSpacesWithCommas,
+	stringToArray: stringToArray,
+	removeUpperCaseLetters: removeUpperCaseLetters,
+	removeBlackListedCharacters: removeBlackListedCharacters,
+	removeUnlistedSpecialCharacters: removeUnlistedSpecialCharacters,
+};
