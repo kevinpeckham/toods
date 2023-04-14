@@ -23,6 +23,7 @@ consumes "data_handle" from context api
 
 	// types
 	import type { Todo } from "$types/todoTypes";
+	import { construct_svelte_component } from "svelte/internal";
 
 	// props
 	export let classes = "";
@@ -41,18 +42,19 @@ consumes "data_handle" from context api
 
 	// variables
 	// variables
-	let value: boolean;
+	let checked: boolean;
+	let value_date: string | null;
 
 	// ** value
 	// value is bound to the input element
 	// when the user toggles the checkbox, value is updated
 	// when value is updated, todo_editable is updated, which updates the store
 	const initial = todo_initial[data_handle];
-	value = initial;
+	value_date = initial;
 
 	$: {
-		if (todo_editable[data_handle] != value) {
-			todo_editable[data_handle] = value;
+		if (todo_editable[data_handle] != value_date) {
+			todo_editable[data_handle] = value_date;
 			$todos = $todos;
 		}
 	}
@@ -87,14 +89,18 @@ consumes "data_handle" from context api
 			ArrowLeft: () => tu.left(e, pd),
 			ArrowRight: () => tu.right(e, pd),
 			Enter() {
-				event.preventDefault();
-				value = !value;
+				iu.removeReadOnly(e);
+				input.click();
+				updateValueDate();
 			},
 			Escape() {
 				if (!input.readOnly) iu.setReadOnly(e);
 				else if (input.readOnly) tu.getRowFromField(input)?.focus();
 			},
-			Space: () => iu.removeReadOnly(e),
+			Space() {
+				iu.removeReadOnly(e);
+				updateValueDate();
+			},
 		};
 		if (action[key] && key != Space) {
 			action[key]();
@@ -106,13 +112,17 @@ consumes "data_handle" from context api
 	}
 	function onMousedown(event: MouseEvent) {
 		iu.removeReadOnly(event);
+		updateValueDate();
+	}
+	function updateValueDate() {
+		value_date = checked ? null : new Date().toISOString();
 	}
 </script>
 
 <template lang="pug">
 	input.field-input.peer.accent-accent(
 		class!="{default_classes} { classes }",
-		bind:checked!="{ value }",
+		bind:checked!="{ checked }",
 		bind:this!="{ input }",
 		data-cell-input="",
 		data-field!="{ data_handle }",

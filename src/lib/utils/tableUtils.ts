@@ -75,7 +75,7 @@ export function getPreviousRowFromRow(row: Row): Row | null {
 // go to fields from fields
 export function goToNextRowSameField(field: Field) {
 	const handle = field?.dataset.field;
-	const row = getFieldRow(field) as Row;
+	const row = getRowFromField(field) as Row;
 	const next_row = getNextRowFromRow(row) as Row;
 	const new_field = next_row?.querySelector(`[data-field=${handle}]`) as Field;
 	if (new_field) new_field.focus();
@@ -167,19 +167,6 @@ function up(event: KeyboardEvent, flags?: string) {
 	const input = event.target as Field;
 	goToPreviousRowSameField(input);
 }
-
-// patches
-export const getFieldNextField = getNextFieldFromField;
-export const getRowCells = getAllCellsFromRow;
-export const getRowFirstCell = getFirstCellFromRow;
-export const getFieldRow = getRowFromField;
-export const getFieldCell = getCellFromField;
-export const getFieldNextCell = getNextCellFromField;
-
-// export const goUpOneRow = goToPreviousRowSameField;
-// export const goDownOneRow = goToNextRowSameField;
-export const goLeftOneCell = goToPreviousField;
-export const goRightOneCell = goToNextField;
 
 export const tableUtils = {
 	// get fields from field

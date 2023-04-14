@@ -13,7 +13,7 @@ import { get_unique_id } from "$utils/idUtils";
 
 export interface TodoConstructor {
 	active?: boolean;
-	completed?: boolean;
+	completed?: string | null;
 	created?: string;
 	description?: string | null;
 	due?: string | null;
@@ -32,7 +32,7 @@ export class Todo {
 	[key: string]: any;
 	id: number | null;
 	index: number;
-	completed: boolean;
+	completed: string | null;
 	created: string;
 	description: string | null;
 	due: string | null;
@@ -46,11 +46,10 @@ export class Todo {
 
 	constructor(o?: TodoConstructor) {
 		const dateAndTimeString = new Date().toISOString();
-		const justDateString = new Date().toISOString().split("T")[0];
 		this.id = null;
 		this.index = get(index_counter) as number;
-		this.completed = false;
-		this.created = o?.created ? o.created : justDateString;
+		this.completed = o?.completed ? o.completed : null;
+		this.created = o?.created ? o.created : dateAndTimeString;
 		this.description = o && o.description ? o.description : "";
 		this.due = o && o.due ? o.due : "";
 		this.friction = o && o.friction ? o.friction : 0;

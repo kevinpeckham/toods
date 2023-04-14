@@ -25,11 +25,11 @@ export const grid_columns_lg = [
 	"36px",
 	"36px",
 	"120px",
-	"36px",
+	"24px",
 ];
 
 export const grid_template_columns = derived([window_w], ([window_w]) => {
-	const grid_columns = [42, 24, 124, 100, 36, 36, 36, 120];
+	const grid_columns = [42, 24, 124, 100, 36, 36, 36, 120, 24];
 
 	const sm = grid_columns_sm.join(" ");
 	const lg = grid_columns_lg.join(" ");

@@ -188,7 +188,8 @@ Here's some documentation for this component.
 		data-table
 	)
 		//- header
-		RowHeadings
+		div.grid.grid-cols-1.gap-y-1.overflow-visible.px-2.py-2
+			RowHeadings
 
 		//- body
 		div.grid.grid-cols-1.gap-y-1.overflow-visible.px-2.py-2(
@@ -203,7 +204,7 @@ Here's some documentation for this component.
 				//- 1. if there are no filters, show all todos
 				//- 2. if there are filters, show only todos that match the filters
 				//- 3. if the todo is completed, don't show it
-				+if('($filtered_todos.length == 0 || $filtered_todos.includes(todo.index)) && !todo.completed')
+				+if('($filtered_todos.length == 0 || $filtered_todos.includes(todo.index))')
 					RowTodoItem(
 						unique!="{ todo.unique }"
 						)

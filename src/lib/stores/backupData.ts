@@ -10,7 +10,7 @@ const backup_3 = `
 [
   {
       "index": 0,
-      "completed": false,
+      "completed": null,
       "friction": 3,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "sustainability report",
@@ -25,7 +25,7 @@ const backup_3 = `
   },
   {
       "index": 1,
-      "completed": false,
+      "completed": null,
       "friction": 2,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "verde website",
@@ -55,7 +55,7 @@ const backup_3 = `
   },
   {
       "index": 3,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Alex Meeting",
@@ -70,7 +70,7 @@ const backup_3 = `
   },
   {
       "index": 4,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Breakfast of Champions text adventure game",
@@ -85,7 +85,7 @@ const backup_3 = `
   },
   {
       "index": 5,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "fix dev environment: Zenith Terminals",
@@ -101,7 +101,7 @@ const backup_3 = `
   },
   {
       "index": 6,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Philadelphia Payroll taxes",
@@ -116,7 +116,7 @@ const backup_3 = `
   },
   {
       "index": 7,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Migrate LJ website to Vercel (or Deno?)",
@@ -131,7 +131,7 @@ const backup_3 = `
   },
   {
       "index": 8,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: web bugs",
@@ -146,7 +146,7 @@ const backup_3 = `
   },
   {
       "index": 9,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "code review: Zenith Capital",
@@ -161,7 +161,7 @@ const backup_3 = `
   },
   {
       "index": 10,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: safari and iOS buttons",
@@ -177,7 +177,7 @@ const backup_3 = `
   },
   {
       "index": 11,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: dropdown breaking screen width on customer stories page",
@@ -193,7 +193,7 @@ const backup_3 = `
   },
   {
       "index": 12,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: home page about copy: make it less awkward",
@@ -209,7 +209,7 @@ const backup_3 = `
   },
   {
       "index": 13,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: missing NPR from SLX home page",
@@ -225,7 +225,7 @@ const backup_3 = `
   },
   {
       "index": 14,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: SLX state of security, is it represented?",
@@ -241,7 +241,7 @@ const backup_3 = `
   },
   {
       "index": 15,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "content: new news stories to home page",
@@ -257,7 +257,7 @@ const backup_3 = `
   },
   {
       "index": 16,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: home images @md breakpoint",
@@ -286,7 +286,7 @@ const backup_3 = `
   },
   {
       "index": 18,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "migrate: resources",
@@ -302,7 +302,7 @@ const backup_3 = `
   },
   {
       "index": 19,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "migrate: google analytics",
@@ -331,7 +331,7 @@ const backup_3 = `
   },
   {
       "index": 21,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "opt-out synching",
@@ -347,7 +347,7 @@ const backup_3 = `
   },
   {
       "index": 22,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "bug: container query poly-fill issue",
@@ -376,7 +376,7 @@ const backup_3 = `
   },
   {
       "index": 24,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "content: add securelogix overview flyer",
@@ -392,7 +392,7 @@ const backup_3 = `
   },
   {
       "index": 25,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "email signature",
@@ -407,7 +407,7 @@ const backup_3 = `
   },
   {
       "index": 26,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "ideas: games for Leo",
@@ -422,7 +422,7 @@ const backup_3 = `
   },
   {
       "index": 27,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "ideas: grief game?",
@@ -437,7 +437,7 @@ const backup_3 = `
   },
   {
       "index": 28,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "review and cut expenses",
@@ -452,7 +452,7 @@ const backup_3 = `
   },
   {
       "index": 29,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "s-corp status to philadelphia",
@@ -468,7 +468,7 @@ const backup_3 = `
   },
   {
       "index": 30,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "did we invoice verde email sig?",
@@ -484,7 +484,7 @@ const backup_3 = `
   },
   {
       "index": 31,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "did we invoice Sage for PPTX work?",
@@ -500,7 +500,7 @@ const backup_3 = `
   },
   {
       "index": 32,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Jim",
@@ -516,7 +516,7 @@ const backup_3 = `
   },
   {
       "index": 33,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Dave Lane",
@@ -532,7 +532,7 @@ const backup_3 = `
   },
   {
       "index": 34,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Petro new sites: css updates",
@@ -547,7 +547,7 @@ const backup_3 = `
   },
   {
       "index": 35,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Eric Bell",
@@ -563,7 +563,7 @@ const backup_3 = `
   },
   {
       "index": 36,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Rachel",
@@ -579,7 +579,7 @@ const backup_3 = `
   },
   {
       "index": 37,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "dentist appointment",
@@ -595,7 +595,7 @@ const backup_3 = `
   },
   {
       "index": 38,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "eye doctor appointment",
@@ -611,7 +611,7 @@ const backup_3 = `
   },
   {
       "index": 39,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "gp appointment + colonoscopy",
@@ -627,7 +627,7 @@ const backup_3 = `
   },
   {
       "index": 40,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "dermatologist appointment ",
@@ -643,7 +643,7 @@ const backup_3 = `
   },
   {
       "index": 41,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Rust",
@@ -659,7 +659,7 @@ const backup_3 = `
   },
   {
       "index": 42,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Raycast: keep exploring, using",
@@ -672,7 +672,7 @@ const backup_3 = `
   },
   {
       "index": 43,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Pugify: migrate & fix bugs",
@@ -688,7 +688,7 @@ const backup_3 = `
   },
   {
       "index": 44,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Vug: keep developing",
@@ -704,7 +704,7 @@ const backup_3 = `
   },
   {
       "index": 45,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Prisma: learn",
@@ -720,7 +720,7 @@ const backup_3 = `
   },
   {
       "index": 46,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "SQLite: learn",
@@ -736,7 +736,7 @@ const backup_3 = `
   },
   {
       "index": 47,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Email Signature",
@@ -752,7 +752,7 @@ const backup_3 = `
   },
   {
       "index": 48,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "New Archery Mug for Maggie",
@@ -768,7 +768,7 @@ const backup_3 = `
   },
   {
       "index": 49,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "SkinnyPug: maintain",
@@ -784,7 +784,7 @@ const backup_3 = `
   },
   {
       "index": 50,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "Reach out to Quinn",
@@ -800,7 +800,7 @@ const backup_3 = `
   },
   {
       "index": 51,
-      "completed": false,
+      "completed": null,
       "friction": 2,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Charlie",
@@ -816,7 +816,7 @@ const backup_3 = `
   },
   {
       "index": 52,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Mel",
@@ -832,7 +832,7 @@ const backup_3 = `
   },
   {
       "index": 53,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Rush ",
@@ -848,7 +848,7 @@ const backup_3 = `
   },
   {
       "index": 54,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Regan & Eric",
@@ -864,7 +864,7 @@ const backup_3 = `
   },
   {
       "index": 55,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "philly shirt for Maggie",
@@ -880,7 +880,7 @@ const backup_3 = `
   },
   {
       "index": 56,
-      "completed": false,
+      "completed": null,
       "friction": 3,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Mike D",
@@ -896,7 +896,7 @@ const backup_3 = `
   },
   {
       "index": 57,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "coordinate PGW inspection?",
@@ -912,7 +912,7 @@ const backup_3 = `
   },
   {
       "index": 58,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "fix back door",
@@ -928,7 +928,7 @@ const backup_3 = `
   },
   {
       "index": 59,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "replace air filter",
@@ -944,7 +944,7 @@ const backup_3 = `
   },
   {
       "index": 60,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "rating of 3 priority gets highlighted",
@@ -959,7 +959,7 @@ const backup_3 = `
   },
   {
       "index": 61,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "reach out to Naki",
@@ -975,7 +975,7 @@ const backup_3 = `
   },
   {
       "index": 62,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "",
@@ -988,7 +988,7 @@ const backup_3 = `
   },
   {
       "index": 63,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "",
@@ -1001,7 +1001,7 @@ const backup_3 = `
   },
   {
       "index": 64,
-      "completed": false,
+      "completed": null,
       "friction": 0,
       "created":"2023-04-05T17:04:58.271Z",
       "description": "",

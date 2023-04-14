@@ -24,3 +24,4 @@ export const symbols = derived(
 );
 
 export const description_max_length = writable(120);
+export const showCompletedTodos = writable(false);

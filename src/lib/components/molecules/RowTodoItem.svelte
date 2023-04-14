@@ -55,10 +55,6 @@ Here's some documentation for this component.
 
 	// functions
 
-	function onMousedown(event: MouseEvent) {
-		event.stopPropagation();
-	}
-
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
 		const Space = " ";
@@ -68,41 +64,21 @@ Here's some documentation for this component.
 		}
 
 		const action: Actions = {
-			ArrowDown() {
-				event.preventDefault();
-				tableUtils.goDownOneRow(row);
-				return;
-			},
-			ArrowLeft() {
-				event.preventDefault();
-				tableUtils.goToPreviousRowLastFieldFromRow(row);
-				return;
-			},
-			ArrowRight() {
-				event.preventDefault();
-				const first = tableUtils.goToFirstFieldFromRow(row);
-				return;
-			},
-			ArrowUp() {
-				event.preventDefault();
-				tableUtils.goUpOneRow(row);
-				return;
-			},
-			Enter() {
-				event.preventDefault();
-				tableUtils.goDownOneRow(row);
-				return;
-			},
-			// Tab() {
-			// 	if (!event.shiftKey) {
-			// 		traverseTable.right(input);
-			// 	} else traverseTable.left(input);
-			// 	event.preventDefault();
-			// },
+			ArrowDown: () => tableUtils.goDownOneRow(row),
+			ArrowLeft: () => tableUtils.goToPreviousRowLastFieldFromRow(row),
+			ArrowRight: () => tableUtils.goToFirstFieldFromRow(row),
+			ArrowUp: () => tableUtils.goUpOneRow(row),
+			Enter: () => tableUtils.goDownOneRow(row),
 		};
 
-		if (action[key]) action[key]();
-		// else if (key == " ") action["Space"]();
+		if (action[key]) {
+			action[key]();
+			event.preventDefault();
+		}
+	}
+
+	function onMousedown(event: MouseEvent) {
+		event.stopPropagation();
 	}
 </script>
 
@@ -132,8 +108,8 @@ Here's some documentation for this component.
 				class!="sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-white !outline-white outline-1 focus:outline",
 				data-table-row,
 				id!="todo-{unique}"
-				on:mousedown!="{onMousedown}"
-				on:keydown!="{onKeydown}"
+				on:mousedown|stopPropagation!="{onMousedown}"
+				on:keydown|stopPropagation!="{onKeydown}"
 				style!="grid-template-columns: { $grid_template_columns };"
 				)
 
@@ -145,5 +121,5 @@ Here's some documentation for this component.
 				CellRating(data_handle="friction" classes="text-[14px]")
 				CellRating(data_handle="joy" classes="text-[14px]")
 				CellTags(classes="text-[14px]")
-				//- CellComplete
+				CellComplete(classes="text-[14px]")
 </template>

@@ -6,24 +6,23 @@ Here's some documentation for this component.
 	// context
 	import { setContext, getContext } from "svelte";
 
-	// set data_handle
-	setContext("data_handle", "completed");
-
-	// get todo_id
-	const todo_id = getContext("todo_id");
-
 	// components
 	import FieldContainer from "$atoms/FieldContainer.svelte";
-	import FieldInputCheckbox from "$atoms/FieldInputCheckbox.svelte";
+	import FieldInputCompleted from "$atoms/FieldInputCompleted.svelte";
 	import FieldDisplayCheckboxMask from "$atoms/FieldDisplayCheckboxMask.svelte";
+
+	// props
+	export let classes = "";
+
+	// set data_handle
+	setContext("data_handle", "completed");
 </script>
 
 <template lang="pug">
-	+if('todo_id > -1')
-		FieldContainer(classes="")
-			FieldInputCheckbox(classes="")
-			//FieldDisplayCheckboxMask(
-				classes="!opacity-100 !text-primary  outline-accent",
-				symbol!="!"
-				)
+	FieldContainer(classes!="{ classes }")
+		FieldInputCompleted(classes="!opacity-100")
+		//FieldDisplayCheckboxMask(
+			classes="!opacity-100 !text-primary  outline-accent",
+			symbol!="!"
+			)
 </template>

@@ -18,6 +18,7 @@ Here's some documentation for this component.
 	// stores
 	import { grid_template_columns } from "$stores/layoutStore";
 	import { breakpoint } from "$stores/layoutStore";
+	import { showCompletedTodos } from "$stores/settings";
 
 	// types
 	import type { Readable } from "svelte/store";
@@ -58,17 +59,16 @@ Here's some documentation for this component.
 				class!="sm:gap-1 sm:w-full sm:grid text-[.85em] opacity-90",
 				data-table-row,
 				disabled,
-				id!="todo-{todo.id}"
 				style!="grid-template-columns: { $grid_template_columns };"
 				)
 
-				.text-center id
+				.pl-2 #
 				.text-center !
 				.pl-2 due
-				.pl-2 description
-				.w-full.text-center +
-				.w-full.text-center :
-				.w-full.text-center ~
+				.pl-2.truncate description
+				.text-center +
+				.text-center :
+				.text-center ~
 				.pl-2 tags
-				.text-center ✔︎
+				button.text-center ✔︎
 </template>
