@@ -35,6 +35,7 @@ Here's some documentation for this component.
 
 	// * props
 	export let row: Row;
+	export let index: number; // position in filtered list
 
 	// ** unique
 	// unique id of the todo
@@ -52,6 +53,7 @@ Here's some documentation for this component.
 	setContext("todo_initial", initialTodo); // snapshots load state of todo
 	setContext("todo_readable", readableTodo); // sent as a readable-only store
 	setContext("unique", unique);
+	setContext("index", index);
 
 	// functions
 

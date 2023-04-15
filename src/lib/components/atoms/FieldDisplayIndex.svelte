@@ -28,6 +28,7 @@ consumes "data_handle" from context api
 	// constants from context api
 	const todo_readable = getContext("todo_readable") as Writable<Todo>;
 	const data_handle = getContext("data_handle") as string;
+	const index = getContext("index") as number;
 
 	// style
 	$: default_classes = `
@@ -44,5 +45,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.field-display.pointer-events-none(class!="{default_classes} { classes }") { $todo_readable[data_handle] }
+	.field-display.pointer-events-none(class!="{default_classes} { classes }") { index }
 </template>

@@ -4,6 +4,7 @@
 	import Footer from "$atoms/Footer.svelte";
 	import PreFooter from "$atoms/PreFooter.svelte";
 	import TodoList from "$molecules/TodoList.svelte";
+	import ButtonAddTodo from "$components/atoms/ButtonAddTodo.svelte";
 
 	import { todos } from "$stores/todosStore";
 
@@ -36,9 +37,13 @@
 				h1.mr-4.font-semibold.text-accent(class="text-lg") Toods
 				.text-base a compact, keyboard-oriented to-do list.
 
+		//- header
+
 		//- todo list
 		.mb-8
 			TodoList
+		//- button
+		ButtonAddTodo
 
 	//- pre-footer
 	//-PreFooter(

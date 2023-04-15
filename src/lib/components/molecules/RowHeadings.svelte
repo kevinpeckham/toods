@@ -36,32 +36,15 @@ Here's some documentation for this component.
 <template lang="pug">
 	+if('($breakpoint) === "mobile"')
 		div mobile
-		//-small
-		//-.mb-1.w-100(
-			class!="sm:hidden",
-			data-table-row,
-			disabled,
-			id!="todo-{todo.id}"
-			)
-			.grid.grid-cols-4.w-full.mb-1
-				//CellId
-				//- CellNext
-				//- CellDue
-				//- CellDescription
-				//- CellRating(data_handle="priority")
-				//- CellRating(data_handle="friction")
-				//- CellRating(data_handle="joy")
-				//- CellTags
 
 		//-large
 		+else
-			.gap-1.w-full.block.mb-1(
+			.gap-1.w-full.block.mb-0(
 				class!="sm:gap-1 sm:w-full sm:grid text-[.85em] opacity-90",
 				data-table-row,
 				disabled,
 				style!="grid-template-columns: { $grid_template_columns };"
 				)
-
 				.pl-2 #
 				.text-center !
 				.pl-2 due

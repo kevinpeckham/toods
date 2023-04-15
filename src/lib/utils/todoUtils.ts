@@ -31,4 +31,25 @@ export function createTodo() {
 		todos.push(todo);
 		return todos;
 	});
+	return todo;
+}
+export function createAndFocusTodo() {
+	const todo = createTodo();
+	const unique = todo.unique;
+	const id = `todo-${unique}`;
+	isTodoLoaded(todo).then((el) => {
+		const row = el as HTMLButtonElement;
+		const desc = row.querySelector(
+			`[data-field="description"]`,
+		) as HTMLInputElement;
+		desc.focus();
+	});
+}
+export async function isTodoLoaded(todo: Todo) {
+	const unique = todo.unique;
+	const id = `todo-${unique}`;
+	while (document.getElementById(id) === null) {
+		await new Promise((resolve) => requestAnimationFrame(resolve));
+	}
+	return document.getElementById(id);
 }

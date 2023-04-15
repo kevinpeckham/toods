@@ -17,14 +17,13 @@ const symbol_joy = symbols_store.joy;
 const symbol_priority = symbols_store.priority;
 
 export const testDatum: Todo = {
-	id: 5,
-	completed: false,
+	completed: null,
 	next: false,
 	created: "2023-04-03",
 	due: "",
-	friction: ":::",
-	joy: "~~",
-	priority: "+",
+	friction: 3,
+	joy: 2,
+	priority: 1,
 	description: "fix dev environment: Zenith Terminals",
 	tags: ["slx", "web"],
 };

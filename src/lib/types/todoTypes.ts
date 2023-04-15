@@ -9,12 +9,10 @@ export const date_regex = /\d{4}-\d{2}-\d{2}/;
 import { get_unique_id } from "$utils/idUtils";
 
 // create a todo id counter
-// export const id_counter = writable(0);
-
 export interface TodoConstructor {
 	active?: boolean;
 	completed?: string | null;
-	created?: string;
+	created?: string | null;
 	description?: string | null;
 	due?: string | null;
 	friction?: number;
@@ -30,8 +28,7 @@ export class Todo {
 	// add index signature
 	//eslint-disable-next-line
 	[key: string]: any;
-	id: number | null;
-	index: number;
+	// index: number;
 	completed: string | null;
 	created: string;
 	description: string | null;
@@ -45,11 +42,8 @@ export class Todo {
 	tags: string[];
 
 	constructor(o?: TodoConstructor) {
-		const dateAndTimeString = new Date().toISOString();
-		this.id = null;
-		this.index = get(index_counter) as number;
 		this.completed = o?.completed ? o.completed : null;
-		this.created = o?.created ? o.created : dateAndTimeString;
+		this.created = o?.created ? o.created : new Date().toISOString();
 		this.description = o && o.description ? o.description : "";
 		this.due = o && o.due ? o.due : "";
 		this.friction = o && o.friction ? o.friction : 0;

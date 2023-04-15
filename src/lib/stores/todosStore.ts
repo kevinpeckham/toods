@@ -47,8 +47,8 @@ todos.subscribe((todos) => {
 });
 
 //- sync id_counter with local storage
-index_counter.subscribe((index) => {
-	if (browser && writeToLocalStorage) {
-		localStorage.setItem("id_counter", JSON.stringify(index));
-	}
-});
+// index_counter.subscribe((index) => {
+// 	if (browser && writeToLocalStorage) {
+// 		localStorage.setItem("id_counter", JSON.stringify(index));
+// 	}
+// });
