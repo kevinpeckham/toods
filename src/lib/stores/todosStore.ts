@@ -3,8 +3,8 @@ import { browser } from "$app/environment";
 import type { Todo } from "$types/todoTypes";
 
 // settings
-const readFromLocalStorage = false;
-const writeToLocalStorage = false;
+const readFromLocalStorage = true;
+const writeToLocalStorage = true;
 
 // data
 import { backup_data } from "$stores/backupData";
@@ -29,26 +29,13 @@ if (stored) {
 //- todos store
 export const todos = writable(todosArray);
 
-// store to keep track of todo ids
-export const index_counter = derived(todos, ($todos) => {
-	const index =
-		$todos.length > 0 ? $todos[$todos.length - 1].index : $todos.length - 1;
-	return index + 1;
-});
-
 //- derived store that returns a JSON string of the todos array -- mostly for testing
-export const todosJSON = derived(todos, ($todos) => JSON.stringify($todos));
+// export const todosJSON = derived(todos, ($todos) => JSON.stringify($todos));
 
 //- sync todos with local storage
 todos.subscribe((todos) => {
 	if (browser && writeToLocalStorage) {
+		// localStorage.removeItem("toods_todos");
 		localStorage.setItem("todos", JSON.stringify(todos));
 	}
 });
-
-//- sync id_counter with local storage
-// index_counter.subscribe((index) => {
-// 	if (browser && writeToLocalStorage) {
-// 		localStorage.setItem("id_counter", JSON.stringify(index));
-// 	}
-// });

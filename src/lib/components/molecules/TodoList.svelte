@@ -18,6 +18,7 @@ Here's some documentation for this component.
 	import type { Todo } from "$types/todoTypes";
 	import { columns, columnHandles } from "$stores/columnsStore";
 	import { colors } from "$stores/colorsStore";
+	import { showCompletedTodos } from "$stores/settings";
 
 	// refs
 	let addTodoButton: HTMLButtonElement;
@@ -155,15 +156,6 @@ Here's some documentation for this component.
 	// 		}, 20);
 	// 	}
 	// }
-
-	function showToDo(todo: Todo) {
-		const id = todo.id;
-		let show: boolean = true;
-		if (todo.completed) show = false;
-		if ($filtered_todos.length > 0) show = false;
-		// if ($filtered_todos.includes(id)) show = true;
-		return show;
-	}
 </script>
 
 <template lang="pug">
@@ -197,9 +189,10 @@ Here's some documentation for this component.
 			style=""
 		)
 			+each('$todos as todo, index')
-				+if('($filtered_todos.length == 0 || $filtered_todos.includes(todo.index))')
-					RowTodoItem(
-						index!="{ index }",
-						unique!="{ todo.unique }"
-					)
+				+if('$filtered_todos.length == 0 || ($filtered_todos.includes(todo.unique))')
+					+if('($showCompletedTodos || !todo.completed)')
+						RowTodoItem(
+							index!="{ index }",
+							unique!="{ todo.unique }"
+						)
 </template>

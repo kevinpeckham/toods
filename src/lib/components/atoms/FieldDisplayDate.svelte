@@ -35,10 +35,24 @@ consumes "data_handle" from context api
 	$: value = $todo_readable[data_handle] as string;
 
 	let days: number | undefined;
+	let daysMessage: string;
 	$: {
 		// update days left to due
-		if (value) days = timeLeftInDays(new Date(value));
+		if (value) days = timeLeftInDays(new Date(value)) + 1;
 		else days = undefined;
+
+		// messages
+		const messages: { [key: string]: string } = {
+			"undefined": "",
+			"-1": "yesterday",
+			"0": "today",
+			"1": "tomorrow",
+			"default": `${days} days`,
+		};
+		if (days === undefined) daysMessage = messages["undefined"];
+		else if (days >= -1 && days <= 1) daysMessage = messages[days?.toString()];
+		else if (days <= 2 || days >= -2) daysMessage = messages["default"];
+		else daysMessage = "";
 	}
 
 	// style
@@ -56,5 +70,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { days ? days + " days" : "" }
+	.field-display(class!="{default_classes} { classes }") { daysMessage }
 </template>

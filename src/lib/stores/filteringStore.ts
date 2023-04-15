@@ -21,9 +21,9 @@ export const filtered_todos = derived([todos, query], ([$todos, $query]) => {
 		return lower.includes($query.toLowerCase());
 	});
 
-	const filtered_ids = results.map((todo) => {
-		return todo.id;
+	const filtered_unique_ids = results.map((todo) => {
+		return todo.unique;
 	});
 
-	return filtered_ids;
+	return filtered_unique_ids;
 });

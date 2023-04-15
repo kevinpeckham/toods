@@ -31,6 +31,11 @@ Here's some documentation for this component.
 
 	// types & classes
 	import { Todo } from "$types/todoTypes";
+
+	// functions
+	function onClick(event: MouseEvent) {
+		$showCompletedTodos = !$showCompletedTodos;
+	}
 </script>
 
 <template lang="pug">
@@ -53,5 +58,7 @@ Here's some documentation for this component.
 				.text-center :
 				.text-center ~
 				.pl-2 tags
-				button.text-center ✔︎
+				button.text-center(
+					on:mousedown|stopPropagation!="{()=> $showCompletedTodos = !$showCompletedTodos}",
+				) ✔︎
 </template>

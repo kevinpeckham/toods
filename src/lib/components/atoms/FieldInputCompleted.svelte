@@ -35,6 +35,7 @@ consumes "data_handle" from context api
 	const data_handle = getContext("data_handle") as string;
 	const todo_initial = getContext("todo_initial") as Todo;
 	const todo_editable = getContext("todo_editable") as Todo;
+	const index = getContext("index") as number;
 
 	// shorthand and other constants
 	const iu = inputUtils;
@@ -45,12 +46,15 @@ consumes "data_handle" from context api
 	let checked: boolean;
 	let value_date: string | null;
 
-	// ** value
-	// value is bound to the input element
-	// when the user toggles the checkbox, value is updated
+	// ** checked
+	// checked is bound to the input element
+	// when the user toggles the checkbox, checked is updated
+	const initialChecked = todo_initial[data_handle] ? true : false;
+	checked = initialChecked;
+
 	// when value is updated, todo_editable is updated, which updates the store
-	const initial = todo_initial[data_handle];
-	value_date = initial;
+	const initialDate = todo_initial[data_handle];
+	value_date = initialDate;
 
 	$: {
 		if (todo_editable[data_handle] != value_date) {

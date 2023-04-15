@@ -1,4 +1,3 @@
-import { index_counter } from "$stores/todosStore";
 import { get } from "svelte/store";
 
 // regex for matching a date string or empty string
