@@ -32,18 +32,16 @@ consumes "data_handle" from context api
 
 	// style
 	$: default_classes = `
-		absolute
-		inset-0
+		opacity-100
+		user-select-none
 		flex
 		items-center
-		leading-none
-		truncate
-		user-select-none
-		px-2
-		focus:bg-blue-500
+		justify-end
+		pr-2
+		text-end
 	`;
 </script>
 
 <template lang="pug">
-	.field-display.pointer-events-none(class!="{default_classes} { classes }") { index }
+	.pointer-events-none(class!="{default_classes} { classes }", data-field-display) { index }
 </template>

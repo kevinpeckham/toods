@@ -56,7 +56,8 @@ consumes "data_handle" from context api
 	}
 
 	// style
-	const default_classes = `
+	let default_classes: string;
+	$: default_classes = `
 		absolute
 		inset-0
 		flex
@@ -65,10 +66,11 @@ consumes "data_handle" from context api
 		pointer-events-none
 		opacity-0
 		peer-read-only:opacity-100
+		${days != undefined && days <= 1 ? "bg-accent text-primary" : ""}
 		px-2
 	`;
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { daysMessage }
+	div(class!="{default_classes} { classes }", data-field-display) { daysMessage }
 </template>

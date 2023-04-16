@@ -107,7 +107,7 @@ Here's some documentation for this component.
 		+else
 			button.gap-1.w-full.block.rounded-sm.overflow-visible(
 				bind:this!="{ row }"
-				class!="sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-white !outline-white outline-1 focus:outline",
+				class!="sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-transparent outline-transparent outline-[1.5px] outline-offset-[1.5px] outline focus:outline-blue-300",
 				data-table-row,
 				id!="todo-{unique}"
 				on:mousedown|stopPropagation!="{onMousedown}"

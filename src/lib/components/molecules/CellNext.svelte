@@ -18,10 +18,10 @@ Here's some documentation for this component.
 </script>
 
 <template lang="pug">
-	FieldContainer(classes!="data-[next]:!bg-accent {classes}")
-		FieldInputCheckbox(classes="!opacity-0")
+	FieldContainer(classes!="{ classes }")
+		FieldInputCheckbox
 		FieldDisplayCheckboxMask(
-			classes="!opacity-100 !text-primary  outline-accent",
+			classes="",
 			symbol!="!"
 		)
 </template>

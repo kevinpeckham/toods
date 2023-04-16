@@ -58,14 +58,13 @@ consumes "data_handle" from context api
 	}
 
 	// style classes
-	const default_classes = `
+	let default_classes: string;
+	$: default_classes = `
 	bg-transparent
 	h-full
 	w-full
 	py-1
 	opacity-0
-	outline-transparent
-	group-focus-within:outline
 	pointer-events-auto
 	`;
 
@@ -114,8 +113,8 @@ consumes "data_handle" from context api
 		class!="{default_classes} { classes }",
 		bind:checked!="{ value }",
 		bind:this!="{ input }",
-		data-cell-input="",
 		data-field!="{ data_handle }",
+		data-field-input,
 		on:blur|stopPropagation!="{ onBlur }",
 		on:keydown|stopPropagation!="{ onKeydown }",
 		on:mousedown|stopPropagation!="{ onMousedown }",

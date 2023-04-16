@@ -117,24 +117,6 @@ consumes "todo_editable" from context api
 		else if (key.match(/^.$/)) iu.removeReadOnly(e);
 	}
 
-	// style classes
-	const default_classes = `
-	bg-transparent
-	h-full
-	w-full
-	py-1
-	opacity-100
-	read-only:opacity-0
-	leading-none
-	outline-transparent
-	selection:bg-accent
-	selection:text-primary
-	truncate
-	group-focus-within:outline
-	pointer-events-auto
-	px-2
-	`;
-
 	function onBlur(event: KeyboardEvent) {
 		iu.setReadOnly(event);
 	}
@@ -144,12 +126,12 @@ consumes "todo_editable" from context api
 </script>
 
 <template lang="pug">
-	input.field-input.peer(
-		class!="{default_classes} { classes }",
+	input.field-input.peer.px-2(
+		class!="{ classes }",
 		bind:this!="{ input }",
 		bind:value!="{ value }",
-		data-cell-input="",
 		data-field!="{ data_handle }",
+		data-field-input,
 		max-length!="{ $description_max_length }",
 		on:blur|stopPropagation!="{ onBlur }",
 		on:keydown|stopPropagation!="{ onKeydown }",

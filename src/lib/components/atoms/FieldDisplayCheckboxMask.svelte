@@ -27,8 +27,9 @@ consumes "data_handle" from context api
 	const todo_readable = getContext("todo_readable") as Writable<Todo>;
 	const data_handle = getContext("data_handle") as string;
 
-	// style
-	const default_classes = `
+	// styles
+	let default_classes: string;
+	$: default_classes = `
 		absolute
 		inset-0
 		flex
@@ -42,5 +43,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { $todo_readable[data_handle] ? symbol : "" }
+	div(class!="{default_classes} { classes }", data-field-display) { $todo_readable[data_handle] ? symbol : "" }
 </template>

@@ -96,6 +96,7 @@ consumes "todo_editable" from context api
 		bind:value!="{ value_string }",
 		data-cell-input="",
 		data-field!="{ data_handle }",
+		data-field-input,
 		readonly="readonly",
 		tabindex="-1",
 		type!="text"

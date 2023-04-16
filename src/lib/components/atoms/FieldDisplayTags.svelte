@@ -57,5 +57,9 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }", bind:this!="{ div }") { $todo_readable[data_handle] }
+	div(
+		class!="{default_classes} { classes }",
+		bind:this!="{ div }",
+		data-field-display
+	) { $todo_readable[data_handle] }
 </template>

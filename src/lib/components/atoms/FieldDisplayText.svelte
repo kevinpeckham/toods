@@ -31,20 +31,13 @@ consumes "data_handle" from context api
 
 	// style
 	$: default_classes = `
-		absolute
-		inset-0
 		flex
 		items-center
-		leading-none
 		truncate
-		opacity-0
-		pointer-events-none
-		peer-read-only:opacity-100
 		px-2
-		${data_handle == "id" && $breakpoint == "mobile" ? "text-11" : ""}
 	`;
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { $todo_readable[data_handle] }
+	div(class!="{default_classes} { classes }", data-field-display) { $todo_readable[data_handle] }
 </template>

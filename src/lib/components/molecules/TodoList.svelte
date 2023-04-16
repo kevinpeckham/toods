@@ -184,8 +184,8 @@ Here's some documentation for this component.
 			RowHeadings
 
 		//- Todos
-		.grid.grid-cols-1.gap-y-1.overflow-visible.px-2.py-2(
-			class="",
+		.grid.grid-cols-1.overflow-visible.px-2.py-2(
+			class="gap-y-[6px]",
 			style=""
 		)
 			+each('$todos as todo, index')

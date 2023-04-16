@@ -51,7 +51,8 @@ consumes "todo_editable" from context api
 	}
 
 	// style classes
-	const default_classes = `
+	let default_classes: string;
+	$: default_classes = `
 	bg-transparent
 	h-full
 	w-full
@@ -59,7 +60,6 @@ consumes "todo_editable" from context api
 	opacity-100
 	read-only:opacity-0
 	leading-none
-	outline-transparent
 	select-all
 	selection:bg-accent
 	selection:text-primary
@@ -117,8 +117,8 @@ consumes "todo_editable" from context api
 		class!="{default_classes} { classes }",
 		bind:this!="{ input }",
 		bind:value!="{ value }",
-		data-cell-input="",
 		data-field!="due",
+		data-field-input,
 		max="2099-12-31",
 		min="2022-01-01",
 		on:blur|stopPropagation!="{ onBlur }",

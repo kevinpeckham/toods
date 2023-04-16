@@ -59,5 +59,5 @@ consumes "symbol" from context api
 </script>
 
 <template lang="pug">
-	.field-display(class!="{default_classes} { classes }") { display_value }
+	div(class!="{default_classes} { classes }", data-field-display) { display_value }
 </template>
