@@ -30,7 +30,7 @@
 		)
 
 	//- body
-	main.relative.min-h-screen.w-full.bg-primary.p-4.pb-48.text-white.max-w-screen.overflow-hidden
+	main.relative.min-h-screen.w-full.bg-oxford-750.p-4.pb-48.text-white.max-w-screen.overflow-hidden
 		.mb-8
 			//- headline
 			.flex.items-center.mb-2

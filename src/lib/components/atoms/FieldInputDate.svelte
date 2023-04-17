@@ -53,14 +53,8 @@ consumes "todo_editable" from context api
 	// style classes
 	let default_classes: string;
 	$: default_classes = `
-	bg-transparent
-	h-full
-	w-full
-	py-1
-	opacity-100
-	read-only:opacity-0
-	leading-none
-	select-all
+
+
 	selection:bg-accent
 	selection:text-primary
 	text-center

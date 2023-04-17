@@ -57,17 +57,6 @@ consumes "data_handle" from context api
 		}
 	}
 
-	// style classes
-	let default_classes: string;
-	$: default_classes = `
-	bg-transparent
-	h-full
-	w-full
-	py-1
-	opacity-0
-	pointer-events-auto
-	`;
-
 	function onKeydown(event: KeyboardEvent) {
 		// constants
 		const e = event;
@@ -106,6 +95,12 @@ consumes "data_handle" from context api
 	function onMousedown(event: MouseEvent) {
 		iu.removeReadOnly(event);
 	}
+
+	// style classes
+	let default_classes: string;
+	$: default_classes = `
+
+	`;
 </script>
 
 <template lang="pug">

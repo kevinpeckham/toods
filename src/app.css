@@ -28,35 +28,39 @@
  [data-field-display] {
 		@apply
 		absolute
+		flex
+		items-center
 		inset-0
-		leading-none
+
 		/* interactions */
 		pointer-events-none
 		select-none
 		/* opacity */
 		opacity-0
 		peer-read-only:opacity-100
-		/* text */
+		/* typography */
 		text-white
-		group-data-[next]:text-primary
+		leading-none
+		group-data-[next]:text-oxford-800
 		/* background */
-		bg-[#28364D]
-		peer-focus-within:bg-blue-300/10
-		group-focus:bg-blue-300
-		peer-hover:!bg-blue-300/20
-		group-data-[next]:bg-accent
-		group-data-[next]:peer-focus-within:bg-accent
-		group-data-[next]:peer-hover:!bg-accent/90
+		bg-oxford-675
+		peer-focus-within:bg-oxford-700
+		peer-hover:bg-oxford-700
+		group-data-[next]:bg-lemon-100
+		group-data-[next]:peer-focus-within:bg-lemon-150
+		group-data-[next]:peer-hover:bg-lemon-150
 		/* outline on peer focus */
 		rounded-sm
-		outline-blue-400
+		/* outline-airSuperiorityBlue */
+		outline-oxford-75
 		outline-offset-[-1px]
 		peer-focus-within:outline
 		peer-focus-within:outline-1
 		/* next */
 		group-data-[next]:outline-primary
-		group-data-[next]:peer-focus-within:outline-2
-		group-data-[next]:peer-focus-within:outline-offset-[-4px]
+		group-data-[next]:peer-focus-within:outline-lemon-100
+		/* group-data-[next]:peer-focus-within:outline-2 */
+		/* group-data-[next]:peer-focus-within:outline-offset-[-4px] */
 		/* hover */
 
 	}
@@ -68,30 +72,30 @@
 		w-full
 		py-1
 		/* text */
-		text-white
-		group-data-[next]:text-accent
+		text-oxford-25
+		group-data-[next]:text-lemon-100
 		leading-none
 		truncate
 		/* opacity */
 		opacity-100
 		read-only:opacity-0
 		/* background */
-		bg-primary
+		bg-oxford-750
 		/* interactions */
 		pointer-events-auto
 		cursor-pointer
 		/* selection */
-		selection:bg-accent
-		selection:text-primary
+		selection:bg-lemon-100
+		selection:text-oxford-800
 		/* border */
 		rounded-sm
 		/* outline on focus */
-		outline-blue-400
+		outline-oxford-200
 		outline-offset-[-1.5px]
 		outline-[1.5px]
 		group-focus-within:outline
 		/* next */
-		group-data-[next]:outline-accent
+		group-data-[next]:outline-lemon-100
 
 	}
 }

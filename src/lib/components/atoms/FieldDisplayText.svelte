@@ -31,8 +31,6 @@ consumes "data_handle" from context api
 
 	// style
 	$: default_classes = `
-		flex
-		items-center
 		truncate
 		px-2
 	`;

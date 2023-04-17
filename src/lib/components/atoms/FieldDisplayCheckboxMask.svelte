@@ -30,15 +30,7 @@ consumes "data_handle" from context api
 	// styles
 	let default_classes: string;
 	$: default_classes = `
-		absolute
-		inset-0
-		flex
-		items-center
 		justify-center
-		leading-none
-		pointer-events-none
-		text-center
-		w-full
 	`;
 </script>
 

@@ -34,8 +34,6 @@ consumes "data_handle" from context api
 	$: default_classes = `
 		opacity-100
 		user-select-none
-		flex
-		items-center
 		justify-end
 		pr-2
 		text-end
@@ -43,5 +41,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	.pointer-events-none(class!="{default_classes} { classes }", data-field-display) { index }
+	div(class!="{default_classes} { classes }", data-field-display) { index }
 </template>

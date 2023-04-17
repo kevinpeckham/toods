@@ -63,18 +63,6 @@ consumes "data_handle" from context api
 		}
 	}
 
-	// style classes
-	const default_classes = `
-	bg-transparent
-	h-full
-	w-full
-	py-1
-	opacity-0
-	outline-transparent
-	group-focus-within:outline
-	pointer-events-auto
-	`;
-
 	function onKeydown(event: KeyboardEvent) {
 		// constants
 		const e = event;
@@ -124,8 +112,8 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	input.field-input.peer.accent-accent(
-		class!="{default_classes} { classes }",
+	input.field-input.peer(
+		class!="{ classes }",
 		bind:checked!="{ checked }",
 		bind:this!="{ input }",
 		data-field!="{ data_handle }",

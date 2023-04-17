@@ -20,9 +20,9 @@ Here's some documentation for this component.
 
 <template lang="pug">
 	FieldContainer(classes!="{ classes }")
-		FieldInputCompleted(classes="!opacity-100")
-		//FieldDisplayCheckboxMask(
-			classes="!opacity-100 !text-primary  outline-accent",
-			symbol!="!"
-			)
+		FieldInputCompleted
+		FieldDisplayCheckboxMask(
+			classes="",
+			symbol!="✔︎"
+		)
 </template>

@@ -48,8 +48,10 @@ consumes "data_handle" from context api
 			"0": "today",
 			"1": "tomorrow",
 			"default": `${days} days`,
+			"completed": "--",
 		};
-		if (days === undefined) daysMessage = messages["undefined"];
+		if ($todo_readable.completed) daysMessage = messages["completed"];
+		else if (days === undefined) daysMessage = messages["undefined"];
 		else if (days >= -1 && days <= 1) daysMessage = messages[days?.toString()];
 		else if (days <= 2 || days >= -2) daysMessage = messages["default"];
 		else daysMessage = "";
@@ -58,15 +60,6 @@ consumes "data_handle" from context api
 	// style
 	let default_classes: string;
 	$: default_classes = `
-		absolute
-		inset-0
-		flex
-		items-center
-		leading-none
-		pointer-events-none
-		opacity-0
-		peer-read-only:opacity-100
-		${days != undefined && days <= 1 ? "bg-accent text-primary" : ""}
 		px-2
 	`;
 </script>

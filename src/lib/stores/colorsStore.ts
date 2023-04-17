@@ -1,9 +1,12 @@
 import { readable } from "svelte/store";
 
-export const oxfordBlue = readable("#142239");
-export const lemonLime = readable("#EBF92F");
+// utils
+import { generateOKLCHShades, generateOKLCHColor } from "./../utils/colorUtils";
+
+export const lemon = generateOKLCHShades(0.2, 114, 25);
+export const oxford = generateOKLCHShades(0.05, 260, 25);
 
 export const colors = readable({
-	oxfordBlue: "#142239",
-	lemonLime: "#EBF92F",
+	oxford: oxford,
+	lemon: lemon,
 });
