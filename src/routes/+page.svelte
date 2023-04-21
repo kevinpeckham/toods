@@ -1,6 +1,7 @@
 <script lang="ts">
 	// eslint-disable-file @typescript-eslint/no-unused-vars, no-unused-vars
 	// components
+	import CommandPalette from "$molecules/CommandPalette.svelte";
 	import Footer from "$atoms/Footer.svelte";
 	import PreFooter from "$atoms/PreFooter.svelte";
 	import TodoList from "$molecules/TodoList.svelte";
@@ -38,12 +39,12 @@
 				.text-base a compact, keyboard-oriented to-do list.
 
 		//- header
-
-		//- todo list
+		.mb-2
+			CommandPalette
 		.mb-8
 			TodoList
-		//- button
-		ButtonAddTodo
+		.mb-2
+			ButtonAddTodo
 
 	//- pre-footer
 	//-PreFooter(
