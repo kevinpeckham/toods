@@ -4,12 +4,15 @@ Here's some documentation for this component.
 -->
 
 <script lang="ts">
-	import { query, filtered_todos } from "$stores/filteringStore";
+	import {
+		query,
+		queryArray,
+		// regexQuery,
+		filtered_todos,
+	} from "$stores/filteringStore";
+	import { todos, todos_searchable_text } from "$stores/todosStore";
 
-	function onConsoleInput() {
-		console.log($query);
-		// console.log($filtered_todos);
-	}
+	function onConsoleInput() {}
 </script>
 
 <template lang="pug">

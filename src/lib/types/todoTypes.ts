@@ -9,7 +9,7 @@ import { get_unique_id } from "$utils/idUtils";
 
 // create a todo id counter
 export interface TodoConstructor {
-	active?: boolean;
+	archived?: string | null;
 	completed?: string | null;
 	created?: string | null;
 	description?: string | null;
@@ -28,6 +28,7 @@ export class Todo {
 	//eslint-disable-next-line
 	[key: string]: any;
 	// index: number;
+	archived: string | null;
 	completed: string | null;
 	created: string;
 	description: string | null;
@@ -41,6 +42,7 @@ export class Todo {
 	tags: string[];
 
 	constructor(o?: TodoConstructor) {
+		this.archived = o?.archived ? o.archived : null;
 		this.completed = o?.completed ? o.completed : null;
 		this.created = o?.created ? o.created : new Date().toISOString();
 		this.description = o && o.description ? o.description : "";
@@ -51,8 +53,14 @@ export class Todo {
 		this.updated = this.created ? this.created : "";
 		this.priority = o && o.priority ? o.priority : 0;
 		this.tags = o && o.tags && o.tags.length > 0 ? o.tags : [];
+		this.text = o && o.text ? o.text : "";
 		this.unique = o && o.unique ? o.unique : get_unique_id();
 	}
+}
+
+export interface todoSearchableItem {
+	unique: string;
+	text: string;
 }
 
 export type todoAsArray = string[];

@@ -6,6 +6,9 @@ import type { Todo } from "$types/todoTypes";
 const readFromLocalStorage = true;
 const writeToLocalStorage = true;
 
+// functions
+import { extractSearchableTextFromTodo } from "$utils/todoUtils";
+
 // data
 import { backup_data } from "$stores/backupData";
 const parsed_backup_data = JSON.parse(backup_data) as Todo[];
@@ -29,8 +32,18 @@ if (stored) {
 //- todos store
 export const todos = writable(todosArray);
 
-//- derived store that returns a JSON string of the todos array -- mostly for testing
-// export const todosJSON = derived(todos, ($todos) => JSON.stringify($todos));
+//- derived store that holds searchable text for each todo
+export const todos_searchable_text = derived(todos, ($todos) => {
+	const searchable_text = $todos.map((todo) => {
+		const text = {
+			unique: todo.unique,
+			text: extractSearchableTextFromTodo(todo),
+		};
+		return text;
+	});
+
+	return searchable_text;
+});
 
 //- sync todos with local storage
 todos.subscribe((todos) => {
