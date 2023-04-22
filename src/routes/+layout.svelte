@@ -21,7 +21,7 @@
 	}
 
 	// props
-	export let data: Data;
+	// export let data: Data;
 
 	// functions
 	const isElementLoadedBySelector = async (selector: string) => {
