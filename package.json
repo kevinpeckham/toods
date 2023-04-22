@@ -57,7 +57,6 @@
 	"type": "module",
 	"dependencies": {
 		"graphql": "^16.6.0",
-		"graphql-request": "^5.2.0",
-		"prettier-plugin-tailwindcss": "^0.2.7"
+		"graphql-request": "^5.2.0"
 	}
 }
