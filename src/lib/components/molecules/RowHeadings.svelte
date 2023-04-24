@@ -24,7 +24,8 @@ Here's some documentation for this component.
 	import { Todo } from "$types/todoTypes";
 
 	// variables
-	let style: string;
+	const style = `grid-template-columns: ${$grid_template_columns};`;
+	console.log(style);
 
 	// functions
 	function toggleShowCompletedTodos() {
@@ -41,7 +42,6 @@ Here's some documentation for this component.
 
 		//-large
 		+else
-			+const('style="grid-template-columns: { $grid_template_columns };"')
 			.gap-1.w-full.block.mb-0(
 				class!="sm:gap-1 sm:w-full sm:grid text-[.85em] opacity-90",
 				data-table-row,
