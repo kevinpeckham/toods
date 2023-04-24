@@ -20,3 +20,10 @@ export const arrayUtils = {
 	stringArrayToString: stringArrayToString,
 	convertedAndScrubbedArray: convertedAndScrubbedArray,
 };
+
+export function moveArrayItemUp(array: unknown[], index: number) {
+	const lastIndex = array.length - 1;
+	const newIndex = index === 0 ? lastIndex : index - 1;
+	array.splice(newIndex, 0, array.splice(index, 1)[0]);
+	return array;
+}

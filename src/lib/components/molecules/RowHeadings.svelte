@@ -6,15 +6,6 @@ Here's some documentation for this component.
 	// context api
 	import { setContext } from "svelte";
 
-	// components
-	import CellComplete from "$molecules/CellComplete.svelte";
-	import CellNext from "$molecules/CellNext.svelte";
-	import CellId from "$components/molecules/CellIndex.svelte";
-	import CellDue from "$molecules/CellDue.svelte";
-	import CellDescription from "$molecules/CellDescription.svelte";
-	import CellRating from "$molecules/CellRating.svelte";
-	import CellTags from "$molecules/CellTags.svelte";
-
 	// stores
 	import { grid_template_columns } from "$stores/layoutStore";
 	import { breakpoint } from "$stores/layoutStore";

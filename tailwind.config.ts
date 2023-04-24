@@ -1,11 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-import { lemon } from "./src/lib/stores/colorsStore";
-
 export default {
 	content: ["./src/**/*.{html,pug,js,svelte,ts}"],
 	theme: {
-		safelist: [],
 		extend: {
 			colors: {
 				lemon: {

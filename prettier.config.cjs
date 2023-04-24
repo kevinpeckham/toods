@@ -11,6 +11,7 @@ const prettierPluginPug = require("@prettier/plugin-pug");
  */
 module.exports = {
 	plugins: [prettierPluginSvelte, prettierPluginPug],
+	overrides: [{ files: "*.svelte", options: { parser: "svelte" } }],
 
 	// prettier pug plugin options
 	// https://prettier.github.io/plugin-pug/guide/pug-specific-options.html
@@ -47,5 +48,5 @@ module.exports = {
 	tabWidth: 2,
 	trailingComma: "all",
 	useTabs: true,
-	pluginSearchDirs: false,
+	pluginSearchDirs: ["."],
 };

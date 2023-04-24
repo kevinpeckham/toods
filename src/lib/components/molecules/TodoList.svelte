@@ -4,12 +4,13 @@ Here's some documentation for this component.
 -->
 <script lang="ts">
 	// components
-	import RowTodoItem from "$components/molecules/RowTodoItem.svelte";
-	import RowHeadings from "$components/molecules/RowHeadings.svelte";
+	import RowTodoItem from "$molecules/RowTodoItem.svelte";
+	import RowHeadings from "$molecules/RowHeadings.svelte";
 
 	// stores
+	import { query } from "$stores/filteringStore";
 	import { filtered_todos } from "$stores/filteringStore";
-	import { todos } from "$stores/todosStore";
+	import { todos, todos_sorted } from "$stores/todosStore";
 	import type { Todo } from "$types/todoTypes";
 	import { showCompletedTodos } from "$stores/settings";
 
@@ -29,11 +30,12 @@ Here's some documentation for this component.
 			class="gap-y-[6px]",
 			style=""
 		)
-			+each('$todos as todo, index')
-				+if('$filtered_todos.length == 0 || ($filtered_todos.includes(todo.unique))')
+			+each('$todos_sorted as todo, index')
+				+if('$query.length == 0 || ($filtered_todos.includes(todo.unique))')
 					+if('($showCompletedTodos || !todo.completed)')
 						RowTodoItem(
 							index!="{ index }",
+							todo!="{ todo }",
 							unique!="{ todo.unique }"
 						)
 </template>

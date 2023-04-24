@@ -1,5 +1,5 @@
 import { Todo } from "$types/todoTypes";
-import { todos } from "$stores/todosStore";
+import { todos, todos_counter } from "$stores/todosStore";
 import { symbols } from "$stores/settings";
 import { get } from "svelte/store";
 
@@ -36,6 +36,7 @@ export function createTodo() {
 		todos.push(todo);
 		return todos;
 	});
+	todos_counter.update((n) => n + 1);
 	return todo;
 }
 export function createAndFocusTodo() {

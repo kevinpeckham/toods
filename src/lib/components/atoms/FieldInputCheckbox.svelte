@@ -18,7 +18,7 @@ consumes "data_handle" from context api
 	import { todos } from "$stores/todosStore";
 
 	// utils
-	import { tableUtils } from "$lib/utils/tableUtils";
+	import { tableUtils } from "$utils/tableUtils";
 	import { inputUtils } from "$utils/inputUtils";
 
 	// types
@@ -40,18 +40,21 @@ consumes "data_handle" from context api
 	const tu = tableUtils;
 
 	// variables
-	// variables
 	let value: boolean;
 
 	// ** value
 	// value is bound to the input element
 	// when the user toggles the checkbox, value is updated
 	// when value is updated, todo_editable is updated, which updates the store
-	const initial = todo_initial[data_handle];
-	value = initial;
+	let initial: boolean;
+	$: initial =
+		todo_initial && todo_initial[data_handle]
+			? todo_initial[data_handle]
+			: false;
+	$: value = initial;
 
 	$: {
-		if (todo_editable[data_handle] != value) {
+		if (todo_editable && todo_editable[data_handle] != value) {
 			todo_editable[data_handle] = value;
 			$todos = $todos;
 		}
@@ -98,12 +101,11 @@ consumes "data_handle" from context api
 
 	// style classes
 	let default_classes: string;
-	$: default_classes = `
-
-	`;
+	$: default_classes = ``;
 </script>
 
 <template lang="pug">
+	//- div test
 	input.field-input.peer.accent-accent(
 		class!="{default_classes} { classes }",
 		bind:checked!="{ value }",

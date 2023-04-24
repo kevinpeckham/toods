@@ -2,9 +2,6 @@
 	// css
 	import "../app.css";
 
-	// context
-	import { setContext } from "svelte";
-
 	// store
 	import { window_w, window_h } from "$stores/windowStore";
 	import { createAndFocusTodo, createTodo } from "$utils/todoUtils";

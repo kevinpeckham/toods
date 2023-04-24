@@ -3,11 +3,9 @@
 Here's some documentation for this component.
 -->
 <script lang="ts">
-	// context api
+	// svelte functions
 	import { getContext, setContext } from "svelte";
-
-	// svelte
-	import { onMount } from "svelte";
+	import { derived } from "svelte/store";
 
 	// components
 	import CellComplete from "$molecules/CellComplete.svelte";
@@ -21,44 +19,53 @@ Here's some documentation for this component.
 	// stores
 	import { grid_template_columns } from "$stores/layoutStore";
 	import { breakpoint } from "$stores/layoutStore";
-	import { todos } from "$stores/todosStore";
+	import { todos, todos_sorted } from "$stores/todosStore";
 
 	// utils
 	import { tableUtils } from "$utils/tableUtils";
+	import { moveArrayItemUp } from "$utils/arrayUtils";
 
 	// types
 	import type { Readable, Writable } from "svelte/store";
-	import { writable, readable, derived, get } from "svelte/store";
 	import type { Todo } from "$types/todoTypes";
-	import { stop_propagation } from "svelte/internal";
 	type Row = HTMLButtonElement | HTMLDivElement | null;
 
-	// * props
-	export let row: Row;
+	// props
 	export let index: number; // position in filtered list
+	export let todo: Todo;
 
-	// ** unique
-	// unique id of the todo
-	export let unique: string = "";
+	// refs
+	let row: Row;
 
-	// track todo state
-	const editableTodo = $todos.find((todo) => todo.unique == unique);
+	// variables
+	export let unique: string;
+	// $: unique = todo.unique;
+
+	// editable todo -- a direct reference to the todo in the store
+	let editableTodo: Todo | undefined;
+	$: editableTodo = $todos.find((todo) => todo.unique == unique);
+	$: setContext("todo_editable", editableTodo);
+
+	// readable todo -- a derived store that is only readable
 	const readableTodo = derived(todos, ($todos) =>
 		$todos.find((t: Todo) => t.unique == unique),
 	);
-	const initialTodo = JSON.parse(JSON.stringify(editableTodo));
 
-	// pass on todo state via	context api
-	setContext("todo_editable", editableTodo); // a direct reference to the to-do in the store
-	setContext("todo_initial", initialTodo); // snapshots load state of todo
+	// initial todo -- the todo as it was when the row was loaded
+	let initialTodo: Todo | undefined;
+	$: initialTodo = editableTodo
+		? JSON.parse(JSON.stringify(editableTodo))
+		: undefined;
+	$: setContext("todo_initial", initialTodo);
+
 	setContext("todo_readable", readableTodo); // sent as a readable-only store
 	setContext("unique", unique);
 	setContext("index", index);
 
 	// functions
-
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
+		const shift = event.shiftKey;
 		const Space = " ";
 
 		interface Actions {
@@ -73,9 +80,27 @@ Here's some documentation for this component.
 			Enter: () => tableUtils.goDownOneRow(row),
 		};
 
-		if (action[key]) {
+		if (!shift && action[key]) {
 			action[key]();
 			event.preventDefault();
+		}
+		//- moving row up
+		else if (shift && key == "ArrowUp") {
+			const focused_todo = $todos.find((todo) => todo.unique == unique);
+			const current_order = focused_todo?.order ? focused_todo.order : 0;
+
+			const preceding_todo = $todos.find(
+				(todo) => todo.order == current_order - 1,
+			);
+
+			// update current todo with lower order number
+			if (focused_todo && focused_todo.order) {
+				focused_todo.order = focused_todo.order - 1;
+			}
+			// update preceding todo with higher order number
+			if (preceding_todo && preceding_todo.order) {
+				preceding_todo.order = preceding_todo.order + 1;
+			}
 		}
 	}
 
@@ -85,43 +110,22 @@ Here's some documentation for this component.
 </script>
 
 <template lang="pug">
-	+if('($breakpoint) === "mobile"')
-		//-small
-		.mb-1.w-100(
-			class!="sm:hidden",
-			data-table-row,
-			disabled,
-			id!="todo-{unique}"
-			)
-			.grid.grid-cols-4.w-full.mb-1
-				//-CellIndex
-				//- CellNext
-				//- CellDue
-				//- CellDescription
-				//- CellRating(data_handle="priority")
-				//- CellRating(data_handle="friction")
-				//- CellRating(data_handle="joy")
-				//- CellTags
-
-		//-large
-		+else
-			button.gap-1.w-full.block.rounded-sm.overflow-visible(
-				bind:this!="{ row }"
-				class!="sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-transparent outline-transparent outline-[1.5px] outline-offset-[1.5px] outline focus:outline-blue-300",
-				data-table-row,
-				id!="todo-{unique}"
-				on:mousedown|stopPropagation!="{onMousedown}"
-				on:keydown|stopPropagation!="{onKeydown}"
-				style!="grid-template-columns: { $grid_template_columns };"
-				)
-
-				CellIndex(classes="text-[12px]")
-				CellNext(classes="text-[18px]")
-				CellDue(classes="text-[14px]")
-				CellDescription(classes="text-[14px]")
-				CellRating(data_handle="priority" classes="text-[14px]")
-				CellRating(data_handle="friction" classes="text-[14px]")
-				CellRating(data_handle="joy" classes="text-[14px]")
-				CellTags(classes="text-[14px]")
-				CellComplete(classes="text-[14px]")
+	button.gap-1.w-full.block.rounded-sm.overflow-visible(
+		class!="h-6 sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-transparent outline-transparent outline-[1.5px] outline-offset-[1.5px] outline focus:outline-blue-300",
+		bind:this!="{row}"
+		data-table-row,
+		id!="todo-{unique}"
+		on:mousedown|stopPropagation!="{onMousedown}"
+		on:keydown|stopPropagation!="{onKeydown}"
+		style!="grid-template-columns: { $grid_template_columns };"
+		)
+		CellIndex(classes="text-[12px]")
+		CellNext(classes="text-[18px]")
+		CellDue(classes="text-[14px]")
+		CellDescription(classes="text-[14px]")
+		CellRating(data_handle="priority" classes="text-[14px]")
+		CellRating(data_handle="friction" classes="text-[14px]")
+		CellRating(data_handle="joy" classes="text-[14px]")
+		CellTags(classes="text-[14px]")
+		CellComplete(classes="text-[14px]")
 </template>

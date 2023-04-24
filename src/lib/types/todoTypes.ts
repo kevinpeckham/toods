@@ -1,4 +1,5 @@
 import { get } from "svelte/store";
+import { todos_counter } from "$stores/todosStore";
 
 // regex for matching a date string or empty string
 export const date_regex = /\d{4}-\d{2}-\d{2}/;
@@ -15,10 +16,10 @@ export interface TodoConstructor {
 	description?: string | null;
 	due?: string | null;
 	friction?: number;
-	index?: number;
 	id?: number;
 	joy?: number;
 	next?: boolean;
+	order?: number | null;
 	tags?: string[];
 	unique?: string;
 	priority?: number;
@@ -36,6 +37,7 @@ export class Todo {
 	friction: number;
 	joy: number;
 	next: boolean;
+	order: number | null;
 	priority: number;
 	unique: string;
 	updated: string | null;
@@ -50,15 +52,15 @@ export class Todo {
 		this.friction = o && o.friction ? o.friction : 0;
 		this.joy = o && o.joy ? o.joy : 0;
 		this.next = o && o.next ? o.next : false;
+		this.order = o && o.order ? o.order : get(todos_counter) + 1;
 		this.updated = this.created ? this.created : "";
 		this.priority = o && o.priority ? o.priority : 0;
 		this.tags = o && o.tags && o.tags.length > 0 ? o.tags : [];
-		this.text = o && o.text ? o.text : "";
 		this.unique = o && o.unique ? o.unique : get_unique_id();
 	}
 }
 
-export interface todoSearchableItem {
+export interface TodoSearchableItem {
 	unique: string;
 	text: string;
 }

@@ -1,38 +1,61 @@
 import { writable, get, derived } from "svelte/store";
 import { browser } from "$app/environment";
+
+// types
+import type { Writable } from "svelte/store";
 import type { Todo } from "$types/todoTypes";
 
+//- todos counter
+export const todos_counter: Writable<number> = writable(0);
+
+//- todos store
+export const todos: Writable<Todo[]> = writable([]);
+
 // settings
-const readFromLocalStorage = true;
-const writeToLocalStorage = true;
+const readFromLocalStorage = false;
+const writeToLocalStorage = false;
 
 // functions
 import { extractSearchableTextFromTodo } from "$utils/todoUtils";
+import { getItemFromLocalStorage } from "$utils/localStorageUtils";
 
-// data
+// backup data
 import { backup_data } from "$stores/backupData";
-const parsed_backup_data = JSON.parse(backup_data) as Todo[];
-
-// variables
-let stored: string | null = "";
-let todosArray: Todo[] = [];
 
 // if enabled, get todos from local storage
 if (browser && readFromLocalStorage) {
-	stored = localStorage.getItem("todos");
+	getItemFromLocalStorage("todos", (toods: string) => {
+		const data_object = JSON.parse(toods) as Todo[];
+		if (toods && data_object) {
+			todos.set(data_object);
+			todos_counter.set(data_object.length);
+		}
+	});
+}
+// if there is nothing in local storage, use backup data
+else {
+	const data_object = JSON.parse(backup_data) as Todo[];
+	if (data_object) {
+		todos.set(data_object);
+		todos_counter.set(data_object.length);
+	}
 }
 
-// if locally stored data exists, use it, otherwise use backup data
-if (stored) {
-	todosArray = JSON.parse(stored);
-} else {
-	todosArray = parsed_backup_data;
-}
+//- derived store that sorts todos by order
+export const todos_sorted = derived(todos, ($todos) => {
+	const deepCopy = JSON.parse(JSON.stringify($todos)) as Todo[];
 
-//- todos store
-export const todos = writable(todosArray);
+	const sorted = deepCopy.sort((a, b) => {
+		if (a.order != null && b.order != null) {
+			return a.order - b.order;
+		} else {
+			return 0;
+		}
+	});
+	return sorted;
+});
 
-//- derived store that holds searchable text for each todo
+//- derived store that holds just searchable text and unique ids for each todo
 export const todos_searchable_text = derived(todos, ($todos) => {
 	const searchable_text = $todos.map((todo) => {
 		const text = {
@@ -48,7 +71,6 @@ export const todos_searchable_text = derived(todos, ($todos) => {
 //- sync todos with local storage
 todos.subscribe((todos) => {
 	if (browser && writeToLocalStorage) {
-		// localStorage.removeItem("toods_todos");
 		localStorage.setItem("todos", JSON.stringify(todos));
 	}
 });
