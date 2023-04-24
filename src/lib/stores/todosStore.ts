@@ -12,8 +12,8 @@ export const todos_counter: Writable<number> = writable(0);
 export const todos: Writable<Todo[]> = writable([]);
 
 // settings
-const readFromLocalStorage = false;
-const writeToLocalStorage = false;
+const readFromLocalStorage = true;
+const writeToLocalStorage = true;
 
 // functions
 import { extractSearchableTextFromTodo } from "$utils/todoUtils";
