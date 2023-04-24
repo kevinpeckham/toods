@@ -19,10 +19,6 @@ Here's some documentation for this component.
 		todos_counter,
 		todos_sorted,
 	} from "$stores/todosStore";
-
-	$: {
-		// console.log("sorted", $todos_sorted);
-	}
 </script>
 
 <template lang="pug">

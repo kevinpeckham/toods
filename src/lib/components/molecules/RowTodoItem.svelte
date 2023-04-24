@@ -4,7 +4,8 @@ Here's some documentation for this component.
 -->
 <script lang="ts">
 	// svelte functions
-	import { getContext, setContext } from "svelte";
+	import { todos_counter } from "$stores/todosStore";
+	import { afterUpdate, getContext, setContext } from "svelte";
 	import { derived } from "svelte/store";
 
 	// components
@@ -32,7 +33,7 @@ Here's some documentation for this component.
 
 	// props
 	export let index: number; // position in filtered list
-	export let todo: Todo;
+	// export let todo: Todo;
 
 	// refs
 	let row: Row;
@@ -63,6 +64,47 @@ Here's some documentation for this component.
 	setContext("index", index);
 
 	// functions
+
+	// function movingRow(unique: string, direction: string) {
+	// 	// this todo
+	// 	const focused_todo = $todos.filter((todo) => todo.unique == unique)[0];
+	// 	const starting_order = Number(JSON.stringify(focused_todo.order));
+	// 	const target_order =
+	// 		direction == "up" ? starting_order - 1 : starting_order + 1;
+
+	// 	// guard rails -- keep from moving past the top or bottom of the list
+	// 	if (target_order < 0) return;
+
+	// 	if (target_order >= $todos_counter) return;
+
+	// 	// other todo at target position
+	// 	const todo_at_target_order = $todos.filter(
+	// 		(todo) => todo.order == target_order,
+	// 	)[0];
+	// 	const other_todo_unique = JSON.parse(
+	// 		JSON.stringify(todo_at_target_order.unique),
+	// 	);
+	// 	const other_todo = $todos.filter(
+	// 		(todo) => todo.unique == other_todo_unique,
+	// 	)[0];
+
+	// 	// swap orders
+	// 	focused_todo.order = target_order;
+	// 	other_todo.order = starting_order;
+
+	// 	// update store
+	// 	$todos = $todos;
+
+	// 	// wait a beat and give time for updated rows to render
+	// 	setTimeout(() => {
+	// 		const button = document.getElementById(`todo-${unique}`);
+	// 		button?.focus();
+	// 		direction == "up"
+	// 			? tableUtils.goUpOneRow(row)
+	// 			: tableUtils.goDownOneRow(row);
+	// 	}, 40);
+	// }
+
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
 		const shift = event.shiftKey;
@@ -80,27 +122,59 @@ Here's some documentation for this component.
 			Enter: () => tableUtils.goDownOneRow(row),
 		};
 
+		// functions local to this function
+		// function movingRow(direction: string) {
+		// 	// this todo
+		// 	const focused_todo = $todos.filter((todo) => todo.unique == unique)[0];
+		// 	const starting_order = Number(JSON.stringify(focused_todo.order));
+		// 	const target_order =
+		// 		direction == "up" ? starting_order - 1 : starting_order + 1;
+
+		// 	// guard rails -- keep from moving past the top or bottom of the list
+		// 	if (target_order < 0 || target_order > $todos_counter) return;
+
+		// 	// other todo at target position
+		// 	const todo_at_target_order = $todos.filter(
+		// 		(todo) => todo.order == target_order,
+		// 	)[0];
+		// 	const other_todo_unique = JSON.parse(
+		// 		JSON.stringify(todo_at_target_order.unique),
+		// 	);
+		// 	const other_todo = $todos.filter(
+		// 		(todo) => todo.unique == other_todo_unique,
+		// 	)[0];
+
+		// 	// swap orders
+		// 	focused_todo.order = target_order;
+		// 	other_todo.order = starting_order;
+
+		// 	// update store
+		// 	$todos = $todos;
+
+		// 	// wait a beat and give time for updated rows to render
+		// 	setTimeout(() => {
+		// 		const button = document.getElementById(`todo-${unique}`);
+		// 		button?.focus();
+		// 		direction == "up"
+		// 			? tableUtils.goUpOneRow(row)
+		// 			: tableUtils.goDownOneRow(row);
+		// 	}, 40);
+		// }
+
 		if (!shift && action[key]) {
 			action[key]();
 			event.preventDefault();
 		}
+
 		//- moving row up
 		else if (shift && key == "ArrowUp") {
-			const focused_todo = $todos.find((todo) => todo.unique == unique);
-			const current_order = focused_todo?.order ? focused_todo.order : 0;
-
-			const preceding_todo = $todos.find(
-				(todo) => todo.order == current_order - 1,
-			);
-
-			// update current todo with lower order number
-			if (focused_todo && focused_todo.order) {
-				focused_todo.order = focused_todo.order - 1;
-			}
-			// update preceding todo with higher order number
-			if (preceding_todo && preceding_todo.order) {
-				preceding_todo.order = preceding_todo.order + 1;
-			}
+			event.preventDefault();
+			tableUtils.moveRow(unique, "up");
+		}
+		//- moving row down
+		else if (shift && key == "ArrowDown") {
+			event.preventDefault();
+			tableUtils.moveRow(unique, "down");
 		}
 	}
 
@@ -110,22 +184,23 @@ Here's some documentation for this component.
 </script>
 
 <template lang="pug">
-	button.gap-1.w-full.block.rounded-sm.overflow-visible(
-		class!="h-6 sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-transparent outline-transparent outline-[1.5px] outline-offset-[1.5px] outline focus:outline-blue-300",
-		bind:this!="{row}"
-		data-table-row,
-		id!="todo-{unique}"
-		on:mousedown|stopPropagation!="{onMousedown}"
-		on:keydown|stopPropagation!="{onKeydown}"
-		style!="grid-template-columns: { $grid_template_columns };"
-		)
-		CellIndex(classes="text-[12px]")
-		CellNext(classes="text-[18px]")
-		CellDue(classes="text-[14px]")
-		CellDescription(classes="text-[14px]")
-		CellRating(data_handle="priority" classes="text-[14px]")
-		CellRating(data_handle="friction" classes="text-[14px]")
-		CellRating(data_handle="joy" classes="text-[14px]")
-		CellTags(classes="text-[14px]")
-		CellComplete(classes="text-[14px]")
+	+key('unique')
+		button.gap-1.w-full.block.rounded-sm.overflow-visible(
+			class!="h-6 sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-transparent outline-transparent outline-[1.5px] outline-offset-[1.5px] outline focus:outline-blue-300",
+			bind:this!="{row}"
+			data-table-row,
+			id!="todo-{unique}"
+			on:mousedown|stopPropagation!="{onMousedown}"
+			on:keydown|stopPropagation!="{onKeydown}"
+			style!="grid-template-columns: { $grid_template_columns };"
+			)
+			CellIndex(classes="text-[12px]")
+			CellNext(classes="text-[18px]")
+			CellDue(classes="text-[14px]")
+			CellDescription(classes="text-[14px]")
+			CellRating(data_handle="priority" classes="text-[14px]")
+			CellRating(data_handle="friction" classes="text-[14px]")
+			CellRating(data_handle="joy" classes="text-[14px]")
+			CellTags(classes="text-[14px]")
+			CellComplete(classes="text-[14px]")
 </template>

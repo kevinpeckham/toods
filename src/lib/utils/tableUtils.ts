@@ -1,3 +1,6 @@
+import { todos, todos_counter } from "$stores/todosStore";
+import { get } from "svelte/store";
+
 type Cell = HTMLDivElement | null;
 type Row = HTMLDivElement | HTMLButtonElement | null;
 type Field = HTMLInputElement | null;
@@ -168,6 +171,41 @@ function up(event: KeyboardEvent, flags?: string) {
 	goToPreviousRowSameField(input);
 }
 
+//- MOVING ROWS
+function moveRow(unique: string, dir: string) {
+	const store = get(todos);
+	const count = get(todos_counter);
+
+	// this todo
+	const focused_todo = get(todos).filter((todo) => todo.unique == unique)[0];
+	const starting_order = Number(JSON.stringify(focused_todo.order));
+	const target_order = dir == "up" ? starting_order - 1 : starting_order + 1;
+
+	// guard rails -- keep from moving past the top or bottom of the list
+	if (target_order < 0) return;
+	if (target_order >= count) return;
+
+	// other todo at target position
+	const todo_at_target = store.filter((todo) => todo.order == target_order)[0];
+	const other_unique = JSON.parse(JSON.stringify(todo_at_target.unique));
+	const other_todo = store.filter((todo) => todo.unique == other_unique)[0];
+
+	// swap orders
+	focused_todo.order = target_order;
+	other_todo.order = starting_order;
+
+	// update store
+	todos.set(store);
+
+	// wait a beat and give time for updated rows to render
+	setTimeout(() => {
+		const button = document.getElementById(
+			`todo-${unique}`,
+		) as HTMLButtonElement;
+		button?.focus();
+	}, 40);
+}
+
 export const tableUtils = {
 	// get fields from field
 	getNextFieldFromField: getNextFieldFromField,
@@ -213,4 +251,7 @@ export const tableUtils = {
 	right: right,
 	down: down,
 	left: left,
+
+	// move row
+	moveRow: moveRow,
 };
