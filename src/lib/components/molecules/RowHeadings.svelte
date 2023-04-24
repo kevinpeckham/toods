@@ -23,9 +23,15 @@ Here's some documentation for this component.
 	// types & classes
 	import { Todo } from "$types/todoTypes";
 
+	// variables
+	let style: string;
+
 	// functions
-	function onClick(event: MouseEvent) {
+	function toggleShowCompletedTodos() {
 		$showCompletedTodos = !$showCompletedTodos;
+	}
+	function onClick(event: MouseEvent) {
+		toggleShowCompletedTodos();
 	}
 </script>
 
@@ -35,12 +41,13 @@ Here's some documentation for this component.
 
 		//-large
 		+else
+			+const('style="grid-template-columns: { $grid_template_columns };"')
 			.gap-1.w-full.block.mb-0(
 				class!="sm:gap-1 sm:w-full sm:grid text-[.85em] opacity-90",
 				data-table-row,
 				disabled,
-				style!="grid-template-columns: { $grid_template_columns };"
-				)
+				style!="{ style }"
+			)
 				.pl-2 #
 				.text-center !
 				.pl-2 due
@@ -50,6 +57,6 @@ Here's some documentation for this component.
 				.text-center ~
 				.pl-2 tags
 				button.text-center(
-					on:mousedown|stopPropagation!="{()=> $showCompletedTodos = !$showCompletedTodos}",
+					on:mousedown|stopPropagation!="{ toggleShowCompletedTodos() }"
 				) ✔︎
 </template>

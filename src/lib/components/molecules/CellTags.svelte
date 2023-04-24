@@ -12,7 +12,7 @@ Here's some documentation for this component.
 	import FieldDisplayTags from "$atoms/FieldDisplayTags.svelte";
 
 	// props
-	export let classes: string = "";
+	export let classes = "";
 
 	// set data_handle
 	setContext("data_handle", "tags");

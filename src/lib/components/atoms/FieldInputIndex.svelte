@@ -101,6 +101,5 @@ consumes "todo_editable" from context api
 		tabindex="-1",
 		type!="text"
 	)
-	//- div(class!="{default_classes} { classes }", on:mousedown!="{ onMousedown }") { value_num }
 </template>
 <!-- 	readonly="readonly" -->

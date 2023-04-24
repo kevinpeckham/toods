@@ -20,8 +20,8 @@ consumes "todo_id" from context api
 	import { symbols } from "$stores/settings";
 
 	// props
-	export let data_handle: string = "";
-	export let classes: string = "";
+	export let data_handle = "";
+	export let classes = "";
 
 	const symbol = $symbols[data_handle] as string;
 

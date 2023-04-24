@@ -99,26 +99,37 @@ Here's some documentation for this component.
 	function onMousedown(event: MouseEvent) {
 		event.stopPropagation();
 	}
+
+	const buttonStyle = ` grid-template-columns: ${$grid_template_columns};`;
 </script>
 
 <template lang="pug">
 	+key('unique')
 		button.gap-1.w-full.block.rounded-sm.overflow-visible(
 			class!="h-6 sm:gap-1 sm:w-full sm:grid focus:ring-1 !ring-transparent outline-transparent outline-[1.5px] outline-offset-[1.5px] outline focus:outline-blue-300",
-			bind:this!="{row}"
+			bind:this!="{ row }",
 			data-table-row,
-			id!="todo-{unique}"
-			on:mousedown|stopPropagation!="{onMousedown}"
-			on:keydown|stopPropagation!="{onKeydown}"
-			style!="grid-template-columns: { $grid_template_columns };"
-			)
+			id!="todo-{unique}",
+			on:keydown|stopPropagation!="{ onKeydown }",
+			on:mousedown|stopPropagation!="{ onMousedown }",
+			style!="{ buttonStyle }"
+		)
 			CellIndex(classes="text-[12px]")
 			CellNext(classes="text-[18px]")
 			CellDue(classes="text-[14px]")
 			CellDescription(classes="text-[14px]")
-			CellRating(data_handle="priority" classes="text-[14px]")
-			CellRating(data_handle="friction" classes="text-[14px]")
-			CellRating(data_handle="joy" classes="text-[14px]")
+			CellRating(
+				classes="text-[14px]",
+				data_handle="priority"
+			)
+			CellRating(
+				classes="text-[14px]",
+				data_handle="friction"
+			)
+			CellRating(
+				classes="text-[14px]",
+				data_handle="joy"
+			)
 			CellTags(classes="text-[14px]")
 			CellComplete(classes="text-[14px]")
 </template>

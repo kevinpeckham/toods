@@ -1,7 +1,7 @@
 import { readable } from "svelte/store";
 
 // utils
-import { generateOKLCHShades, generateOKLCHColor } from "./../utils/colorUtils";
+import { generateOKLCHShades } from "./../utils/colorUtils";
 
 export const lemon = generateOKLCHShades(0.2, 114, 25);
 export const oxford = generateOKLCHShades(0.05, 260, 25);

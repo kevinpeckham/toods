@@ -22,7 +22,7 @@ consumes "todo_id" from context api
 	const index = getContext("index") as number;
 
 	// props
-	export let classes: string = "";
+	export let classes = "";
 
 	// style classes
 	let default_classes: string;
