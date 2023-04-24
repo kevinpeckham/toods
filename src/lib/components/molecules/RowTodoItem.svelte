@@ -33,19 +33,16 @@ Here's some documentation for this component.
 
 	// props
 	export let index: number; // position in filtered list
-	// export let todo: Todo;
 
 	// refs
 	let row: Row;
 
 	// variables
 	export let unique: string;
-	// $: unique = todo.unique;
 
 	// editable todo -- a direct reference to the todo in the store
 	let editableTodo: Todo | undefined;
 	$: editableTodo = $todos.find((todo) => todo.unique == unique);
-	$: setContext("todo_editable", editableTodo);
 
 	// readable todo -- a derived store that is only readable
 	const readableTodo = derived(todos, ($todos) =>
@@ -57,54 +54,14 @@ Here's some documentation for this component.
 	$: initialTodo = editableTodo
 		? JSON.parse(JSON.stringify(editableTodo))
 		: undefined;
-	$: setContext("todo_initial", initialTodo);
 
-	setContext("todo_readable", readableTodo); // sent as a readable-only store
-	setContext("unique", unique);
-	setContext("index", index);
+	$: setContext("todo_editable", editableTodo);
+	$: setContext("todo_readable", readableTodo); // sent as a readable-only store
+	$: setContext("todo_initial", initialTodo);
+	$: setContext("unique", unique);
+	$: setContext("index", index);
 
 	// functions
-
-	// function movingRow(unique: string, direction: string) {
-	// 	// this todo
-	// 	const focused_todo = $todos.filter((todo) => todo.unique == unique)[0];
-	// 	const starting_order = Number(JSON.stringify(focused_todo.order));
-	// 	const target_order =
-	// 		direction == "up" ? starting_order - 1 : starting_order + 1;
-
-	// 	// guard rails -- keep from moving past the top or bottom of the list
-	// 	if (target_order < 0) return;
-
-	// 	if (target_order >= $todos_counter) return;
-
-	// 	// other todo at target position
-	// 	const todo_at_target_order = $todos.filter(
-	// 		(todo) => todo.order == target_order,
-	// 	)[0];
-	// 	const other_todo_unique = JSON.parse(
-	// 		JSON.stringify(todo_at_target_order.unique),
-	// 	);
-	// 	const other_todo = $todos.filter(
-	// 		(todo) => todo.unique == other_todo_unique,
-	// 	)[0];
-
-	// 	// swap orders
-	// 	focused_todo.order = target_order;
-	// 	other_todo.order = starting_order;
-
-	// 	// update store
-	// 	$todos = $todos;
-
-	// 	// wait a beat and give time for updated rows to render
-	// 	setTimeout(() => {
-	// 		const button = document.getElementById(`todo-${unique}`);
-	// 		button?.focus();
-	// 		direction == "up"
-	// 			? tableUtils.goUpOneRow(row)
-	// 			: tableUtils.goDownOneRow(row);
-	// 	}, 40);
-	// }
-
 	function onKeydown(event: KeyboardEvent) {
 		const key = event.key;
 		const shift = event.shiftKey;
@@ -121,45 +78,6 @@ Here's some documentation for this component.
 			ArrowUp: () => tableUtils.goUpOneRow(row),
 			Enter: () => tableUtils.goDownOneRow(row),
 		};
-
-		// functions local to this function
-		// function movingRow(direction: string) {
-		// 	// this todo
-		// 	const focused_todo = $todos.filter((todo) => todo.unique == unique)[0];
-		// 	const starting_order = Number(JSON.stringify(focused_todo.order));
-		// 	const target_order =
-		// 		direction == "up" ? starting_order - 1 : starting_order + 1;
-
-		// 	// guard rails -- keep from moving past the top or bottom of the list
-		// 	if (target_order < 0 || target_order > $todos_counter) return;
-
-		// 	// other todo at target position
-		// 	const todo_at_target_order = $todos.filter(
-		// 		(todo) => todo.order == target_order,
-		// 	)[0];
-		// 	const other_todo_unique = JSON.parse(
-		// 		JSON.stringify(todo_at_target_order.unique),
-		// 	);
-		// 	const other_todo = $todos.filter(
-		// 		(todo) => todo.unique == other_todo_unique,
-		// 	)[0];
-
-		// 	// swap orders
-		// 	focused_todo.order = target_order;
-		// 	other_todo.order = starting_order;
-
-		// 	// update store
-		// 	$todos = $todos;
-
-		// 	// wait a beat and give time for updated rows to render
-		// 	setTimeout(() => {
-		// 		const button = document.getElementById(`todo-${unique}`);
-		// 		button?.focus();
-		// 		direction == "up"
-		// 			? tableUtils.goUpOneRow(row)
-		// 			: tableUtils.goDownOneRow(row);
-		// 	}, 40);
-		// }
 
 		if (!shift && action[key]) {
 			action[key]();
