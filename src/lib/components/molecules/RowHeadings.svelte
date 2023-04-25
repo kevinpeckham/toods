@@ -57,6 +57,6 @@ Here's some documentation for this component.
 				.text-center ~
 				.pl-2 tags
 				button.text-center(
-					on:mousedown|stopPropagation!="{ toggleShowCompletedTodos() }"
+					on:mousedown|stopPropagation!="{ toggleShowCompletedTodos }"
 				) ✔︎
 </template>
