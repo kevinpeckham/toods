@@ -8,7 +8,7 @@ Here's some documentation for this component.
 </script>
 
 <template lang="pug">
-	.mb-8.flex
+	.mb-0.flex
 		textarea#console.h-6.text-primary.text-14.w-80.flex.items-start.px-2(
 			autocorrect="off",
 			bind:value!="{ $query }",

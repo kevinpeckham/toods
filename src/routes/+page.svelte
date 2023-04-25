@@ -8,6 +8,7 @@ Here's some documentation for this component.
 	import CommandPalette from "$molecules/CommandPalette.svelte";
 	import TodoList from "$molecules/TodoList.svelte";
 	import ButtonAddTodo from "$atoms/ButtonAddTodo.svelte";
+	import TagCloud from "$atoms/TagCloud.svelte";
 
 	//-import Footer from "$atoms/Footer.svelte";
 	//-import PreFooter from "$atoms/PreFooter.svelte";
@@ -37,10 +38,9 @@ Here's some documentation for this component.
 				h1.mr-4.font-semibold.text-accent(class="text-lg") Toods
 				.text-base a compact, keyboard-oriented to-do list.
 
-		.mb-2
+		.mb-2.grid.grid-cols-3.mb-6(class="grid-cols-1 lg:grid-cols-2")
 			CommandPalette
-			//-div { JSON.stringify($todos) }
-			//-div { JSON.stringify($todos_searchable_text) }
+			TagCloud
 
 		.mb-8
 			TodoList
