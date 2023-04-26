@@ -88,6 +88,7 @@ Here's some documentation for this component.
 		else if (shift && key == "ArrowUp") {
 			event.preventDefault();
 			tableUtils.moveRow(unique, "up");
+			console.log(unique);
 		}
 		//- moving row down
 		else if (shift && key == "ArrowDown") {

@@ -41,5 +41,5 @@ consumes "data_handle" from context api
 </script>
 
 <template lang="pug">
-	div(class!="{default_classes} { classes }", data-field-display) { index }
+	div(class!="{default_classes} { classes }", data-field-display) { $todo_readable.order ? $todo_readable.order : 0 }
 </template>

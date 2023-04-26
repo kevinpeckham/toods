@@ -1,4 +1,5 @@
 import { todos, todos_counter } from "$stores/todosStore";
+import type { Todo } from "$types/todoTypes";
 import { get } from "svelte/store";
 
 type Cell = HTMLDivElement | null;
@@ -171,6 +172,42 @@ function up(event: KeyboardEvent, flags?: string) {
 	goToPreviousRowSameField(input);
 }
 
+//- get adjacent todos
+function getPrecedingTodoByOrder(starting_order: number, store: Todo[]) {
+	// get all preceding todos
+	const all_preceding_todos = store.filter(
+		(todo) => (todo.order ? todo.order : 0) < starting_order,
+	);
+
+	// escape hatch if no preceding todos
+	if (all_preceding_todos.length == 0) return null;
+
+	// sort preceding todos
+	all_preceding_todos.sort(
+		(a, b) => (b.order ? b.order : 0) - (a.order ? a.order : 0),
+	);
+	const todo_at_target = all_preceding_todos[0];
+	console.log(todo_at_target.order);
+	return todo_at_target;
+}
+
+function getNextTodoByOrder(starting_order: number, store: Todo[]) {
+	// get all subsequent todos
+	const all_subsequent_todos = store.filter(
+		(todo) => (todo.order ? todo.order : 0) > starting_order,
+	);
+
+	// escape hatch if we're at the end
+	if (all_subsequent_todos.length == 0) return null;
+
+	// sort subsequent todos
+	all_subsequent_todos.sort(
+		(a, b) => (a.order ? a.order : 0) - (b.order ? b.order : 0),
+	);
+	const todo_at_target = all_subsequent_todos[0];
+	return todo_at_target;
+}
+
 //- MOVING ROWS
 function moveRow(unique: string, dir: string) {
 	const store = get(todos);
@@ -186,7 +223,17 @@ function moveRow(unique: string, dir: string) {
 	if (target_order >= count) return;
 
 	// other todo at target position
-	const todo_at_target = store.filter((todo) => todo.order == target_order)[0];
+	// let todo_at_target = Todo;
+	// get all todos with order less than current order
+
+	const todo_at_target =
+		dir == "up"
+			? getPrecedingTodoByOrder(starting_order, store)
+			: getNextTodoByOrder(starting_order, store);
+
+	// return if there is no todo at target
+	if (!todo_at_target) return;
+
 	const other_unique = JSON.parse(JSON.stringify(todo_at_target.unique));
 	const other_todo = store.filter((todo) => todo.unique == other_unique)[0];
 

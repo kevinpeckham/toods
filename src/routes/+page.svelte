@@ -20,6 +20,7 @@ Here's some documentation for this component.
 		todos_counter,
 		todos_sorted,
 	} from "$stores/todosStore";
+	// $todos.forEach((todo) => console.log(todo.order));
 </script>
 
 <template lang="pug">
